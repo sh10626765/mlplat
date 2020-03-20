@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+{% load i18n %}
+{% load static %}
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="{% trans '面向锂电池材料的机器学习平台' %}">
+    <meta name="description" content="{% trans '面向锂电池材料的机器学习平台' %}">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <script type="text/javascript" src="{% static 'jquery-3.4.1/jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'popper-1.14.3/esm/popper.js' %}"></script>
+    <script src="{% static 'popper-1.14.3/umd/popper.js' %}"></script>
+
+    <link rel="stylesheet" href="{% static 'bootstrap-4.4.1-dist/css/bootstrap.css' %}">
+    <script type="text/javascript" src="{% static 'bootstrap-4.4.1-dist/js/bootstrap.js' %}"></script>
+
+    {% block script %}{% endblock %}
+    {% block style %}{% endblock %}
+
+</head>
+<body>
+
+<div class="jumbotron bg-info jumbotron-fluid" style="margin-bottom:0">
+    <h2 class="text-white">{% trans "面向锂电池材料的机器学习平台" %}</h2>
+</div>
+<script type="text/javascript">
+    window.onscroll = function(){
+        var backtop = document.documentElement.scrollTop;
+        if(backtop >= 100){
+            $('a.back-to-top').show();
+        }
+        else{
+            $('a.back-to-top').hide();
+        }
+    }
+</script>
+
+<nav class="navbar bg-light navbar-dark" role="navigation">
+        <a class="navbar-brand" href="{% url 'index' %}">
+            <p style="font-size:24px;color:black">
+                {% trans "主页" %}
+            </p>
+        </a>
+        <ul class="nav">
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" style="color:black" href="#"  data-toggle="dropdown">
+                    {% trans "数据管理" %}
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'upload' %}" style="color:black">
+                        {% trans "数据上传" %}
+                    </a>
+                    <a class="dropdown-item" href="{% url 'show' %}" style="color:black">
+                        {% trans "数据查看" %}
+                    </a>
+                    <a class="dropdown-item" href="" style="color:black">
+                        {% trans "其他" %}
+                    </a>
+                </div>
+            </li>
+
+        </ul>
+</nav>
+
+{% block content %}{% endblock %}
+
+{#<nav class="navbar navbar-expand-sm fixed-bottom" style="background-color:#ecf0f1">#}
+    <div class="jumbotron bg-info" id="foot" style="width:100%; height:150px;padding-top:20px;margin-top:10px;clear:both;bottom:0;">
+        <div class="row">
+            <div class="col-auto offset-3">
+                <p class="text-white" style="font-size:14px;margin:auto;text-align:center">
+                    <br>
+                    {% trans "面向锂电池材料的机器学习平台, 邮编：200444, 邮箱：mail@mail.maildomain" %}
+                </p>
+            </div>
+            <div class="col" align="right">
+                <div align="center"></div>
+
+            </div>
+        </div>
+    </div>
+{#</nav>#}
+<a style="position: fixed;bottom: 3em;right: 3em;text-decoration: none;color: #EEEEEE;background-color: rgba(0, 0, 0, 0.3);font-size: 12px;padding: 1em;border-radius: 3px;border: 1px solid #CCCCCC;display: none;" href="#" class="back-to-top">{% trans "回到顶端" %}</a>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% extends 'base_index.html' %}
+{% load static %}
+
+{% block title %}数据上传{% endblock %}
+
+{% block script %}
+    <link rel="stylesheet" href="{% static 'kartik-v-bootstrap-fileinput/css/fileinput.css' %}">
+    <script type="text/javascript" src="{% static 'kartik-v-bootstrap-fileinput/js/fileinput.js' %}"></script>
+    <script type="text/javascript" src="{% static 'kartik-v-bootstrap-fileinput/js/locales/zh.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <a href="#">下载模板</a>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" class="file" id="input-excel" name="input-excel">
+        </form>
+    </div>
+
+            <script>
+                $('#input-excel').fileinput({
+                    showPreview: false,
+                    showRemove: false,
+                    browseOnZoneClick: true,
+                    allowedFileExtensions: ['xls', 'xlsx'],
+                    language: 'zh',
+                    type: 'post',
+                })
+            </script>
+{% endblock %}
