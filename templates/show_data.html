@@ -17,7 +17,8 @@
         <tbody>
             {% for dataitem in dataset %}
                 <tr>
-                    <td><a href="{% url 'download' dataitem.data_name %}">{{ dataitem.data_name }}</a></td>
+{#                    <td><a href="{% url 'download' dataitem.data_name %}">{{ dataitem.data_name }}</a></td>#}
+                    <td><a href="{% url 'data' dataitem.data_name %}">{{ dataitem.data_name }}</a></td>
                     <td>{{ dataitem.pub_date }}</td>
                 </tr>
             {% endfor %}

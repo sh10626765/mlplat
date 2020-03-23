@@ -1,0 +1,27 @@
+{% extends 'base_index.html' %}
+
+{% block title %}数据修改{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <form method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
+            {% csrf_token %}
+            {% for k, v in dataitem.items %}
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="{{ k }}">{{ k }}</label>
+                    <div class="col-sm-8">
+                        <input type="text" id="{{ k }}" name="material_attr" value="{{ v }}" class="form-control" {% if forloop.counter0 < col_start %}disabled{% endif %}>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-6">
+                    <input type="submit" class="btn btn-primary" value="提交">
+                    <a type="button" class="btn btn-default" href="{% url 'qualitycontrol' dataname %}">返回</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}

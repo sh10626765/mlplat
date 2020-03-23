@@ -1,11 +1,1 @@
-{% extends 'base_index.html' %}
-
-{% block content %}
-
-
-    {% for item in data %}
-        
-    {% endfor %}
-
-
-{% endblock %}
+{{data|safe}}

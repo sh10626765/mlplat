@@ -3,12 +3,15 @@
 {% block title %}质量检测{% endblock %}
 
 {% block script %}
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'bootstrap-table-develop/dist/bootstrap-table.css' %}">
 
     <script type="text/javascript" src="{% static 'bootstrap-table-develop/dist/bootstrap-table.js' %}"></script>
-    <script type="text/javascript" src="{% static 'bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js' %}"></script>
-    <script type="text/javascript" src="{% static 'bootstrap-table-develop/dist/extensions/editable/bootstrap-table-editable.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'bootstrap-table-develop/dist/extensions/editable/bootstrap-table-editable.js' %}"></script>
 
     <script type="text/javascript" src="{% static 'incubator-echarts-4.7.0/dist/echarts.js' %}"></script>
 {% endblock %}
@@ -18,7 +21,8 @@
         .w100 .th-inner {
             width: 100px;
         }
-        .panel-title>p {
+
+        .panel-title > p {
             margin: 0px;
         }
     </style>
@@ -28,96 +32,109 @@
 
     <div class="container">
 
-    <ul class="nav nav-tabs" id="data_tabs" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" href="#raw_data" data-toggle="tab">原始数据</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#stat_quality" data-toggle="tab">数据统计</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#ck_quality" data-toggle="tab">异常检测</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#data_visualize" data-toggle="tab">数据可视</a>
-        </li>
-    </ul>
+        <ul class="nav nav-tabs" id="data_tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" href="#raw_data" data-toggle="tab">原始数据</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#stat_quality" data-toggle="tab">数据统计</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#ck_quality" data-toggle="tab">异常检测</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#data_visualize" data-toggle="tab">数据可视</a>
+            </li>
+        </ul>
 
-    <div class="tab-content" id="data_tab_content">
-        <div class="tab-pane fade show active" id="raw_data" role="tabpanel" aria-labelledby="raw_data_tab">
-            <div class="row">
-                <div class="col-sm-12 table-responsive" style="overflow:auto;">
-                <table id="raw_table" class="table table-sm table-bordered table-hover table-responsive"></table>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-offset-8 col-sm-1">
-                    <button id="beginMLButton" type="button" class="btn btn-primary" onclick='window.location.href="${ctx}/page/machineLearningItems"' disabled="disabled">机器学习</button>
-                </div>
-                <div class="col-sm-1">
-                    <button id="beginFeatureButton" type="button" class="btn btn-primary" onclick=' window.location.href="${ctx}/page/dataShow"' disabled="disabled">特征选择</button>
-                </div>
-                <div class="col-sm-1">
-                    <button id="beginPredictButton" type="button" class="btn btn-primary" disabled="disabled">开始预测</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="tab-pane fade" id="stat_quality" role="tabpanel" aria-labelledby="data_statistics_tab">
-            <table id="stat_table" class="table table-sm table-bordered table-hover table-responsive"></table>
-        </div>
-
-        <div class="tab-pane fade" id="ck_quality" role="tabpanel" aria-labelledby="data_check_tab">
-            <table id="dc_table" class="table table-sm table-bordered table-hover table-responsive"></table>
-        </div>
-
-        <div class="tab-pane fade" id="data_visualize" role="tabpanel" aria-labelledby="data_visualize_tab">
-            <div class="row">
-                <div class="col-2">
-                    <div class="nav flex-column nav-pills" id="chart_tabs" role="tablist" aria-orientation="vertical">
-
-                        {% with data|first as dm %}
-                            {% for i in dm %}
-                                <a class="nav-link" id="chart_tab{{forloop.counter0}}" data-toggle="pill" role="tab" href="#chart{{forloop.counter0}}" aria-selected="true">{{ i }}</a>
-                            {% endfor %}
-                        {% endwith %}
+        <div class="tab-content" id="data_tab_content">
+            <div class="tab-pane fade show active" id="raw_data" role="tabpanel" aria-labelledby="raw_data_tab">
+                <div class="row">
+                    <div class="col-sm-12 table-responsive" style="overflow:auto;">
+                        <table id="raw_table"
+                               class="table table-sm table-bordered table-hover table-responsive"></table>
                     </div>
                 </div>
-                <div class="col-10">
-                    <div class="tab-content" id="chart_content">
 
-                        {% with data|first as dm %}
-                            {% for i in dm %}
-                                {% if forloop.counter0 == 0 %}
-                                <div class="tab-pane fade show active" id="chart{{forloop.counter0}}" role="tabpanel" aria-labelledby="chart_tab{{ forloop.counter0 }}">
-                                    <div id="data_chart{{ forloop.counter0 }}" style="width: 600px; height: 800px"></div>
-                                </div>
-                                {% else %}
-                                <div class="tab-pane fade" id="chart{{forloop.counter0}}" role="tabpanel" aria-labelledby="chart_tab{{ forloop.counter0 }}">
-                                    <div id="data_chart{{ forloop.counter0 }}" style="width: 600px; height: 800px"></div>
-                                </div>
-                                {% endif %}
-                            {% endfor %}
-                        {% endwith %}
-
-                        <div class="tab-pane fade show active" id="chart1" role="tabpanel" aria-labelledby="chart_tab1">
-                            <div id="data_chart" style="width: 600px; height: 400px"></div>
-                        </div>
-
-                        <div class="tab-pane fade " id="chart2" role="tabpanel" aria-labelledby="chart_tab2">
-                            <div id="data_chart" style="width: 600px; height: 400px"></div>
-                        </div>
-                        <div class="tab-pane fade " id="chart3" role="tabpanel" aria-labelledby="chart_tab3">
-                            <div id="data_chart" style="width: 600px; height: 400px"></div>
-                        </div>
-
-
+                <div class="row">
+                    <div class="col-sm-offset-8 col-sm-1">
+                        <button id="beginMLButton" type="button" class="btn btn-primary"
+                                onclick='window.location.href="${ctx}/page/machineLearningItems"' disabled="disabled">
+                            机器学习
+                        </button>
+                    </div>
+                    <div class="col-sm-1">
+                        <button id="beginFeatureButton" type="button" class="btn btn-primary"
+                                onclick=' window.location.href="${ctx}/page/dataShow"' disabled="disabled">特征选择
+                        </button>
+                    </div>
+                    <div class="col-sm-1">
+                        <button id="beginPredictButton" type="button" class="btn btn-primary" disabled="disabled">开始预测
+                        </button>
                     </div>
                 </div>
             </div>
+
+            <div class="tab-pane fade" id="stat_quality" role="tabpanel" aria-labelledby="data_statistics_tab">
+                <table id="stat_table" class="table table-sm table-bordered table-hover table-responsive"></table>
+            </div>
+
+            <div class="tab-pane fade" id="ck_quality" role="tabpanel" aria-labelledby="data_check_tab">
+                <table id="dc_table" class="table table-sm table-bordered table-hover table-responsive"></table>
+            </div>
+
+            <div class="tab-pane fade" id="data_visualize" role="tabpanel" aria-labelledby="data_visualize_tab">
+                <div class="row">
+                    <div class="col-2">
+                        <div class="nav flex-column nav-pills" id="chart_tabs" role="tablist"
+                             aria-orientation="vertical">
+                            {% with data|first as dm %}
+                                {% for i in dm %}
+                                    <a class="nav-link" id="chart_tab{{ forloop.counter0 }}" data-toggle="pill"
+                                       role="tab" href="#chart{{ forloop.counter0 }}" aria-selected="true">{{ i }}</a>
+                                {% endfor %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                    <div class="col-10">
+                        <div class="tab-content" id="chart_content">
+
+                            {% with data|first as dm %}
+                                {% for i in dm %}
+                                    {% if forloop.counter0 == 0 %}
+                                        <div class="tab-pane fade show active" id="chart{{ forloop.counter0 }}"
+                                             role="tabpanel" aria-labelledby="chart_tab{{ forloop.counter0 }}">
+                                            <div id="data_chart{{ forloop.counter0 }}"
+                                                 style="width: 600px; height: 800px"></div>
+                                        </div>
+                                    {% else %}
+                                        <div class="tab-pane fade" id="chart{{ forloop.counter0 }}" role="tabpanel"
+                                             aria-labelledby="chart_tab{{ forloop.counter0 }}">
+                                            <div id="data_chart{{ forloop.counter0 }}"
+                                                 style="width: 600px; height: 800px"></div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endwith %}
+
+                            <div class="tab-pane fade show active" id="chart1" role="tabpanel"
+                                 aria-labelledby="chart_tab1">
+                                <div id="data_chart" style="width: 600px; height: 400px"></div>
+                            </div>
+
+                            <div class="tab-pane fade " id="chart2" role="tabpanel" aria-labelledby="chart_tab2">
+                                <div id="data_chart" style="width: 600px; height: 400px"></div>
+                            </div>
+                            <div class="tab-pane fade " id="chart3" role="tabpanel" aria-labelledby="chart_tab3">
+                                <div id="data_chart" style="width: 600px; height: 400px"></div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
     </div>
 
@@ -125,22 +142,21 @@
     <script type="text/javascript">
         $(function () {
             var data = {{ data|safe }};
-            var raw_data= JSON.parse(JSON.stringify(data)); // 深拷贝 修改rawdata不影响data
             var stat = {{ stat|safe }};
+            var eudist = {{ eudist|safe }};
+            var algo ={{ algo|safe }};
+
+            var raw_data = JSON.parse(JSON.stringify(data)); // 深拷贝 修改rawdata不影响data
             var quality_title = [];
             var raw_title = [];
 
             var editable = {type: "text"};
 
-            var algo={{ algo|safe }};
-
             raw_title.push({
                 title: 'NO',
                 class: 'w100',
                 field: "NO",
-                {#editable: true,#}
             });
-            {#console.log(data);#}
 
             quality_title.push({
                 title: '',
@@ -150,11 +166,11 @@
 
             var dataqualityfields = [];
 
-            for (var item in stat){
-                for (var fn in stat[item]){
+            for (var item in stat) {
+                for (var fn in stat[item]) {
                     var temp = {};
                     temp["dataQualityField"] = fn;
-                    for (var iiiii in stat){
+                    for (var iiiii in stat) {
                         temp[iiiii] = stat[iiiii][fn].toFixed(5);
                     }
                     dataqualityfields.push(temp);
@@ -175,51 +191,61 @@
                 });
             }
 
-            for (var i in raw_data){
-                for (var j in raw_data[i]){
-                    if (typeof (raw_data[i][j]) == 'number' && j !== 'NO' ){
+            for (var i in raw_data) {
+                for (var j in raw_data[i]) {
+                    if (typeof (raw_data[i][j]) == 'number' && j !== 'NO') {
                         raw_data[i][j] = raw_data[i][j].toFixed(5);
                     }
                 }
             }
 
             var check_title = [];
+            check_title.push({
+                title: '操作',
+                formatter: function (value, row, index) {
+                    var idx=index;
+                    var url="{% url 'edit' dataname 12345 %}";  // django 模板语言不支持使用JS变量，故用12345作占位符再替换
+                    url=url.replace(12345, idx);
+                    var s='<a href="'+url+'">修改</a>';
+                    return [s].join("")
+                }
+            });
 
             var lower = {};
             var upper = {};
-            for (var item in stat){
+            for (var item in stat) {
                 lower[item] = stat[item]['lower'];
                 upper[item] = stat[item]['upper'];
             }
-            var idx = 0;
-            for (var i in data[0]){
-                if (typeof (data[0][i]) == 'number'){
-                    check_title[idx]={
+            var idx = 1;
+            for (var i in data[0]) {
+                if (typeof (data[0][i]) == 'number') {
+                    check_title[idx] = {
                         field: i,
                         title: $('<div/>').text(i).html(),
                         {#editable:{type:'text'},#}
                         class: 'w100',
 
                         cellStyle: function (value, row, index, field) {
-                            if(value === '' || undefined){
-                                return {css:{"background-color":'red'}};
-                            }else if((Number(value)<Number(lower[field])||Number(value)>Number(upper[field]))){
-                                return {css:{"background-color":'yellow'}};
-                            }else{
-                                return{};
+                            if (value === '' || undefined) {
+                                return {css: {"background-color": 'red'}};
+                            } else if ((Number(value) < Number(lower[field]) || Number(value) > Number(upper[field]))) {
+                                return {css: {"background-color": 'yellow'}};
+                            } else {
+                                return {};
                             }
                         },
 
                         rowStyle: function (row, index) {
                             console.log(index);
-                            for (var i in algo['llof']){
-                                if (index === i){
-                                    return {css:{"color":'red'}}
+                            for (var i in algo['llof']) {
+                                if (index === i) {
+                                    return {css: {"color": 'red'}}
                                 }
                             }
-                            for (var i in algo['lif']){
-                                if (index === i){
-                                    return {css:{"color":'red'}}
+                            for (var i in algo['lif']) {
+                                if (index === i) {
+                                    return {css: {"color": 'red'}}
                                 }
                             }
                             return {};
@@ -265,8 +291,8 @@
         var datafield = {};  // {field: [value]}
 
         for (var ii in rawdata[0]) {
-            datafield[ii]=[];
-            for (var iii=0;iii<rawdata.length;iii++) {
+            datafield[ii] = [];
+            for (var iii = 0; iii < rawdata.length; iii++) {
                 datafield[ii].push(rawdata[iii][ii]);
             }
         }
@@ -275,13 +301,10 @@
         for (var i in datafield) {
             fields.push(i);
         }
-        console.log(Object.keys(datafield).length);
 
-        for (var i=0;i<Object.keys(datafield).length;i++){
-            console.log(i);
+        for (var i = 0; i < Object.keys(datafield).length; i++) {
             try {
-                console.log('data_chart'+i.toString());
-                var data_chart = echarts.init(document.getElementById('data_chart'+i.toString()));
+                var data_chart = echarts.init(document.getElementById('data_chart' + i.toString()));
                 data_chart.setOption({
                     title: {text: fields[i]},
                     xAxis: {
@@ -293,8 +316,7 @@
                         data: datafield[fields[i]]
                     }]
                 });
-            }
-            catch (e) {
+            } catch (e) {
                 console.log(i);
                 console.log(e);
                 continue
