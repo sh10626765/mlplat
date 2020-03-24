@@ -50,6 +50,9 @@
         <div class="tab-content" id="data_tab_content">
             <div class="tab-pane fade show active" id="raw_data" role="tabpanel" aria-labelledby="raw_data_tab">
                 <div class="row">
+                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;本标签页下显示表格原式数据</h5>
+                </div>
+                <div class="row">
                     <div class="col-sm-12 table-responsive" style="overflow:auto;">
                         <table id="raw_table"
                                class="table table-sm table-bordered table-hover table-responsive"></table>
@@ -76,14 +79,39 @@
             </div>
 
             <div class="tab-pane fade" id="stat_quality" role="tabpanel" aria-labelledby="data_statistics_tab">
-                <table id="stat_table" class="table table-sm table-bordered table-hover table-responsive"></table>
+                <div class="row">
+                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;本标签页下显示表格数据的基本统计信息</h5>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 table-responsive" style="overflow:auto;">
+                        <table id="stat_table"
+                               class="table table-sm table-bordered table-hover table-responsive"></table>
+                    </div>
+                </div>
             </div>
 
             <div class="tab-pane fade" id="ck_quality" role="tabpanel" aria-labelledby="data_check_tab">
-                <table id="dc_table" class="table table-sm table-bordered table-hover table-responsive"></table>
+                <div class="row">
+                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;本标签页下显示可能异常的样本，用户可根据实际情况进行修改。检测方法包括<i>箱型图检测、欧式距离检测</i></h5>
+                </div>
+                <div class="row">
+                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red">红色字体</span>表示该值超出其所在<i>列</i>的箱型图上下限</h5>
+                </div>
+                <div class="row">
+                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;<span style="background-color: yellow">黄色背景</span>表示该样本的<i>非决策属性与其他样本相近而决策属性值与其他样本差异较大</i>或<i>决策属性值与其他样本相近而非决策属性与其他样本差异较大</i>
+                    </h5>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 table-responsive" style="overflow:auto;">
+                        <table id="dc_table" class="table table-sm table-bordered table-hover table-responsive"></table>
+                    </div>
+                </div>
             </div>
 
             <div class="tab-pane fade" id="data_visualize" role="tabpanel" aria-labelledby="data_visualize_tab">
+                <div class="row">
+                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;本标签页下显示样本各维度属性的分布信息</h5>
+                </div>
                 <div class="row">
                     <div class="col-2">
                         <div class="nav flex-column nav-pills" id="chart_tabs" role="tablist"
@@ -146,6 +174,11 @@
             var eudist = {{ eudist|safe }};
             var algo ={{ algo|safe }};
 
+            var suspected = [];
+            for (it in eudist) {
+                suspected.push(eudist[it]['NO'])
+            }
+
             var raw_data = JSON.parse(JSON.stringify(data)); // 深拷贝 修改rawdata不影响data
             var quality_title = [];
             var raw_title = [];
@@ -203,10 +236,10 @@
             check_title.push({
                 title: '操作',
                 formatter: function (value, row, index) {
-                    var idx=index;
-                    var url="{% url 'edit' dataname 12345 %}";  // django 模板语言不支持使用JS变量，故用12345作占位符再替换
-                    url=url.replace(12345, idx);
-                    var s='<a href="'+url+'">修改</a>';
+                    var idx = index;
+                    var url = "{% url 'edit' dataname 12345 %}";  // django 模板语言不支持使用JS变量，故用12345作占位符再替换
+                    url = url.replace(12345, idx);
+                    var s = '<a href="' + url + '">修改</a>';
                     return [s].join("")
                 }
             });
@@ -230,9 +263,11 @@
                             if (value === '' || undefined) {
                                 return {css: {"background-color": 'red'}};
                             } else if ((Number(value) < Number(lower[field]) || Number(value) > Number(upper[field]))) {
+                                return {css: {"color": 'red'}};
+                            } else if (suspected.includes(index)) {
                                 return {css: {"background-color": 'yellow'}};
                             } else {
-                                return {};
+                                return {}
                             }
                         },
 

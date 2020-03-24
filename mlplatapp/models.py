@@ -5,17 +5,20 @@ import pymongo
 import json
 
 
-def SavaData(dataName, dictList, host, port, database):
+def SavaData(dataName, dictList, overwrite, host, port, database):
     client = pymongo.MongoClient(host=host, port=port)
     db = client.get_database(name=database)
 
     n = 0
     if dataName in db.list_collection_names():
-        n += 1
-        dataName = dataName[:dataName.rfind('.')] + str(n) + dataName[dataName.rfind('.'):]
-        while dataName in db.list_collection_names():
+        if not overwrite:
             n += 1
-            dataName = dataName[:dataName.rfind('.') - 1] + str(n) + dataName[dataName.rfind('.'):]
+            dataName = dataName[:dataName.rfind('.')] + str(n) + dataName[dataName.rfind('.'):]
+            while dataName in db.list_collection_names():
+                n += 1
+                dataName = dataName[:dataName.rfind('.') - 1] + str(n) + dataName[dataName.rfind('.'):]
+        else:
+            db.drop_collection(dataName)
 
     coll = db.create_collection(name=dataName)
 

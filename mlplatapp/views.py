@@ -102,7 +102,7 @@ def upload(request):
 
         # 将表格数据存入数据库，返回表格数据在数据库中的集合名和文档_id
         # 数据库文档不允许字段名中存在'.','$'字符，须过滤
-        data_name_in_db, res = models.SavaData(fileinputname, excelproc.get_data(),
+        data_name_in_db, res = models.SavaData(fileinputname, excelproc.get_data(), False,
                                                host=HOST, port=PORT, database=DATABASE)
 
         # 数据质量检测结果存入数据库
@@ -134,19 +134,19 @@ def qualitycontrol(request, data_name):  # , stat_quality_name, algo_quality_nam
         for key, val in excelproc.statistics_data_check().to_dict().items():
             stat_data_quality.append({key.replace('.', '').replace('$', ''): val})
 
-        stat_data_quality_name, res = models.SavaData('stat_data_quality_' + data_name, stat_data_quality,
+        stat_data_quality_name, res = models.SavaData('stat_data_quality_' + data_name, stat_data_quality, True,
                                                       host=HOST, port=PORT, database=DATABASE)
 
         algo_data_quality = []  # 检测表格数据质量，得到算法检测结果
         for key, val in excelproc.algorithm_data_check().items():
             algo_data_quality.append({key: val})
-        algo_data_quality_name, res = models.SavaData('algo_data_quality_' + data_name, algo_data_quality,
+        algo_data_quality_name, res = models.SavaData('algo_data_quality_' + data_name, algo_data_quality, True,
                                                       host=HOST, port=PORT, database=DATABASE)
 
         eudist_data_quality = []  # 检测表格数据质量，得到算法检测结果
         for key, val in excelproc.eudist_data_check().items():
             eudist_data_quality.append({'NO': key, 'count': val})
-        eudist_data_quality_name, res = models.SavaData('eudist_data_quality_' + data_name, eudist_data_quality,
+        eudist_data_quality_name, res = models.SavaData('eudist_data_quality_' + data_name, eudist_data_quality, True,
                                                         host=HOST, port=PORT, database=DATABASE)
 
         stat = models.ReadData(stat_data_quality_name, host=HOST, port=PORT, database=DATABASE)

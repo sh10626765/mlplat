@@ -25,16 +25,18 @@ def is_number(s):
 
 
 filepath = 'E:\\毕设\\data\\traindata-0.5D0 - he.xlsx'
-df=pd.read_excel(filepath)
-kk=[k.replace('.','').replace('$','') for k in df]
+
 cl = pymongo.MongoClient('127.0.0.1', 27017)
-db = cl.get_database(name='materialsData')
-col = db.get_collection('traindata-0.5D0 - he3.xlsx')
-attr=['111', 'Li7PSe6', 'shu.ssy_2019122611180312', 'Li7(PSe4)Se2', '1.98', '2.55', '10.5', '0.17', '2.19', '0.0198', '7.0', '10.475', '1149.44166', '9.1472', '5.4923', '2.633', '3.863', '2.63018', '2.653', '0.706316', '0.57132', '0.580692', '2.314', '2.164', '2.944', '0.66', '0.0', '0.66', '255.8193102', '0.0', '0.0', '0.0', '1.84', '2.55', '1.84', '2.55', '0.5078125']
-newitem=dict(zip(kk,attr))
-print(newitem)
-item = col.find_one({'NO': '1'})
-print(col.update_one({'NO': '1'}, {'$set': newitem}))
+db = cl.get_database(name='aaaaa')
+
+cols = db.list_collection_names()
+
+if 'aaaaa' in cols:
+    db.drop_collection('aaaaa')
+print(cols)
+# col = db.get_collection('aaaaa')
+# col.insert_one({'a':11,'b':2})
+
 # a=col.find_one_and_update({'NO': attr[0]}, item)
 # print(a)
 # df = loaddata(filepath)

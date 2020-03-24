@@ -137,8 +137,8 @@ class excelProcessor(object):
                     suspected_samples.append(j)
 
         for i in suspected_samples:
-            # 若嫌疑样本出现2次以上，视为异常样本
-            if suspected_samples.count(i) > 2:
+            # 若嫌疑样本出现3次以上，视为异常样本
+            if suspected_samples.count(i) > 3:
                 suspected_samples_count[i] = suspected_samples.count(i)
 
         # {样本编号：出现次数}
