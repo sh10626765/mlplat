@@ -12,7 +12,7 @@ import pymongo
 HOST = 'localhost'
 PORT = 27017
 DATABASE = 'materialsData'
-si = 0
+si = 0  # 暂时，用于记录第一个数值型数据的列下标
 
 
 def test(request):
@@ -35,7 +35,7 @@ def edit(request, name, number):
         return redirect(reverse('qualitycontrol', kwargs={'data_name': name}))
 
     if request.method == 'GET':
-
+        # 根据数据集的名称name，编号number，查询到需要改动的数据
         data = models.ReadData(name, HOST, PORT, DATABASE)
 
         item = None
@@ -165,6 +165,7 @@ def qualitycontrol(request, data_name):  # , stat_quality_name, algo_quality_nam
             'stat': json.dumps(stat_dict),
             'algo': json.dumps(algo_dict),
             'eudist': json.dumps(eudist),
+            'col_start': si,
         })
 
 
@@ -180,3 +181,40 @@ def download(request, name):
         # res['Content-Type'] = 'application/octet-stream'
         # res['Content-Disposition'] = 'attachment;filename="' + str(name) + '"'
         return FileResponse(open(WFP, 'rb'))
+
+
+def dataprocess(request, data_name):
+    if request.method == 'POST':
+        pass
+    if request.method == 'GET':
+        return HttpResponse('this is data pre-process page for {}'.format(data_name))
+
+
+def featureselection(request, data_name):
+    if request.method == 'POST':
+        check_list = request.POST.getlist('checkbox_list')
+        print(check_list)
+        return HttpResponse('Success! You have chosen {}'.format(check_list))
+    if request.method == 'GET':
+        data = models.ReadData(data_name, HOST, PORT, DATABASE)
+        excelproc = utils.excelProcessor(data)
+
+        return render(request, 'custom_retain_features.html',
+                      {
+                          'dataname': data_name,
+                          'featurenames': excelproc.col_name[:-1]}
+                      )
+
+
+def machinelearning(request, data_name):
+    if request.method == 'POST':
+        check_list = request.POST.getlist('checkbox_list')
+        print(check_list)
+        return HttpResponse('Success! You have chosen {}'.format(check_list))
+    if request.method == 'GET':
+        ml_methods = models.MachineLearningMethods.objects.all()
+        return render(request, 'machine_learning.html',
+                      {
+                          'dataname': data_name,
+                          'ml_methods': ml_methods,
+                      })

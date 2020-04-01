@@ -1,0 +1,19 @@
+{% extends 'base_index.html' %}
+
+{% block title %}机器学习{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h3>选择机器学习方法</h3>
+
+        <form action="#" method="post" enctype="multipart/form-data">{% csrf_token %}
+            {% for mlmethod in ml_methods %}
+                <div class="custom-checkbox">
+                    <input class="custom-checkbox" type="checkbox" id="{{ mlmethod }}" name="checkbox_list" value="{{ forloop.counter0 }}">
+                    <label for="{{ mlmethod }}">{{ mlmethod }}</label>
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">确定</button>
+        </form>
+    </div>
+{% endblock %}

@@ -123,6 +123,7 @@ class excelProcessor(object):
         func_dist_lower = numpy.quantile(func_dist_list, 0.1)
 
         suspected_samples = []  # 记录嫌疑样本
+        suspected_samples_pair = []  # 记录嫌疑样本对
         suspected_samples_count = {}  # 记录嫌疑样本出现次数
 
         for i in range(self.df_rows):
@@ -131,14 +132,16 @@ class excelProcessor(object):
                 if arg_pair_dist[i][j] >= arg_dist_upper and func_pair_dist[i][j] <= func_dist_lower:
                     suspected_samples.append(i)
                     suspected_samples.append(j)
+                    suspected_samples_pair.append((i, j))
                 #  如果样本非决策属性相似而决策属性差异大，记入嫌疑样本
                 if arg_pair_dist[i][j] <= arg_dist_lower and func_pair_dist[i][j] >= func_dist_upper:
                     suspected_samples.append(i)
                     suspected_samples.append(j)
+                    suspected_samples_pair.append((i, j))
 
         for i in suspected_samples:
             # 若嫌疑样本出现3次以上，视为异常样本
-            if suspected_samples.count(i) > 3:
+            if suspected_samples.count(i) > self.df_rows * 0.05:
                 suspected_samples_count[i] = suspected_samples.count(i)
 
         # {样本编号：出现次数}

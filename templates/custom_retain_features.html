@@ -1,0 +1,22 @@
+{% extends 'base_index.html' %}
+{% load static %}
+
+{% block title %}特征选择{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <h3>自定义保留特征</h3>
+
+        <form action="#" method="post" enctype="multipart/form-data">{% csrf_token %}
+            {% for featurename in featurenames %}
+                <div class="custom-checkbox">
+                    <input class="custom-checkbox" type="checkbox" id="{{ featurename }}" name="checkbox_list" value="{{ forloop.counter0 }}">
+                    <label for="{{ featurename }}">{{ featurename }}</label>
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">确定</button>
+        </form>
+
+    </div>
+{% endblock %}

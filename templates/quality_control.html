@@ -62,13 +62,12 @@
                 <div class="row">
                     <div class="col-sm-offset-8 col-sm-1">
                         <button id="beginMLButton" type="button" class="btn btn-primary"
-                                onclick='window.location.href="${ctx}/page/machineLearningItems"' disabled="disabled">
-                            机器学习
+                                onclick='window.location.href="{% url 'machinelearning' dataname %}"'>机器学习
                         </button>
                     </div>
                     <div class="col-sm-1">
                         <button id="beginFeatureButton" type="button" class="btn btn-primary"
-                                onclick=' window.location.href="${ctx}/page/dataShow"' disabled="disabled">特征选择
+                                onclick=' window.location.href="{% url 'featureselection' dataname %}"'>特征选择
                         </button>
                     </div>
                     <div class="col-sm-1">
@@ -114,48 +113,62 @@
                 </div>
                 <div class="row">
                     <div class="col-2">
-                        <div class="nav flex-column nav-pills" id="chart_tabs" role="tablist"
-                             aria-orientation="vertical">
-                            {% with data|first as dm %}
-                                {% for i in dm %}
-                                    <a class="nav-link" id="chart_tab{{ forloop.counter0 }}" data-toggle="pill"
-                                       role="tab" href="#chart{{ forloop.counter0 }}" aria-selected="true">{{ i }}</a>
-                                {% endfor %}
-                            {% endwith %}
-                        </div>
+                        {#                        <div class="nav flex-column nav-tabs" id="chart_tabs" role="tablist"#}
+                        {#                             aria-orientation="vertical">#}
+                        <ul class="nav flex-column" id="chart_tabs" role="tablist">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                   aria-haspopup="true" aria-expanded="false">
+                                    下拉查看
+                                </a>
+                                <div class="dropdown-menu">
+                                    {% with data|first as dm %}
+                                        {% for i in dm %}
+                                            <a class="nav-link dropdown-item" id="chart_tab{{ forloop.counter0 }}"
+                                               data-toggle="tab"
+                                               role="tab" href="#chart{{ forloop.counter0 }}"
+                                               aria-selected="true">{{ i }}</a>
+                                        {% endfor %}
+                                    {% endwith %}
+                                </div>
+                            </li>
+                        </ul>
+                        {#                        </div>#}
                     </div>
                     <div class="col-10">
                         <div class="tab-content" id="chart_content">
 
                             {% with data|first as dm %}
                                 {% for i in dm %}
-                                    {% if forloop.counter0 == 0 %}
+                                    {% if forloop.counter0 == col_start %}
                                         <div class="tab-pane fade show active" id="chart{{ forloop.counter0 }}"
                                              role="tabpanel" aria-labelledby="chart_tab{{ forloop.counter0 }}">
                                             <div id="data_chart{{ forloop.counter0 }}"
-                                                 style="width: 600px; height: 800px"></div>
+                                                 style="width: 600px; height: 400px"></div>
                                         </div>
                                     {% else %}
-                                        <div class="tab-pane fade" id="chart{{ forloop.counter0 }}" role="tabpanel"
-                                             aria-labelledby="chart_tab{{ forloop.counter0 }}">
-                                            <div id="data_chart{{ forloop.counter0 }}"
-                                                 style="width: 600px; height: 800px"></div>
-                                        </div>
+                                        {% if forloop.counter0 > col_start %}
+                                            <div class="tab-pane fade" id="chart{{ forloop.counter0 }}" role="tabpanel"
+                                                 aria-labelledby="chart_tab{{ forloop.counter0 }}">
+                                                <div id="data_chart{{ forloop.counter0 }}"
+                                                     style="width: 600px; height: 400px"></div>
+                                            </div>
+                                        {% endif %}
                                     {% endif %}
                                 {% endfor %}
                             {% endwith %}
 
-                            <div class="tab-pane fade show active" id="chart1" role="tabpanel"
-                                 aria-labelledby="chart_tab1">
-                                <div id="data_chart" style="width: 600px; height: 400px"></div>
-                            </div>
-
-                            <div class="tab-pane fade " id="chart2" role="tabpanel" aria-labelledby="chart_tab2">
-                                <div id="data_chart" style="width: 600px; height: 400px"></div>
-                            </div>
-                            <div class="tab-pane fade " id="chart3" role="tabpanel" aria-labelledby="chart_tab3">
-                                <div id="data_chart" style="width: 600px; height: 400px"></div>
-                            </div>
+                            {#                            <div class="tab-pane fade show active" id="chart1" role="tabpanel"#}
+                            {#                                 aria-labelledby="chart_tab1">#}
+                            {#                                <div id="data_chart" style="width: 600px; height: 400px"></div>#}
+                            {#                            </div>#}
+                            {##}
+                            {#                            <div class="tab-pane fade " id="chart2" role="tabpanel" aria-labelledby="chart_tab2">#}
+                            {#                                <div id="data_chart" style="width: 600px; height: 400px"></div>#}
+                            {#                            </div>#}
+                            {#                            <div class="tab-pane fade " id="chart3" role="tabpanel" aria-labelledby="chart_tab3">#}
+                            {#                                <div id="data_chart" style="width: 600px; height: 400px"></div>#}
+                            {#                            </div>#}
 
 
                         </div>
@@ -264,27 +277,13 @@
                                 return {css: {"background-color": 'red'}};
                             } else if ((Number(value) < Number(lower[field]) || Number(value) > Number(upper[field]))) {
                                 return {css: {"color": 'red'}};
-                            } else if (suspected.includes(index)) {
-                                return {css: {"background-color": 'yellow'}};
+                                //} else if (suspected.includes(index)) {
+                                //    return {css: {"background-color": 'yellow'}};
                             } else {
                                 return {}
                             }
                         },
 
-                        rowStyle: function (row, index) {
-                            console.log(index);
-                            for (var i in algo['llof']) {
-                                if (index === i) {
-                                    return {css: {"color": 'red'}}
-                                }
-                            }
-                            for (var i in algo['lif']) {
-                                if (index === i) {
-                                    return {css: {"color": 'red'}}
-                                }
-                            }
-                            return {};
-                        }
                     };
                     idx++;
                 }
@@ -315,6 +314,45 @@
                 pagination: true,
                 pageSize: '15',
                 columns: check_title,
+                rowStyle: function (row, index) {
+                    if (suspected.includes(index)) {
+                        return {css: {"background-color": 'yellow'}}
+                    } else {
+                        return {}
+                    }
+//                    for (var i in algo['llof']) {
+//                        if (index === i) {
+//                            return {css: {"color": 'red'}}
+//                        }
+//                    }
+//                    for (var i in algo['lif']) {
+//                        if (index === i) {
+//                            return {css: {"color": 'red'}}
+//                        }
+//                    }
+//                    return {};
+                },
+
+                rowAttributes: function (row, index) {
+                    if (suspected.includes(index)) {
+                        var cnt;
+                        for (it in eudist) {
+                            if (index === eudist[it]['NO']) {
+                                cnt = eudist[it]['count'];
+                            }
+                        }
+                        return {
+                            'data-toggle': 'popover',
+                            'data-placement': 'bottom',
+                            'data-trigger': 'hover',
+                            'data-index': index,
+                            'title': ['NO:' + index, '该样本与其他' + cnt + '个样本规则差异大'].join(',')
+                        }
+                    } else {
+                        return {}
+                    }
+                }
+
             });
         })
     </script>

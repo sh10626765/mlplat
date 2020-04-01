@@ -4,7 +4,12 @@ from mlplatapp import utils
 import pymongo
 
 from sklearn.neighbors import LocalOutlierFactor
+from sklearn.ensemble import IsolationForest
 from sklearn.metrics import pairwise_distances
+from sklearn.decomposition import PCA
+from sklearn.feature_selection import RFE
+from sklearn.svm import SVC
+import matplotlib.pyplot as plt
 
 
 def is_number(s):
@@ -24,30 +29,42 @@ def is_number(s):
     return False
 
 
+def loaddata(name):
+    if isinstance(name, str):
+        return pd.read_excel(name)
+    if isinstance(name, list):
+        return pd.DataFrame(name)
+
+
 filepath = 'E:\\毕设\\data\\traindata-0.5D0 - he.xlsx'
 
-cl = pymongo.MongoClient('127.0.0.1', 27017)
-db = cl.get_database(name='aaaaa')
+df = loaddata(filepath)
 
-cols = db.list_collection_names()
+dfnd = df.iloc[:, 4:-1]
+dfd = df.iloc[:, -1]
 
-if 'aaaaa' in cols:
-    db.drop_collection('aaaaa')
-print(cols)
-# col = db.get_collection('aaaaa')
-# col.insert_one({'a':11,'b':2})
+sample_num = len(df)
+attr = [i for i in dfnd]
+print(type(attr[0]))
 
-# a=col.find_one_and_update({'NO': attr[0]}, item)
-# print(a)
-# df = loaddata(filepath)
+non_decision_attr_mat = dfnd.values
+decision_attr_mat = dfd.values.reshape(-1, 1)
+
+print(non_decision_attr_mat)
+
+svc=SVC()
+rfe=RFE(estimator=svc,n_features_to_select=1,step=1)
+
+# clt = PCA(n_components=1)
+# non = clt.fit_transform(non_decision_attr_mat)
 #
-# dfnd = df.iloc[:, 4:-1]
-# dfd = df.iloc[:, -1]
+# x = non.reshape(1, -1).tolist()[0]
+# y = decision_attr_mat.reshape(1, -1).tolist()[0]
 #
-# sample_num = len(df)
-#
-# non_decision_attr_mat = dfnd.values
-# decision_attr_mat = dfd.values.reshape(-1, 1)
+# clt = IsolationForest(n_estimators=500)
+# labellist = clt.fit_predict(list(zip(x, y)))
+# print(labellist)
+
 #
 # pair_dist_n = pairwise_distances(non_decision_attr_mat)
 # pair_dist = pairwise_distances(decision_attr_mat)

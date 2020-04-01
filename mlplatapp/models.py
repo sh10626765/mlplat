@@ -58,3 +58,7 @@ def DropColl(collection, host, port, database):
 class Data(models.Model):
     data_name = models.CharField(max_length=200, primary_key=True)
     pub_date = models.DateTimeField('date published')
+
+
+class MachineLearningMethods(models.Model):
+    method_name = models.CharField(max_length=200, primary_key=True)
