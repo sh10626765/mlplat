@@ -46,6 +46,10 @@ class excelProcessor(object):
         self.valuearray = self.dfvalue.values
         self.col_name = [column_name for column_name in self.df][self.col_start:]
 
+        self.dfattr = self.df.iloc[:, self.col_start:-1]
+        self.attr_num = len([i for i in self.dfattr])
+        self.dftarget = self.df.iloc[:, -1]
+
     def get_column_names(self):
         return [column_name for column_name in self.df]
 
@@ -160,3 +164,14 @@ class excelProcessor(object):
         desc['lof'] = llof_idx
         desc['if'] = lif_idx
         return desc
+
+    def get_pearson_r(self):
+        pearson_corr_mat = self.dfattr.corr(method='pearson')
+
+        attr_relate = []  # 记录相关系数过高的特征编号和相关系数，例如：(1,2,0.9)表示特征1与特征2的相关系数为0.9
+        for i in range(self.attr_num):
+            for j in range(i + 1, self.attr_num):
+                temp = pearson_corr_mat.iloc[i, j]
+                if temp > 0.8:
+                    attr_relate.append((i, j, temp))
+        return attr_relate

@@ -43,6 +43,9 @@
                 <a class="nav-link" href="#ck_quality" data-toggle="tab">异常检测</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="#verbosity" data-toggle="tab">冗余属性筛选</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="#data_visualize" data-toggle="tab">数据可视</a>
             </li>
         </ul>
@@ -53,9 +56,9 @@
                     <h5>&nbsp;&nbsp;&nbsp;&nbsp;本标签页下显示表格原式数据</h5>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12 table-responsive" style="overflow:auto;">
+                    <div class="col-sm-12" style="overflow:auto;">
                         <table id="raw_table"
-                               class="table table-sm table-bordered table-hover table-responsive"></table>
+                               class="table table-sm table-hover table-responsive"></table>
                     </div>
                 </div>
 
@@ -104,6 +107,34 @@
                     <div class="col-sm-12 table-responsive" style="overflow:auto;">
                         <table id="dc_table" class="table table-sm table-bordered table-hover table-responsive"></table>
                     </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="verbosity" role="tabpanel" aria-labelledby="verbosity_tab">
+                <div class="row"><h5>&nbsp;&nbsp;&nbsp;&nbsp;本标签页下显示Pearson系数较高的属性组</h5></div>
+                <div class="row"><h5>&nbsp;&nbsp;&nbsp;&nbsp;用户可根据实际情况筛选独立属性</h5></div>
+                <div class="row">
+                    <div id="corrchart" style="width: 1000px;height:600px;"></div>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>属性1</th>
+                            <th>属性2</th>
+                            <th>Pearson's r</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for tuple in pearsonr %}
+                            <tr>
+                                <td>{{ tuple.0 }}</td>
+                                <td>{{ tuple.1 }}</td>
+                                <td>{{ tuple.2 }}</td>
+                                <td><a href="{% url 'setverbose' dataname forloop.counter0 %}">标记冗余属性</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -395,5 +426,65 @@
                 continue
             }
         }
+    </script>
+
+    <script type="text/javascript ">
+        {#import compatStyle from "../static/incubator-echarts-4.7.0/src/preprocessor/helper/compatStyle";#}
+
+        var attr = [];
+        var attrcorr = [];
+
+        {% for i in pearsonr %}
+            if (!attr.includes('{{ i.0 }}')) {
+                attr.push('{{ i.0 }}')
+            }
+            if (!attr.includes('{{ i.1 }}')) {
+                attr.push('{{ i.1 }}')
+            }
+            attrcorr.push(['{{ i.0 }}', '{{ i.1 }}', {{ i.2 }}]);
+        {% endfor %}
+        console.log(attr);
+
+        var corrchart = echarts.init(document.getElementById('corrchart'));
+        corrchart.setOption({
+            tooltip: {
+                position: 'top'
+            },
+            animation: false,
+            xAxis: {
+                type: 'category',
+                data: attr,
+                splitArea: {
+                    show: true
+                }
+            },
+            yAxis: {
+                type: 'category',
+                data: attr,
+                splitArea: {
+                    show: true
+                }
+            },
+            visualMap: {
+                min: 0.8,
+                max: 1,
+                orient: 'horizontal',
+                left: 'center',
+
+            },
+            series: [{
+                type: 'heatmap',
+                data: attrcorr,
+                label: {show: false},
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }]
+        })
+
+
     </script>
 {% endblock %}

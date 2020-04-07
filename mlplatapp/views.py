@@ -47,6 +47,37 @@ def edit(request, name, number):
         return render(request, 'modify_data.html', {'dataitem': item, 'dataname': name, 'col_start': si})
 
 
+def setverbose(request, name, number):
+    if request.method == 'GET':
+        data = models.ReadData(name, host=HOST, port=PORT, database=DATABASE)
+
+        excelproc = utils.excelProcessor(data)
+        corr = excelproc.get_pearson_r()
+        attr_name = excelproc.col_name[:-1]
+        corr = [(attr_name[i[0]], attr_name[i[1]], i[2]) for i in corr]  # 将属性下标转为属性名
+        corr.sort(key=lambda x: x[2], reverse=True)
+
+        return render(request, 'set_verbose.html', {
+            'dataname': name,
+            'attrpair': corr[number]
+        })
+
+    if request.method == 'POST':
+        ck_attr1 = request.POST.get('attr1')
+        ck_attr2 = request.POST.get('attr2')
+
+        cl = pymongo.MongoClient(host=HOST, port=PORT)
+        db = cl.get_database(DATABASE)
+        coll = db.get_collection('verbose_attr_' + name)
+
+        if ck_attr1:
+            coll.update_one({'name': ck_attr1}, {'$setOnInsert': {'name': ck_attr1}}, upsert=True)
+        if ck_attr2:
+            coll.update_one({'name': ck_attr2}, {'$setOnInsert': {'name': ck_attr2}}, upsert=True)
+
+        return redirect(reverse('qualitycontrol', kwargs={'data_name': name}))
+
+
 def index(request):
     return render(request, 'homepage.html')
 
@@ -129,6 +160,10 @@ def qualitycontrol(request, data_name):  # , stat_quality_name, algo_quality_nam
         data = models.ReadData(data_name, host=HOST, port=PORT, database=DATABASE)
 
         excelproc = utils.excelProcessor(data)
+        corr = excelproc.get_pearson_r()
+        attr_name = excelproc.col_name[:-1]
+        corr = [(attr_name[i[0]], attr_name[i[1]], i[2]) for i in corr]  # 将属性下标转为属性名
+        corr.sort(key=lambda x: x[2], reverse=True)
 
         stat_data_quality = []  # 对表格数据进行质量检测，得到基本统计信息
         for key, val in excelproc.statistics_data_check().to_dict().items():
@@ -165,6 +200,7 @@ def qualitycontrol(request, data_name):  # , stat_quality_name, algo_quality_nam
             'stat': json.dumps(stat_dict),
             'algo': json.dumps(algo_dict),
             'eudist': json.dumps(eudist),
+            'pearsonr': corr,
             'col_start': si,
         })
 
@@ -202,8 +238,8 @@ def featureselection(request, data_name):
         return render(request, 'custom_retain_features.html',
                       {
                           'dataname': data_name,
-                          'featurenames': excelproc.col_name[:-1]}
-                      )
+                          'featurenames': excelproc.col_name[:-1]
+                      })
 
 
 def machinelearning(request, data_name):

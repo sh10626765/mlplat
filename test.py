@@ -2,12 +2,14 @@ import pandas as pd
 import numpy as np
 from mlplatapp import utils
 import pymongo
+import random
 
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.ensemble import IsolationForest
 from sklearn.metrics import pairwise_distances
 from sklearn.decomposition import PCA
 from sklearn.feature_selection import RFE
+from sklearn.linear_model import Lasso
 from sklearn.svm import SVC
 import matplotlib.pyplot as plt
 
@@ -44,17 +46,33 @@ dfnd = df.iloc[:, 4:-1]
 dfd = df.iloc[:, -1]
 
 sample_num = len(df)
-attr = [i for i in dfnd]
-print(type(attr[0]))
+feature_num = len([i for i in dfnd])
 
 non_decision_attr_mat = dfnd.values
-decision_attr_mat = dfd.values.reshape(-1, 1)
+decision_attr_mat = dfd.values
 
-print(non_decision_attr_mat)
+corrm = dfnd.corr(method='pearson')
 
-svc=SVC()
-rfe=RFE(estimator=svc,n_features_to_select=1,step=1)
+for i in range(feature_num):
+    for j in range(i + 1, feature_num):
+        if corrm.iloc[i, j] > 0.8:
+            print(i,j,corrm.iloc[i, j])
+        # print(corrm.iloc[i, j])
+# decision_attr_mat = dfd.values.reshape(-1, 1)
+# print(dfnd.describe())
+# c1 = 2
+# c2 = 2
+# x = [[]]
+# v = [[]]
+# for i in range(51):
+#     for j in range(31):
+#         x[i][j] = random.random()
+#         v[i][j] = random.random()
 
+# rfe = RFE(estimator=svc, n_features_to_select=1, step=1)
+# rfe.fit(non_decision_attr_mat, decision_attr_mat)
+# print(rfe.ranking_)
+# print(rfe.support_)
 # clt = PCA(n_components=1)
 # non = clt.fit_transform(non_decision_attr_mat)
 #

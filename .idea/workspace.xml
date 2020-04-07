@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a19f6c1d-b15e-4c7c-8ce2-6755da6e0855" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/custom_retain_features.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/machine_learning.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/set_verbose.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mlplatapp/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mlplatapp/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mlplatapp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mlplatapp/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mlplatapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/views.py" afterDir="false" />
@@ -53,7 +50,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/pyplotfig" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Django server.mlplat">
+  <component name="RunManager" selected="Python.test">
     <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="mlplat" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -120,7 +117,8 @@
       <workItem from="1583946748204" duration="13872000" />
       <workItem from="1584266160237" duration="105948000" />
       <workItem from="1584709303224" duration="46658000" />
-      <workItem from="1585040283660" duration="45623000" />
+      <workItem from="1585040283660" duration="49882000" />
+      <workItem from="1585813150267" duration="29771000" />
     </task>
     <task id="LOCAL-00001" summary="outlier detecting based on Euclidean distance">
       <created>1585044217307</created>
@@ -129,7 +127,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585044217307</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add fs and ml page">
+      <created>1585744528228</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1585744528228</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -160,41 +165,43 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="outlier detecting based on Euclidean distance" />
-    <option name="LAST_COMMIT_MESSAGE" value="outlier detecting based on Euclidean distance" />
+    <MESSAGE value="add fs and ml page" />
+    <option name="LAST_COMMIT_MESSAGE" value="add fs and ml page" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="183" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584709484526">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="414" y="183" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1584709484526" />
-    <state x="598" y="123" key="CommitChangelistDialog2" timestamp="1585044216315">
+    <state x="598" y="123" key="CommitChangelistDialog2" timestamp="1585744527063">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="598" y="123" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1585744527063" />
     <state x="598" y="123" key="CommitChangelistDialog2/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585044216315" />
     <state x="1024" y="289" key="FileChooserDialogImpl" timestamp="1585232745405">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="1024" y="289" key="FileChooserDialogImpl/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585232745405" />
-    <state width="1018" height="244" key="GridCell.Tab.0.bottom" timestamp="1585744468133">
+    <state width="1016" height="345" key="GridCell.Tab.0.bottom" timestamp="1586239333891">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1018" height="244" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1585744468133" />
-    <state width="938" height="279" key="GridCell.Tab.0.bottom/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585233555245" />
-    <state width="1018" height="244" key="GridCell.Tab.0.center" timestamp="1585744468132">
+    <state width="658" height="244" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1585812259413" />
+    <state width="1016" height="345" key="GridCell.Tab.0.bottom/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586239333891" />
+    <state width="1016" height="345" key="GridCell.Tab.0.center" timestamp="1586239333891">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1018" height="244" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1585744468132" />
-    <state width="938" height="279" key="GridCell.Tab.0.center/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585233555244" />
-    <state width="1018" height="244" key="GridCell.Tab.0.left" timestamp="1585744468132">
+    <state width="658" height="244" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1585812259413" />
+    <state width="1016" height="345" key="GridCell.Tab.0.center/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586239333891" />
+    <state width="1016" height="345" key="GridCell.Tab.0.left" timestamp="1586239333891">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1018" height="244" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1585744468132" />
-    <state width="938" height="279" key="GridCell.Tab.0.left/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585233555244" />
-    <state width="1018" height="244" key="GridCell.Tab.0.right" timestamp="1585744468133">
+    <state width="658" height="244" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1585812259413" />
+    <state width="1016" height="345" key="GridCell.Tab.0.left/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586239333891" />
+    <state width="1016" height="345" key="GridCell.Tab.0.right" timestamp="1586239333891">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1018" height="244" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1585744468133" />
-    <state width="938" height="279" key="GridCell.Tab.0.right/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585233555244" />
+    <state width="658" height="244" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1585812259413" />
+    <state width="1016" height="345" key="GridCell.Tab.0.right/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586239333891" />
     <state width="1877" height="352" key="GridCell.Tab.1.bottom" timestamp="1585040242303">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -246,6 +253,6 @@
     <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1584588533655" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/mlplat$test.coverage" NAME="test Coverage Results" MODIFIED="1585651184373" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/mlplat$test.coverage" NAME="test Coverage Results" MODIFIED="1585884975308" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
