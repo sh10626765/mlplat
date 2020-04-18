@@ -3,6 +3,7 @@ import numpy
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.ensemble import IsolationForest
 from sklearn.metrics import pairwise_distances
+from sklearn import preprocessing
 
 
 def is_number(s):
@@ -49,6 +50,11 @@ class excelProcessor(object):
         self.dfattr = self.df.iloc[:, self.col_start:-1]
         self.attr_num = len([i for i in self.dfattr])
         self.dftarget = self.df.iloc[:, -1]
+
+        self.count = numpy.shape(self.dfattr)[0]
+        self.dim = numpy.shape(self.dfattr)[1]
+        self.X = preprocessing.MinMaxScaler().fit_transform(self.dfattr.values)
+        self.Y = self.dftarget.values
 
     def get_column_names(self):
         return [column_name for column_name in self.df]

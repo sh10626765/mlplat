@@ -6,11 +6,12 @@ import random
 
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.ensemble import IsolationForest
-from sklearn.metrics import pairwise_distances
+from sklearn.metrics import pairwise_distances, mean_squared_error, mean_absolute_error
 from sklearn.decomposition import PCA
-from sklearn.feature_selection import RFE
-from sklearn.linear_model import Lasso
+from sklearn.model_selection import KFold, LeaveOneOut
+from sklearn.linear_model import LinearRegression
 from sklearn.svm import SVC
+from sklearn import preprocessing
 import matplotlib.pyplot as plt
 
 
@@ -42,48 +43,87 @@ filepath = 'E:\\毕设\\data\\traindata-0.5D0 - he.xlsx'
 
 df = loaddata(filepath)
 
-dfnd = df.iloc[:, 4:-1]
-dfd = df.iloc[:, -1]
+data_x = df.iloc[:, 4:-1]
+data_y = df.iloc[:, -1]
 
 sample_num = len(df)
-feature_num = len([i for i in dfnd])
+feature_num = len([i for i in data_x])
 
-non_decision_attr_mat = dfnd.values
-decision_attr_mat = dfd.values
+corr = data_x.corr()
 
-corrm = dfnd.corr(method='pearson')
+data_x = preprocessing.MinMaxScaler().fit_transform(data_x)
+data_y = data_y.values
 
-for i in range(feature_num):
-    for j in range(i + 1, feature_num):
-        if corrm.iloc[i, j] > 0.8:
-            print(i,j,corrm.iloc[i, j])
-        # print(corrm.iloc[i, j])
-# decision_attr_mat = dfd.values.reshape(-1, 1)
-# print(dfnd.describe())
-# c1 = 2
-# c2 = 2
-# x = [[]]
-# v = [[]]
-# for i in range(51):
-#     for j in range(31):
-#         x[i][j] = random.random()
-#         v[i][j] = random.random()
-
-# rfe = RFE(estimator=svc, n_features_to_select=1, step=1)
-# rfe.fit(non_decision_attr_mat, decision_attr_mat)
-# print(rfe.ranking_)
-# print(rfe.support_)
-# clt = PCA(n_components=1)
-# non = clt.fit_transform(non_decision_attr_mat)
+# al = []
 #
-# x = non.reshape(1, -1).tolist()[0]
-# y = decision_attr_mat.reshape(1, -1).tolist()[0]
+# for i in range(feature_num):
+#     for j in range(i + 1, feature_num):
+#         if abs(corr.iloc[i, j]) > 0.8:
+#             al.append({i, j})
+# print(al)
 #
-# clt = IsolationForest(n_estimators=500)
-# labellist = clt.fit_predict(list(zip(x, y)))
-# print(labellist)
+# al_d = {}
+#
+# for i in range(feature_num):
+#     for j in al:
+#         if i in j:
+#             al_d[i] = al_d.get(i, 0) + 1
+#
+# print(sorted(al_d.items(), key=lambda d: d[1], reverse=True))
+#
+# for i in al:
+#     for j in al:
+#         if i & j:
+#             i.update(j)
+# aal = []
+# for i in al:
+#     if i not in aal:
+#         aal.append(i)
+#
+# x = dfnd.values
+# y = dfd.values
 
+# linea regression
+# lr = LinearRegression()
+# lr.fit(x, y)
+# res = lr.predict(x)
 #
+# ms = sum([(i - j) ** 2 for i, j in zip(y, res.reshape(1, -1)[0])]) / sample_num
+# print(ms)
+# linea regression
+
+# kfold
+# sub = [i for i in range(feature_num) if np.random.randint(0, 2, feature_num)[i]]
+# x = data_x.iloc[:, sub]
+# print(x)
+kf = KFold(n_splits=5)
+loo=LeaveOneOut()
+mses = []
+maes = []
+index_of_sets = [[1, 3, 6, 14, 24, 28, 29, 38, 43, 48],
+                 [0, 5, 8, 15, 16, 25, 30, 31, 39, 44],
+                 [2, 10, 11, 17, 18, 26, 32, 33, 40, 45],
+                 [9, 12, 13, 19, 20, 27, 34, 35, 41, 46],
+                 [4, 7, 21, 22, 23, 36, 37, 42, 47, 49]]
+# for train, test in loo.split(data_x):
+#     print(train, test)
+for i in range(len(index_of_sets)):
+    lr = LinearRegression()
+    train_index = np.delete(range(50), index_of_sets[i])        # 获取训练集的样本编号
+    test_index = index_of_sets[i]                               # 获取验证集的样本编号
+    print(train_index, test_index)
+    lr.fit(data_x[train_index], data_y[train_index])
+    y_pred = lr.predict(data_x[test_index])
+
+    mses.append(mean_squared_error(data_y[test_index], y_pred))
+    maes.append(mean_absolute_error(data_y[test_index], y_pred))
+
+print(sum(mses) / len(mses))
+print(sum(maes) / len(maes))
+
+
+# kfold
+
 # pair_dist_n = pairwise_distances(non_decision_attr_mat)
 # pair_dist = pairwise_distances(decision_attr_mat)
 #

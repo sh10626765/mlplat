@@ -11,7 +11,7 @@
         <form action="#" method="post" enctype="multipart/form-data">{% csrf_token %}
             {% for featurename in featurenames %}
                 <div class="custom-checkbox">
-                    <input class="custom-checkbox" type="checkbox" id="{{ featurename }}" name="checkbox_list" value="{{ forloop.counter0 }}">
+                    <input class="custom-checkbox" type="checkbox" id="{{ featurename }}" name="checkbox_list" value="{{ featurename }}">
                     <label for="{{ featurename }}">{{ featurename }}</label>
                 </div>
             {% endfor %}
