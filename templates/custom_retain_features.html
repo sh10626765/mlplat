@@ -3,6 +3,22 @@
 
 {% block title %}特征选择{% endblock %}
 
+{% block style %}
+    <style>
+        #loading {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            top: 10%;
+            left: 10%;
+            {#margin: -25px -150px;#}
+            background-color: #FFFFFF;
+            border: 1px solid #CCCCCC;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+{% endblock %}
 
 {% block content %}
     <div class="container">
@@ -11,12 +27,20 @@
         <form action="#" method="post" enctype="multipart/form-data">{% csrf_token %}
             {% for featurename in featurenames %}
                 <div class="custom-checkbox">
-                    <input class="custom-checkbox" type="checkbox" id="{{ featurename }}" name="checkbox_list" value="{{ featurename }}">
+                    <input class="custom-checkbox" type="checkbox" id="{{ featurename }}" name="checkbox_list"
+                           value="{{ featurename }}">
                     <label for="{{ featurename }}">{{ featurename }}</label>
                 </div>
             {% endfor %}
-            <button type="submit" class="btn btn-primary">确定</button>
+            <button type="submit" class="btn btn-primary"
+                    onclick="document.getElementById('loading').style.display='';">确定
+            </button>
+            <a type="button" class="btn btn-primary"
+                    href="{% url 'qualitycontrol' dataname %}">返回
+            </a>
         </form>
-
+        <div id="loading" style="display:none">
+            <img src="{% static 'image/loading.gif' %}" width="400" height="400" alt="Processing">
+        </div>
     </div>
 {% endblock %}

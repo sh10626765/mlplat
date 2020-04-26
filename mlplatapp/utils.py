@@ -133,7 +133,7 @@ class excelProcessor(object):
         func_dist_lower = numpy.quantile(func_dist_list, 0.1)
 
         suspected_samples = []  # 记录嫌疑样本
-        suspected_samples_pair = []  # 记录嫌疑样本对
+        suspected_samples_pair = []  # 记录嫌疑样本对, 即两个规则差异大的样本
         suspected_samples_count = {}  # 记录嫌疑样本出现次数
 
         for i in range(self.df_rows):
@@ -151,11 +151,12 @@ class excelProcessor(object):
 
         for i in suspected_samples:
             # 若嫌疑样本出现3次以上，视为异常样本
-            if suspected_samples.count(i) > self.df_rows * 0.05:
+            if suspected_samples.count(i) > 1:
                 suspected_samples_count[i] = suspected_samples.count(i)
-
+        suspected_samples_count = sorted(suspected_samples_count.items(), key=lambda it: it[1], reverse=True)[
+                                  :int(self.df_rows * 0.1)]
         # {样本编号：出现次数}
-        return suspected_samples_count
+        return dict(suspected_samples_count)
 
     def algorithm_data_check(self):
         lof = LocalOutlierFactor(n_neighbors=self.df_rows // 2, contamination=.1)

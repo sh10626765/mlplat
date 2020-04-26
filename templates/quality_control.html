@@ -63,14 +63,14 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-offset-8 col-sm-1">
-                        <button id="beginMLButton" type="button" class="btn btn-primary"
-                                onclick='window.location.href="{% url 'machinelearning' dataname %}"'>机器学习
+                    <div class="col-sm-1">
+                        <button id="beginFeatureButton" type="button" class="btn btn-primary"
+                                onclick='window.location.href="{% url 'featureselection' dataname %}"'>特征选择
                         </button>
                     </div>
                     <div class="col-sm-1">
-                        <button id="beginFeatureButton" type="button" class="btn btn-primary"
-                                onclick=' window.location.href="{% url 'featureselection' dataname %}"'>特征选择
+                        <button id="beginMLButton" type="button" class="btn btn-primary"
+                                onclick=' window.location.href="{% url 'machinelearning' dataname %}"'>机器学习
                         </button>
                     </div>
                     <div class="col-sm-1">

@@ -1,0 +1,82 @@
+{% extends 'base_index.html' %}
+{% load static %}
+
+{% block title %}特征选择结果{% endblock %}
+
+{% block script %}
+    <script type="text/javascript" src="{% static 'incubator-echarts-4.7.0/dist/echarts.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div>选择保留的特征：</div>
+        <div>{% for el in retainedfeatures %}
+            {{ el.name }},
+        {% endfor %}</div>
+        <div>特征选择结果：</div>
+        <div>
+            {% for el in result %}
+                {{ el }},
+            {% endfor %}</div>
+        <div>均方误差：{{ rmse }}，拟合度：{{ r2 }}</div>
+        <div class="row">
+            <div id="evochart" style="width: 600px; height: 400px"></div>
+            <button type="button" class="btn btn-primary"
+                    onclick=' window.location.href="{% url 'qualitycontrol' dataname %}"' style="height: 70px">返回
+            </button>
+            <button type="button" class="btn btn-primary"
+                    onclick=' window.location.href="{% url 'machinelearning' dataname %}"' style="height: 70px">机器学习
+            </button>
+        </div>
+    </div>
+
+    <script type="application/javascript">
+        var evo_record = {{ evorecord }};
+        console.log(evo_record);
+        var iteration_xaxis = [];
+        var rmse_yaxis = [];
+        var r2_yaxis = [];
+        for (let i = 0; i < evo_record.length; i++) {
+            iteration_xaxis.push(evo_record[i][0]);
+            rmse_yaxis.push(evo_record[i][1]);
+            r2_yaxis.push(evo_record[i][2]);
+        }
+        var evochart = echarts.init(document.getElementById('evochart'));
+        evochart.setOption({
+            title: {
+                text: '迭代记录'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['RMSE', 'R2']
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                name: '迭代次数',
+                data: iteration_xaxis
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: 'RMSE',
+                    type: 'line',
+                    data: rmse_yaxis
+                },
+                {
+                    name: 'R2',
+                    type: 'line',
+                    data: r2_yaxis
+                }
+            ]
+        })
+    </script>
+{% endblock %}

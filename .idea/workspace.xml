@@ -2,15 +2,41 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a19f6c1d-b15e-4c7c-8ce2-6755da6e0855" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/mlplatapp/feature_select/BPSO_FK.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mlplatapp/feature_select/GA_FK.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mlplatapp/feature_select/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/material.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/fonts/glyphicons-halflings-regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/fonts/glyphicons-halflings-regular.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/ICSD_Logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/bottom_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/index_3ds.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/index_ms.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/llzomepsmall.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/llzosmall.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/loading.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/nzpmepsmall.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/nzpsmall.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/shusmall.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/solidElectrolyte.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/分子2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/分子3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/图标合辑.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/ChemDoodleWeb.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/Index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/common.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/show_feature_select.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mlplatapp/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mlplatapp/feature_select/BPSO_FK.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/feature_select/BPSO_FK.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mlplatapp/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mlplatapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base_index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base_index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/custom_retain_features.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/custom_retain_features.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/head.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/homepage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home_page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/machine_learning.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/machine_learning.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/quality_control.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/quality_control.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/test_table.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/testhtml.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/testhtml.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,7 +62,6 @@
       </list>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="MERGE" />
   </component>
   <component name="ProjectId" id="1YkEPFvhuHUvnIzXqDuNZzpSm8v" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -52,7 +77,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../test1" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Django Server.mlplat">
     <configuration name="pso" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="mlplat" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -146,6 +171,8 @@
       <workItem from="1585813150267" duration="76282000" />
       <workItem from="1586679564400" duration="284000" />
       <workItem from="1586681901230" duration="28948000" />
+      <workItem from="1587183693052" duration="2046000" />
+      <workItem from="1587383926082" duration="49685000" />
     </task>
     <task id="LOCAL-00001" summary="outlier detecting based on Euclidean distance">
       <created>1585044217307</created>
@@ -168,7 +195,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586262354059</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="add fs method">
+      <created>1587183747388</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1587183747388</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -200,7 +234,8 @@
     <MESSAGE value="outlier detecting based on Euclidean distance" />
     <MESSAGE value="add fs and ml page" />
     <MESSAGE value="add pearson's r to check verbose attr" />
-    <option name="LAST_COMMIT_MESSAGE" value="add pearson's r to check verbose attr" />
+    <MESSAGE value="add fs method" />
+    <option name="LAST_COMMIT_MESSAGE" value="add fs method" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="183" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584709484526">
@@ -211,42 +246,51 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="640" y="264" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1586679308674" />
-    <state x="598" y="123" key="CommitChangelistDialog2" timestamp="1586262352999">
+    <state x="598" y="123" key="CommitChangelistDialog2" timestamp="1587183743848">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="598" y="123" key="CommitChangelistDialog2/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1587183743848" />
     <state x="598" y="123" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1585744527063" />
     <state x="598" y="123" key="CommitChangelistDialog2/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586262352999" />
+    <state x="92" y="92" width="1736" height="866" key="DiffContextDialog" timestamp="1587384243333">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="92" y="92" width="1736" height="866" key="DiffContextDialog/0.0.1920.1050/1920.-853.1080.1890@0.0.1920.1050" timestamp="1587384243333" />
     <state x="1024" y="287" key="FileChooserDialogImpl" timestamp="1586688866064">
       <screen x="0" y="0" width="1920" height="1041" />
     </state>
     <state x="1024" y="287" key="FileChooserDialogImpl/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586688866064" />
     <state x="1024" y="289" key="FileChooserDialogImpl/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1586678823591" />
     <state x="1024" y="289" key="FileChooserDialogImpl/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585232745405" />
-    <state width="1013" height="221" key="GridCell.Tab.0.bottom" timestamp="1586797887315">
-      <screen x="0" y="0" width="1920" height="1041" />
+    <state width="1012" height="188" key="GridCell.Tab.0.bottom" timestamp="1587618075791">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1013" height="221" key="GridCell.Tab.0.bottom/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586797887315" />
+    <state width="1012" height="188" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.-853.1080.1890@0.0.1920.1050" timestamp="1587618075791" />
     <state width="1014" height="224" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1586679504868" />
     <state width="658" height="244" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1585812259413" />
     <state width="633" height="224" key="GridCell.Tab.0.bottom/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586613671839" />
-    <state width="1013" height="221" key="GridCell.Tab.0.center" timestamp="1586797887315">
-      <screen x="0" y="0" width="1920" height="1041" />
+    <state width="1012" height="188" key="GridCell.Tab.0.center" timestamp="1587618075791">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1013" height="221" key="GridCell.Tab.0.center/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586797887315" />
+    <state width="1012" height="188" key="GridCell.Tab.0.center/0.0.1920.1050/1920.-853.1080.1890@0.0.1920.1050" timestamp="1587618075791" />
     <state width="1014" height="224" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1586679504868" />
     <state width="658" height="244" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1585812259413" />
     <state width="633" height="224" key="GridCell.Tab.0.center/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586613671839" />
-    <state width="1013" height="221" key="GridCell.Tab.0.left" timestamp="1586797887315">
-      <screen x="0" y="0" width="1920" height="1041" />
+    <state width="1012" height="188" key="GridCell.Tab.0.left" timestamp="1587618075790">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1013" height="221" key="GridCell.Tab.0.left/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586797887315" />
+    <state width="1012" height="188" key="GridCell.Tab.0.left/0.0.1920.1050/1920.-853.1080.1890@0.0.1920.1050" timestamp="1587618075790" />
     <state width="1014" height="224" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1586679504868" />
     <state width="658" height="244" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1585812259413" />
     <state width="633" height="224" key="GridCell.Tab.0.left/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586613671839" />
-    <state width="1013" height="221" key="GridCell.Tab.0.right" timestamp="1586797887315">
-      <screen x="0" y="0" width="1920" height="1041" />
+    <state width="1012" height="188" key="GridCell.Tab.0.right" timestamp="1587618075791">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1013" height="221" key="GridCell.Tab.0.right/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586797887315" />
+    <state width="1012" height="188" key="GridCell.Tab.0.right/0.0.1920.1050/1920.-853.1080.1890@0.0.1920.1050" timestamp="1587618075791" />
     <state width="1014" height="224" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1586679504868" />
     <state width="658" height="244" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1585812259413" />
     <state width="633" height="224" key="GridCell.Tab.0.right/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586613671839" />
@@ -271,25 +315,30 @@
     </state>
     <state x="747" y="177" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1583740189774" />
     <state x="693" y="210" key="SettingsEditor/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585228997526" />
-    <state x="545" y="277" key="Vcs.Push.Dialog.v2" timestamp="1586262976214">
+    <state x="545" y="277" key="Vcs.Push.Dialog.v2" timestamp="1587183761335">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="545" y="277" key="Vcs.Push.Dialog.v2/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1587183761335" />
     <state x="545" y="277" key="Vcs.Push.Dialog.v2/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586262976214" />
-    <state x="94" y="48" width="1736" height="866" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1585228399830">
+    <state x="94" y="48" width="1736" height="866" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1587571681851">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="94" y="48" width="1736" height="866" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1050/1920.-853.1080.1890@0.0.1920.1050" timestamp="1587571681851" />
     <state x="94" y="48" width="1736" height="866" key="com.intellij.history.integration.ui.views.FileHistoryDialog/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585228399830" />
-    <state x="92" y="92" width="1736" height="866" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog" timestamp="1585228399830">
+    <state x="92" y="92" width="1736" height="866" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog" timestamp="1587572516754">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="92" y="92" width="1736" height="866" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog/0.0.1920.1050/1920.-853.1080.1890@0.0.1920.1050" timestamp="1587572516754" />
     <state x="92" y="92" width="1736" height="866" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585228399830" />
-    <state x="771" y="444" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1584984814774">
+    <state x="771" y="444" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1587889481823">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="771" y="444" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1587889481823" />
     <state x="771" y="444" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1584984814774" />
-    <state x="121" y="66" width="669" height="921" key="dock-window-1" timestamp="1584496872613">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state x="1456" y="314" width="1074" height="822" key="dock-window-1" timestamp="1587888848754">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
+    <state x="1456" y="314" width="1074" height="822" key="dock-window-1/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1587888848754" />
     <state x="121" y="66" width="669" height="921" key="dock-window-1/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1584496872613" />
     <state x="766" y="328" key="git4idea.merge.GitMergeDialog" timestamp="1584984947353">
       <screen x="0" y="0" width="1920" height="1050" />
@@ -301,7 +350,7 @@
     <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586611469415" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/mlplat$test.coverage" NAME="test Coverage Results" MODIFIED="1586797186811" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/mlplat$test.coverage" NAME="test Coverage Results" MODIFIED="1587572433459" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/mlplat$pso.coverage" NAME="pso Coverage Results" MODIFIED="1586321858750" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.." />
   </component>
 </project>

@@ -32,6 +32,9 @@ class BPSO_FK(object):
         self.p_best = np.array(list(zip(self.x, self.fitness)))  # 局部最优x和fitness，zip打包后局部最优x类型为array()
         self.g_best, self.r2_best = self.cal_g_best()  # 粒子群最优x、fitness和r2
 
+        self.cur_evo = 0  # 循环进度标记
+        self.evo_record = []  # 迭代记录
+
     # 初始化个体的位置和速度
     def init_population(self):
         x = np.random.randint(0, 2, (1, self.dim))  # 初始化位置随机二进制序列
@@ -157,6 +160,7 @@ class BPSO_FK(object):
         history_g_best[1] = self.g_best[1]
         history_g_best[2] = self.r2_best
         for step in range(self.max_steps):
+            self.cur_evo = step
             # 生成population_size个范围在0-1的随机dim维数组（引入随机因素）
             r1 = np.random.uniform(0, 1, (self.population_size, self.dim))
             r2 = np.random.uniform(0, 1, (self.population_size, self.dim))
@@ -183,6 +187,7 @@ class BPSO_FK(object):
                 [index for index, values in enumerate(self.g_best[0]) if values == 1 and index not in self.verbose]]
             # 获取最优个体对应的特征子集（含特征核）
             best_result_options = list(np.sort(np.append(self.feature_kernel, selected_best_result).astype('int8')))
+            self.evo_record.append([m, self.g_best[1], self.r2_best])
             print('第%d次迭代， 最优适应度为：%.5f, 最优拟合优度为：%.5f' % (m, self.g_best[1], self.r2_best))
             print('最优粒子个体：', self.g_best[0])
             print('最优的特征子集是：', best_result_options)
@@ -236,4 +241,4 @@ class BPSO_FK(object):
         data_y = self.data.Y
         rr = self.get_model(data_x, data_y)
         print(rr.coef_, rr.intercept_)
-        return final_options, history_g_best[1], history_g_best[2]
+        return final_options, history_g_best[1], history_g_best[2], self.evo_record

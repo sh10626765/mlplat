@@ -80,7 +80,7 @@ def setverbose(request, name, number):
 
 
 def index(request):
-    return render(request, 'homepage.html')
+    return render(request, 'home_page.html')
 
 
 def show(request):
@@ -228,6 +228,7 @@ def dataprocess(request, data_name):
 
 
 def featureselection(request, data_name):
+    # TODO: use async while users submit the feature selection request
     if request.method == 'POST':
         check_list = request.POST.getlist('checkbox_list')
         features_to_retain = [{'name': feature_name} for feature_name in check_list]
@@ -235,8 +236,8 @@ def featureselection(request, data_name):
                                         DATABASE)
         verbose_feature = models.ReadData('verbose_attr_' + data_name, HOST, PORT, DATABASE)
 
-        origin_data = models.ReadData(data_name, HOST, PORT, DATABASE)
-        origin_data = utils.excelProcessor(origin_data)
+        origin_data = utils.excelProcessor(models.ReadData(data_name, HOST, PORT, DATABASE))
+        sample_num = origin_data.count
 
         features_to_retain_idx = [origin_data.col_name[:-1].index(e['name']) for e in features_to_retain]
         verbose_feature_idx = [origin_data.col_name[:-1].index(e['name']) for e in verbose_feature]
@@ -244,18 +245,36 @@ def featureselection(request, data_name):
         #     features_to_retain_idx.append(origin_data.col_name[:-1].index(e['name']))
         print(features_to_retain_idx, verbose_feature_idx)
 
+        abnornal_sample_idx = [el['NO'] for el in
+                               models.ReadData('eudist_data_quality_' + data_name, host=HOST, port=PORT,
+                                               database=DATABASE)]
+
         index_of_sets = [[1, 3, 6, 14, 24, 28, 29, 38, 43, 48],
                          [0, 5, 8, 15, 16, 25, 30, 31, 39, 44],
                          [2, 10, 11, 17, 18, 26, 32, 33, 40, 45],
                          [9, 12, 13, 19, 20, 27, 34, 35, 41, 46],
                          [4, 7, 21, 22, 23, 36, 37, 42, 47, 49]]
 
-        bpso_fk = BPSO_FK.BPSO_FK(origin_data, 100, 0.01, 40, features_to_retain_idx, verbose_feature_idx, index_of_sets)
-        res, rmse, r2 = bpso_fk.evolve()
+        bpso_fk = BPSO_FK.BPSO_FK(origin_data, 100, 0.01, 3, features_to_retain_idx, verbose_feature_idx,
+                                  index_of_sets)
+        res, rmse, r2, evo_record = bpso_fk.evolve()
 
-        print(check_list)
-        print(res, rmse, r2)
-        return HttpResponse('Success! You have chosen {}.<br>Result is {}.<br>RMSE is {}.<br>R2 is {}'.format(check_list, res, rmse, r2))
+        # models.SavaData('fs_result_' + data_name, [{'res': list(res)}], True, HOST, PORT, DATABASE)
+        print(res)
+        print(evo_record)
+        return render(request, 'show_feature_select.html',
+                      {
+                          'dataname': data_name,
+                          'retainedfeatures': features_to_retain,
+                          'verbosefeatures': verbose_feature,
+                          'result': [origin_data.col_name[:-1][i] for i in range(len(origin_data.col_name[:-1])) if
+                                     i in res],
+                          'rmse': rmse,
+                          'r2': r2,
+                          'evorecord': evo_record
+                      })
+        # return HttpResponse(
+        #     'Success! You have chosen {}.<br>Result is {}.<br>RMSE is {}.<br>R2 is {}'.format(check_list, res, rmse, r2))
     if request.method == 'GET':
         data = models.ReadData(data_name, HOST, PORT, DATABASE)  # 读原始数据
         excelproc = utils.excelProcessor(data)
