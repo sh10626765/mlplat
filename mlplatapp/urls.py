@@ -16,6 +16,7 @@ urlpatterns = [
     path('qualitycontrol/<str:data_name>', views.qualitycontrol, name='qualitycontrol'),
     path('featureselection/<str:data_name>', views.featureselection, name='featureselection'),
     path('machinelearning/<str:data_name>', views.machinelearning, name='machinelearning'),
+    path('predict/<str:data_name>/<str:method_name>', views.predict, name='predict'),
 
     path('edit/<str:name>/<int:number>', views.edit, name='edit'),
     path('setverbose/<str:name>/<int:number>', views.setverbose, name='setverbose'),

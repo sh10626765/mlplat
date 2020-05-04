@@ -10,23 +10,37 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <a href="#">下载模板</a>
+{#    <div class="container">#}
+{#        <a href="#">下载模板</a>#}
+{##}
+{#        <form method="post" enctype="multipart/form-data">#}
+{#            {% csrf_token %}#}
+{#            <input type="file" class="file" id="input-excel" name="input-excel">#}
+{#        </form>#}
+{#    </div>#}
 
+    <div class="container" style="margin-top: 2%;">
+        <h3>材料特征数值上传</h3>
+        <p>支持的文件扩展名：.xls，.xlsx（Excel表格文件）</p>
+        <p>文件格式说明：表格第一行应为特征名，最后一列为目标属性，务必确保所有属性值不为空</p>
+        <p><a href="#">Excel文件示例</a></p>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <input type="file" class="file" id="input-excel" name="input-excel">
+            <input type="file" class="file" id="input-excel" name="input-excel" placeholder="选择上传文件">
         </form>
     </div>
 
-            <script>
-                $('#input-excel').fileinput({
-                    showPreview: false,
-                    showRemove: false,
-                    browseOnZoneClick: true,
-                    allowedFileExtensions: ['xls', 'xlsx'],
-                    language: 'zh',
-                    type: 'post',
-                })
-            </script>
+    <script>
+        $('#input-excel').fileinput({
+            showPreview: false,
+            showRemove: false,
+            browseOnZoneClick: true,
+            allowedFileExtensions: ['xls', 'xlsx'],
+            language: 'zh',
+            type: 'post',
+            theme: 'explorer',
+            browseClass: 'btn btn-info',
+            uploadClass: 'btn btn-info',
+        })
+    </script>
 {% endblock %}

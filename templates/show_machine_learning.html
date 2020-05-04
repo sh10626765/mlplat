@@ -1,0 +1,71 @@
+{% extends 'base_index.html' %}
+
+{% block title %}机器学习模型{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {#        <div class="row">#}
+        {#            <div class="col-3">#}
+        {#                <h5>机器学习模型：</h5>#}
+        {#            </div>#}
+        {#            <div class="col-9">#}
+        {#                {{ ml_method }}#}
+        {#            </div>#}
+        {#        </div>#}
+        {#        <div class="row">#}
+        {#            <div class="col-3">#}
+        {#                <h5>已选特征：</h5>#}
+        {#            </div>#}
+        {#            <div class="col-9">#}
+        {#                {{ selected_features }}#}
+        {#            </div>#}
+        {#        </div>#}
+        {#        <div class="row">#}
+        {#            <div class="col-3">#}
+        {#                <h5>回归系数：</h5>#}
+        {#            </div>#}
+        {#            <div class="col-9">#}
+        {#                {{ coef }}#}
+        {#            </div>#}
+        {#        </div>#}
+        {#        <div class="row">#}
+        {#            <div class="col-3">#}
+        {#                <h5>截距系数：</h5>#}
+        {#            </div>#}
+        {#            <div class="col-9">#}
+        {#                {{ intercept }}#}
+        {#            </div>#}
+        {#        </div>#}
+        <div class="row">
+            <table style="margin: auto">
+                {#                <caption><h5>机器学习模型：</h5></caption>#}
+                <thead>
+                <tr>
+                    <th>机器学习模型：</th>
+                    <th colspan="2"><h6>{{ ml_method }}</h6></th>
+                </tr>
+                <tr>
+                    <th>已选特征</th>
+                    <th>回归系数</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in fc %}
+                    <tr>
+                        <td>{{ i.0 }}</td>
+                        <td>{{ i.1 }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td><strong>截距系数：</strong></td>
+                    <td colspan="2"><h6>{{ intercept }}</h6></td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <a type="button" class="btn btn-primary" href="{% url 'predict' dataname ml_method %}">开始预测</a>
+        <a type="button" class="btn btn-default" href="{% url 'qualitycontrol' dataname %}">返回</a>
+    </div>
+{% endblock %}

@@ -55,6 +55,13 @@ def DropColl(collection, host, port, database):
     return db.drop_collection(collection)
 
 
+def RmDoc(doc_filter, collection, host, port, database):
+    client = pymongo.MongoClient(host=host, port=port)
+    db = client.get_database(name=database)
+    coll = db.get_collection(collection)
+    return coll.remove(doc_filter)
+
+
 class Data(models.Model):
     data_name = models.CharField(max_length=200, primary_key=True)
     pub_date = models.DateTimeField('date published')

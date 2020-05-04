@@ -32,10 +32,10 @@
                     <label for="{{ featurename }}">{{ featurename }}</label>
                 </div>
             {% endfor %}
-            <button type="submit" class="btn btn-primary"
+            <button type="submit" class="btn btn-info"
                     onclick="document.getElementById('loading').style.display='';">确定
             </button>
-            <a type="button" class="btn btn-primary"
+            <a type="button" class="btn btn-default"
                     href="{% url 'qualitycontrol' dataname %}">返回
             </a>
         </form>

@@ -9,12 +9,12 @@
         <form action="#" method="post" enctype="multipart/form-data">{% csrf_token %}
             {% for mlmethod in ml_methods %}
                 <div class="custom-checkbox">
-                    <input class="custom-checkbox" type="checkbox" id="{{ mlmethod }}" name="checkbox_list" value="{{ forloop.counter0 }}">
+                    <input class="custom-checkbox" type="radio" id="{{ mlmethod }}" name="radio_list" value="{{ mlmethod }}">
                     <label for="{{ mlmethod }}">{{ mlmethod }}</label>
                 </div>
             {% endfor %}
             <button type="submit" class="btn btn-primary">确定</button>
-            <a type="button" class="btn btn-primary" href="{% url 'qualitycontrol' dataname %}">确定</a>
+            <a type="button" class="btn btn-default" href="{% url 'qualitycontrol' dataname %}">返回</a>
         </form>
     </div>
 {% endblock %}

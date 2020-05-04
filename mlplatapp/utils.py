@@ -53,7 +53,8 @@ class excelProcessor(object):
 
         self.count = numpy.shape(self.dfattr)[0]
         self.dim = numpy.shape(self.dfattr)[1]
-        self.X = preprocessing.MinMaxScaler().fit_transform(self.dfattr.values)
+        # self.X = preprocessing.MinMaxScaler().fit_transform(self.dfattr.values)
+        self.X = self.dfattr.values
         self.Y = self.dftarget.values
 
     def get_column_names(self):

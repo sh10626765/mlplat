@@ -10,9 +10,25 @@
     <script type="text/javascript" src="{% static 'bootstrap-table-develop/dist/bootstrap-table.js' %}"></script>
     <script type="text/javascript"
             src="{% static 'bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js' %}"></script>
+
+    <link rel="stylesheet" href="{% static 'x-editable-develop/dist/bootstrap3-editable/css/bootstrap-editable.css' %}">
+    <script type="text/javascript"
+            src="{% static 'x-editable-develop/dist/bootstrap3-editable/js/bootstrap-editable.js' %}"></script>
     <script type="text/javascript"
             src="{% static 'bootstrap-table-develop/dist/extensions/editable/bootstrap-table-editable.js' %}"></script>
 
+    <script type="text/javascript"
+            src="{% static 'tableExport.jquery.plugin/libs/FileSaver/FileSaver.min.js' %}"></script>
+{#    <script type="text/javascript"#}
+{#            src="{% static 'tableExport.jquery.plugin/libs/js-xlsx/xlsx.core.min.js' %}"></script>#}
+    <script type="text/javascript"
+            src="{% static 'tableExport.jquery.plugin/libs/js-xlsx/xlsx.full.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'tableExport.jquery.plugin/tableExport.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'bootstrap-table-develop/dist/extensions/export/bootstrap-table-export.js' %}"></script>
+
+    <link rel="stylesheet"
+          href="{% static 'bootstrap-directional-button/dist/bootstrap-directional-buttons.css' %}">
     <script type="text/javascript" src="{% static 'incubator-echarts-4.7.0/dist/echarts.js' %}"></script>
 {% endblock %}
 
@@ -23,16 +39,31 @@
         }
 
         .panel-title > p {
-            margin: 0px;
+            margin: 0;
         }
     </style>
 {% endblock %}
 
 {% block content %}
 
-    <div class="container">
+    <div class="container" style="margin-top: 2%;">
 
-        <ul class="nav nav-tabs" id="data_tabs" role="tablist">
+
+        <div class="row">
+            <button id="beginFeatureButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
+                    onclick='window.location.href="{% url 'featureselection' dataname %}"'>特征选择
+            </button>
+            <button id="beginMLButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
+                    onclick=' window.location.href="{% url 'machinelearning' dataname %}"'>机器学习
+            </button>
+            {#                    <div class="col-sm-1">#}
+            {#                        <button id="beginPredictButton" type="button" class="btn btn-primary"#}
+            {#                                onclick=' window.location.href="{% url 'predict' dataname %}"'>开始预测#}
+            {#                        </button>#}
+            {#                    </div>#}
+        </div>
+
+        <ul class="nav nav-tabs" id="data_tabs" role="tablist" style="padding-top: 2%;">
             <li class="nav-item">
                 <a class="nav-link active" href="#raw_data" data-toggle="tab">原始数据</a>
             </li>
@@ -53,60 +84,46 @@
         <div class="tab-content" id="data_tab_content">
             <div class="tab-pane fade show active" id="raw_data" role="tabpanel" aria-labelledby="raw_data_tab">
                 <div class="row">
-                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;本标签页下显示表格原式数据</h5>
-                </div>
-                <div class="row">
                     <div class="col-sm-12" style="overflow:auto;">
                         <table id="raw_table"
                                class="table table-sm table-hover table-responsive"></table>
                     </div>
                 </div>
-
                 <div class="row">
-                    <div class="col-sm-1">
-                        <button id="beginFeatureButton" type="button" class="btn btn-primary"
-                                onclick='window.location.href="{% url 'featureselection' dataname %}"'>特征选择
-                        </button>
-                    </div>
-                    <div class="col-sm-1">
-                        <button id="beginMLButton" type="button" class="btn btn-primary"
-                                onclick=' window.location.href="{% url 'machinelearning' dataname %}"'>机器学习
-                        </button>
-                    </div>
-                    <div class="col-sm-1">
-                        <button id="beginPredictButton" type="button" class="btn btn-primary" disabled="disabled">开始预测
-                        </button>
-                    </div>
+                    <h6>注：&nbsp;&nbsp;&nbsp;&nbsp;上表内容为原始数据</h6>
                 </div>
             </div>
 
             <div class="tab-pane fade" id="stat_quality" role="tabpanel" aria-labelledby="data_statistics_tab">
-                <div class="row">
-                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;本标签页下显示表格数据的基本统计信息</h5>
-                </div>
                 <div class="row">
                     <div class="col-sm-12 table-responsive" style="overflow:auto;">
                         <table id="stat_table"
                                class="table table-sm table-bordered table-hover table-responsive"></table>
                     </div>
                 </div>
+                <div class="row">
+                    <h6>注：&nbsp;&nbsp;&nbsp;&nbsp;上表内容为数据的基本统计信息</h6>
+                </div>
             </div>
 
             <div class="tab-pane fade" id="ck_quality" role="tabpanel" aria-labelledby="data_check_tab">
-                <div class="row">
-                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;本标签页下显示可能异常的样本，用户可根据实际情况进行修改。检测方法包括<i>箱型图检测、欧式距离检测</i></h5>
-                </div>
-                <div class="row">
-                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red">红色字体</span>表示该值超出其所在<i>列</i>的箱型图上下限</h5>
-                </div>
-                <div class="row">
-                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;<span style="background-color: yellow">黄色背景</span>表示该样本的<i>非决策属性与其他样本相近而决策属性值与其他样本差异较大</i>或<i>决策属性值与其他样本相近而非决策属性与其他样本差异较大</i>
-                    </h5>
-                </div>
+                {#                <div class="row">#}
+                {#                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;本标签页下显示可能异常的样本，用户可根据实际情况进行修改。检测方法包括<i>箱型图检测、欧式距离检测</i></h5>#}
+                {#                </div>#}
+                {#                <div class="row">#}
+                {#                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red">红色字体</span>表示该值超出其所在<i>列</i>的箱型图上下限</h5>#}
+                {#                </div>#}
+                {#                <div class="row">#}
+                {#                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;<span style="background-color: yellow">黄色背景</span>表示该样本的<i>非决策属性与其他样本相近而决策属性值与其他样本差异较大</i>或<i>决策属性值与其他样本相近而非决策属性与其他样本差异较大</i>#}
+                {#                    </h5>#}
+                {#                </div>#}
                 <div class="row">
                     <div class="col-sm-12 table-responsive" style="overflow:auto;">
                         <table id="dc_table" class="table table-sm table-bordered table-hover table-responsive"></table>
                     </div>
+                </div>
+                <div class="row">
+                    <h6>注：&nbsp;&nbsp;&nbsp;&nbsp;黄色背景的单元格表示该值超出本列盒图统计值的上下限</h6>
                 </div>
             </div>
 
@@ -115,7 +132,7 @@
                 <div class="row"><h5>&nbsp;&nbsp;&nbsp;&nbsp;用户可根据实际情况筛选独立属性</h5></div>
                 <div class="row">
                     <div id="corrchart" style="width: 1000px;height:600px;"></div>
-                    <table class="table table-hover">
+                    <table class="table table-sm table-bordered table-hover table-responsive">
                         <thead>
                         <tr>
                             <th>属性1</th>
@@ -188,20 +205,6 @@
                                     {% endif %}
                                 {% endfor %}
                             {% endwith %}
-
-                            {#                            <div class="tab-pane fade show active" id="chart1" role="tabpanel"#}
-                            {#                                 aria-labelledby="chart_tab1">#}
-                            {#                                <div id="data_chart" style="width: 600px; height: 400px"></div>#}
-                            {#                            </div>#}
-                            {##}
-                            {#                            <div class="tab-pane fade " id="chart2" role="tabpanel" aria-labelledby="chart_tab2">#}
-                            {#                                <div id="data_chart" style="width: 600px; height: 400px"></div>#}
-                            {#                            </div>#}
-                            {#                            <div class="tab-pane fade " id="chart3" role="tabpanel" aria-labelledby="chart_tab3">#}
-                            {#                                <div id="data_chart" style="width: 600px; height: 400px"></div>#}
-                            {#                            </div>#}
-
-
                         </div>
                     </div>
                 </div>
@@ -243,10 +246,29 @@
 
             var dataqualityfields = [];
 
+            function stat_name_mapper(fn) {
+                let temp = {};
+                temp["count"] = "样本数";
+                temp["mean"] = "平均值";
+                temp["std"] = "标准差";
+                temp["min"] = "最小值";
+                temp["max"] = "最大值";
+                temp["range"] = "值范围";
+                temp["IQR"] = "四分位距";
+                temp["lower"] = "值下限";
+                temp["upper"] = "值上限";
+                temp["geomean"] = "几何平均值";
+                temp["skew"] = "偏度";
+                temp["25%"] = "下四分位数";
+                temp["50%"] = "中位数";
+                temp["75%"] = "上四分位数";
+                return temp[fn]
+            }
+
             for (var item in stat) {
                 for (var fn in stat[item]) {
                     var temp = {};
-                    temp["dataQualityField"] = fn;
+                    temp["dataQualityField"] = stat_name_mapper(fn);
                     for (var iiiii in stat) {
                         temp[iiiii] = stat[iiiii][fn].toFixed(5);
                     }
@@ -307,9 +329,9 @@
                             if (value === '' || undefined) {
                                 return {css: {"background-color": 'red'}};
                             } else if ((Number(value) < Number(lower[field]) || Number(value) > Number(upper[field]))) {
-                                return {css: {"color": 'red'}};
-                                //} else if (suspected.includes(index)) {
-                                //    return {css: {"background-color": 'yellow'}};
+                                return {css: {"background-color": 'yellow'}};
+//                            } else if (suspected.includes(index) && field === 'NO') {
+//                                return {css: {"background-color": 'yellow'}};
                             } else {
                                 return {}
                             }
@@ -327,6 +349,12 @@
                 pageSize: '15',
                 editable: editable,
                 columns: raw_title,
+                showColumns: true,
+                showToggle: true,
+                search: true,
+                showExport: true,
+                exportDataType: "all",
+                exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
             });
 
             $('#stat_table').bootstrapTable({
@@ -336,6 +364,12 @@
                 pageSize: '15',
                 editable: editable,
                 columns: quality_title,
+                showColumns: true,
+                showToggle: true,
+                search: true,
+                showExport: true,
+                exportDataType: "all",
+                exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
             });
 
             $('#dc_table').bootstrapTable({
@@ -345,12 +379,19 @@
                 pagination: true,
                 pageSize: '15',
                 columns: check_title,
-                rowStyle: function (row, index) {
-                    if (suspected.includes(index)) {
-                        return {css: {"background-color": 'yellow'}}
-                    } else {
-                        return {}
-                    }
+                showColumns: true,
+                showToggle: true,
+                search: true,
+                showExport: true,
+                exportDataType: "all",
+                exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
+                exportOptions: {ignoreColumn: [0]},
+//                rowStyle: function (row, index) {
+//                    if (suspected.includes(index)) {
+//                        return {css: {"background-color": 'yellow'}}
+//                    } else {
+//                        return {}
+//                    }
 //                    for (var i in algo['llof']) {
 //                        if (index === i) {
 //                            return {css: {"color": 'red'}}
@@ -362,7 +403,7 @@
 //                        }
 //                    }
 //                    return {};
-                },
+//                },
 
                 rowAttributes: function (row, index) {
                     if (suspected.includes(index)) {

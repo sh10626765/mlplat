@@ -8,21 +8,24 @@
 {% block content %}
     <div class="container">
         <table class="table table-sm table-hover table-responsive">
-        <thead>
-        <tr>
-            <th>数据名</th>
-            <th>收录时间</th>
-        </tr>
-        </thead>
-        <tbody>
+            <thead>
+            <tr>
+                <th>数据名</th>
+                <th>收录时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
             {% for dataitem in dataset %}
                 <tr>
-{#                    <td><a href="{% url 'download' dataitem.data_name %}">{{ dataitem.data_name }}</a></td>#}
-                    <td><a href="{% url 'data' dataitem.data_name %}">{{ dataitem.data_name }}</a></td>
+                    {#                    <td><a href="{% url 'download' dataitem.data_name %}">{{ dataitem.data_name }}</a></td>#}
+                    <td><a href="{% url 'qualitycontrol' dataitem.data_name %}">{{ dataitem.data_name }}</a></td>
                     <td>{{ dataitem.pub_date }}</td>
+                    <td><a href="{% url 'download' dataitem.data_name %}">下载</a></td>
                 </tr>
             {% endfor %}
-        </tbody>
+
+            </tbody>
         </table>
     </div>
 {% endblock %}

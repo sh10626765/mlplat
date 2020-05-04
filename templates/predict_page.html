@@ -1,0 +1,72 @@
+{% extends 'base_index.html' %}
+{% load static %}
+
+{% block title %}性能预测{% endblock %}
+
+{% block script %}
+    <link rel="stylesheet" href="{% static 'kartik-v-bootstrap-fileinput/css/fileinput.css' %}">
+    <script type="text/javascript" src="{% static 'kartik-v-bootstrap-fileinput/js/fileinput.js' %}"></script>
+    <script type="text/javascript" src="{% static 'kartik-v-bootstrap-fileinput/js/locales/zh.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% for i in selected_features %}
+            <div class="row">
+                <div class="col-2">
+                    <label for="{{ i }}">{{ i }}</label>
+                </div>
+                <div class="col-10"><input type="text" id="{{ i }}"></div>
+            </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col-2">
+                <label for="">Ea(eV)</label>
+            </div>
+            <div class="col-6">
+                <label id="target" for=""></label>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-primary" id="" onclick="calc();">预测</button>
+            </div>
+        </div>
+        <div class="row">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="file" class="file" id="input-excel" name="input-excel">
+                </form>
+            <script>
+                $('#input-excel').fileinput({
+                    showPreview: false,
+                    showRemove: false,
+                    browseOnZoneClick: true,
+                    allowedFileExtensions: ['xls', 'xlsx'],
+                    language: 'zh',
+                    type: 'post',
+                    msgPlaceholder: "上传数据表格进行预测",
+                })
+            </script>
+        </div>
+    </div>
+
+    <script type="application/javascript">
+        function calc() {
+            var coef = {{ coef }};
+            var intercept = {{ intercept }};
+            var selected_features = {{ selected_features|safe }};
+
+            console.log(coef);
+            console.log(intercept);
+            console.log(selected_features);
+
+            var res = 0;
+            for (let i = 0; i < coef.length; i++) {
+                res += coef[i] * document.getElementById(selected_features[i]).value;
+            }
+            res += intercept;
+            console.log(res);
+
+            document.getElementById("target").innerText = res;
+        }
+    </script>
+{% endblock %}

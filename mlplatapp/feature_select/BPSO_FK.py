@@ -34,6 +34,7 @@ class BPSO_FK(object):
 
         self.cur_evo = 0  # 循环进度标记
         self.evo_record = []  # 迭代记录
+        self.model = None
 
     # 初始化个体的位置和速度
     def init_population(self):
@@ -239,6 +240,6 @@ class BPSO_FK(object):
         final_options = list(np.sort(np.append(self.feature_kernel, final_result).astype('int8')))
         data_x = self.data.X[:, final_options]
         data_y = self.data.Y
-        rr = self.get_model(data_x, data_y)
-        print(rr.coef_, rr.intercept_)
-        return final_options, history_g_best[1], history_g_best[2], self.evo_record
+        self.model = self.get_model(data_x, data_y)
+        # print(rr.coef_, rr.intercept_)
+        return self.model, final_options, history_g_best[1], history_g_best[2], self.evo_record

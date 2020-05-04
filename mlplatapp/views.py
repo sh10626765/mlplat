@@ -231,9 +231,11 @@ def featureselection(request, data_name):
     # TODO: use async while users submit the feature selection request
     if request.method == 'POST':
         check_list = request.POST.getlist('checkbox_list')
+
         features_to_retain = [{'name': feature_name} for feature_name in check_list]
-        ftr_name, res = models.SavaData('custom_retain_features_' + data_name, features_to_retain, True, HOST, PORT,
-                                        DATABASE)
+        if features_to_retain:
+            ftr_name, res = models.SavaData('custom_retain_features_' + data_name, features_to_retain, True, HOST, PORT,
+                                            DATABASE)
         verbose_feature = models.ReadData('verbose_attr_' + data_name, HOST, PORT, DATABASE)
 
         origin_data = utils.excelProcessor(models.ReadData(data_name, HOST, PORT, DATABASE))
@@ -257,10 +259,22 @@ def featureselection(request, data_name):
 
         bpso_fk = BPSO_FK.BPSO_FK(origin_data, 100, 0.01, 3, features_to_retain_idx, verbose_feature_idx,
                                   index_of_sets)
-        res, rmse, r2, evo_record = bpso_fk.evolve()
+        ml_model, res, rmse, r2, evo_record = bpso_fk.evolve()
+        print('model: ', ml_model)
+        print('res: ', res)
 
-        # models.SavaData('fs_result_' + data_name, [{'res': list(res)}], True, HOST, PORT, DATABASE)
-        print(res)
+        res = [int(e) for e in res]
+        method = 'LinearRegression'
+
+        models.SavaData('fs_result_' + data_name,
+                        [{
+                            'method': method,
+                            'res': res,
+                            'coef': list(ml_model.coef_),
+                            'intercept': ml_model.intercept_
+                        }], True, HOST, PORT, DATABASE)
+        ml_method = models.MachineLearningMethods(method_name=method)
+        ml_method.save()
         print(evo_record)
         return render(request, 'show_feature_select.html',
                       {
@@ -273,8 +287,7 @@ def featureselection(request, data_name):
                           'r2': r2,
                           'evorecord': evo_record
                       })
-        # return HttpResponse(
-        #     'Success! You have chosen {}.<br>Result is {}.<br>RMSE is {}.<br>R2 is {}'.format(check_list, res, rmse, r2))
+
     if request.method == 'GET':
         data = models.ReadData(data_name, HOST, PORT, DATABASE)  # 读原始数据
         excelproc = utils.excelProcessor(data)
@@ -293,13 +306,78 @@ def featureselection(request, data_name):
 
 def machinelearning(request, data_name):
     if request.method == 'POST':
-        check_list = request.POST.getlist('checkbox_list')
-        print(check_list)
-        return HttpResponse('Success! You have chosen {}'.format(check_list))
+        radio_list = request.POST.getlist('radio_list')
+        fs_result_all = models.ReadData('fs_result_' + data_name, HOST, PORT, DATABASE)
+        fs_result = None
+        for res_i in fs_result_all:
+            if res_i.get('method', None) in radio_list:
+                fs_result = res_i
+
+        origin_data = utils.excelProcessor(models.ReadData(data_name, HOST, PORT, DATABASE))
+        feature_names = origin_data.col_name
+
+        selected_features = [feature_names[i] for i in fs_result.get('res', None)]
+        feture_coef = list(zip(selected_features, fs_result.get('coef', None)))
+
+        return render(request, 'show_machine_learning.html',
+                      {
+                          'dataname': data_name,
+                          'ml_method': fs_result.get('method', None),
+                          'coef': fs_result.get('coef', None),
+                          'intercept': fs_result.get('intercept', None),
+                          'selected_features': selected_features,
+                          'fc': feture_coef,
+                      })
+        # return HttpResponse('Success! You have chosen {}'.format(radio_list))
+
     if request.method == 'GET':
-        ml_methods = models.MachineLearningMethods.objects.all()
+        ml_methods_orm = models.MachineLearningMethods.objects.all()  # 查询orm和mongodb中的ml方法，统一
+        ml_methods_mdb = [doc.get('method', None) for doc in
+                          models.ReadData('fs_result_' + data_name, HOST, PORT, DATABASE)]
+
+        print(ml_methods_orm)
+        print(ml_methods_mdb)
+        for model_item in ml_methods_orm:
+            if model_item in ml_methods_mdb:
+                continue
+            else:
+                models.MachineLearningMethods.objects.filter(method_name=model_item.method_name).delete()
+
+        # for data_item in ml_methods_mdb:
+        #     if models.MachineLearningMethods.objects.filter(method_name=data_item):
+        #         continue
+        #     else:
+        #         res = models.RmDoc({'method': data_item}, 'fs_result_' + data_name, HOST, PORT, DATABASE)
+
         return render(request, 'machine_learning.html',
                       {
                           'dataname': data_name,
-                          'ml_methods': ml_methods,
+                          'ml_methods': ml_methods_mdb,
+                      })
+
+
+def predict(request, data_name, method_name):
+    if request.method == 'POST':
+        fileinput = request.FILES.get('input-excel')  # read file from <input name="input-excel">
+        fileinputname = fileinput.name  # get file name
+        excelproc = utils.excelProcessor(fileinput)  # preprocess the file uploaded
+        pass
+    if request.method == 'GET':
+        fs_result_all = models.ReadData('fs_result_' + data_name, HOST, PORT, DATABASE)
+        fs_result = None
+        for res_i in fs_result_all:
+            if res_i.get('method', None) == method_name:
+                fs_result = res_i
+
+        origin_data = utils.excelProcessor(models.ReadData(data_name, HOST, PORT, DATABASE))
+        feature_names = origin_data.col_name
+
+        selected_features = [feature_names[i] for i in fs_result.get('res', None)]
+        feture_coef = list(zip(selected_features, fs_result.get('coef', None)))
+        return render(request, 'predict_page.html',
+                      {
+                          'dataname': data_name,
+                          'selected_features': selected_features,
+                          'coef': fs_result.get('coef', None),
+                          'intercept': fs_result.get('intercept', None),
                       })

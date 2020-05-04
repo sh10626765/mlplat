@@ -21,13 +21,13 @@
         <div>均方误差：{{ rmse }}，拟合度：{{ r2 }}</div>
         <div class="row">
             <div id="evochart" style="width: 600px; height: 400px"></div>
-            <button type="button" class="btn btn-primary"
-                    onclick=' window.location.href="{% url 'qualitycontrol' dataname %}"' style="height: 70px">返回
-            </button>
-            <button type="button" class="btn btn-primary"
-                    onclick=' window.location.href="{% url 'machinelearning' dataname %}"' style="height: 70px">机器学习
-            </button>
         </div>
+        <button type="button" class="btn btn-primary"
+                onclick=' window.location.href="{% url 'machinelearning' dataname %}"' style="height: 70px">机器学习
+        </button>
+        <button type="button" class="btn btn-default"
+                onclick=' window.location.href="{% url 'qualitycontrol' dataname %}"' style="height: 70px">返回
+        </button>
     </div>
 
     <script type="application/javascript">
