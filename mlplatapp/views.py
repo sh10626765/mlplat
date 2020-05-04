@@ -199,7 +199,7 @@ def qualitycontrol(request, data_name):  # , stat_quality_name, algo_quality_nam
             'dataname': data_name,
             'data': data,
             'stat': json.dumps(stat_dict),
-            'algo': json.dumps(algo_dict),
+            'algo': algo_dict,
             'eudist': json.dumps(eudist),
             'pearsonr': corr,
             'col_start': si,

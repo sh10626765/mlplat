@@ -19,8 +19,8 @@
 
     <script type="text/javascript"
             src="{% static 'tableExport.jquery.plugin/libs/FileSaver/FileSaver.min.js' %}"></script>
-{#    <script type="text/javascript"#}
-{#            src="{% static 'tableExport.jquery.plugin/libs/js-xlsx/xlsx.core.min.js' %}"></script>#}
+    {#    <script type="text/javascript"#}
+    {#            src="{% static 'tableExport.jquery.plugin/libs/js-xlsx/xlsx.core.min.js' %}"></script>#}
     <script type="text/javascript"
             src="{% static 'tableExport.jquery.plugin/libs/js-xlsx/xlsx.full.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'tableExport.jquery.plugin/tableExport.js' %}"></script>
@@ -107,17 +107,15 @@
             </div>
 
             <div class="tab-pane fade" id="ck_quality" role="tabpanel" aria-labelledby="data_check_tab">
-                {#                <div class="row">#}
-                {#                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;本标签页下显示可能异常的样本，用户可根据实际情况进行修改。检测方法包括<i>箱型图检测、欧式距离检测</i></h5>#}
-                {#                </div>#}
-                {#                <div class="row">#}
-                {#                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red">红色字体</span>表示该值超出其所在<i>列</i>的箱型图上下限</h5>#}
-                {#                </div>#}
-                {#                <div class="row">#}
-                {#                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;<span style="background-color: yellow">黄色背景</span>表示该样本的<i>非决策属性与其他样本相近而决策属性值与其他样本差异较大</i>或<i>决策属性值与其他样本相近而非决策属性与其他样本差异较大</i>#}
-                {#                    </h5>#}
-                {#                </div>#}
                 <div class="row">
+                    <div class="form-group">
+                        <label for="dc_method">异常样本检测算法：</label>
+                        <select name="dc_method_name" class="form-control" id="dc_method">
+                            {% for k, v in algo.items %}
+                                <option value="{{ k }}">{{ k }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                     <div class="col-sm-12 table-responsive" style="overflow:auto;">
                         <table id="dc_table" class="table table-sm table-bordered table-hover table-responsive"></table>
                     </div>
@@ -215,85 +213,222 @@
 
 
     <script type="text/javascript">
-        $(function () {
-            var data = {{ data|safe }};
-            var stat = {{ stat|safe }};
-            var eudist = {{ eudist|safe }};
-            var algo ={{ algo|safe }};
 
-            var suspected = [];
-            for (it in eudist) {
-                suspected.push(eudist[it]['NO'])
-            }
+        function isInteger(arg) {
+            return new RegExp("^[0-9]*$").test(arg)
+        }
 
-            var raw_data = JSON.parse(JSON.stringify(data)); // 深拷贝 修改rawdata不影响data
-            var quality_title = [];
-            var raw_title = [];
+        function isFloat(arg) {
+            return new RegExp("^(-?\\d+)(\\.\\d+)?$").test(arg)
+        }
 
-            var editable = {type: "text"};
+        function stat_name_mapper(fn) {
+            let temp = {};
+            temp["count"] = "样本数";
+            temp["mean"] = "平均值";
+            temp["std"] = "标准差";
+            temp["min"] = "最小值";
+            temp["max"] = "最大值";
+            temp["range"] = "极差";
+            temp["IQR"] = "四分位距";
+            temp["lower"] = "值下限";
+            temp["upper"] = "值上限";
+            temp["geomean"] = "几何平均值";
+            temp["skew"] = "偏度";
+            temp["25%"] = "下四分位数";
+            temp["50%"] = "中位数";
+            temp["75%"] = "上四分位数";
+            return temp[fn]
+        }
 
-            raw_title.push({
-                title: 'NO',
-                class: 'w100',
-                field: "NO",
-            });
+        let sampleList = [];
+        $.ajax({
+            url: '/data/' + '{{ dataname }}',
+            type: 'get',
+            async: true,
+            success: function (res) {
+                sampleList = eval(res);
+                let sampleColumns = [];
 
-            quality_title.push({
-                title: '',
-                class: 'w100',
-                field: "dataQualityField"
-            });
-
-            var dataqualityfields = [];
-
-            function stat_name_mapper(fn) {
-                let temp = {};
-                temp["count"] = "样本数";
-                temp["mean"] = "平均值";
-                temp["std"] = "标准差";
-                temp["min"] = "最小值";
-                temp["max"] = "最大值";
-                temp["range"] = "值范围";
-                temp["IQR"] = "四分位距";
-                temp["lower"] = "值下限";
-                temp["upper"] = "值上限";
-                temp["geomean"] = "几何平均值";
-                temp["skew"] = "偏度";
-                temp["25%"] = "下四分位数";
-                temp["50%"] = "中位数";
-                temp["75%"] = "上四分位数";
-                return temp[fn]
-            }
-
-            for (var item in stat) {
-                for (var fn in stat[item]) {
-                    var temp = {};
-                    temp["dataQualityField"] = stat_name_mapper(fn);
-                    for (var iiiii in stat) {
-                        temp[iiiii] = stat[iiiii][fn].toFixed(5);
+                for (let key in sampleList[0]) {
+                    if (sampleList[0].hasOwnProperty(key)) {
+                        sampleColumns.push({
+                            title: $('<div/>').text(key).html(),
+                            field: key,
+                            visible: true,
+                            formatter: function (value) {
+                                if (!isFloat(value)) {
+                                    return value;  // if value is not float or integer, return value
+                                }
+                                if (isInteger(value)) {
+                                    return value;  // if value is integer, return value
+                                }
+                                return value.toFixed(5);  // if value is float, return fixed float
+                            }
+                        });
                     }
-                    dataqualityfields.push(temp);
                 }
-                break;
-            }
 
-            for (var item in stat) {
-                raw_title.push({
-                    field: item,
-                    class: 'w100',
-                    title: $('<div/>').text(item).html(),
-                });
-                quality_title.push({
-                    field: item,
-                    class: 'w100',
-                    title: $('<div/>').text(item).html(),
+                $('#raw_table').bootstrapTable({
+                    data: sampleList,
+                    datatype: 'json',
+                    pagination: true,
+                    pageSize: '15',
+                    columns: sampleColumns,
+                    showColumns: true,
+                    showToggle: true,
+                    search: true,
+                    showExport: true,
+                    exportDataType: "all",
+                    exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
                 });
             }
+        });
 
-            for (var i in raw_data) {
-                for (var j in raw_data[i]) {
-                    if (typeof (raw_data[i][j]) == 'number' && j !== 'NO') {
-                        raw_data[i][j] = raw_data[i][j].toFixed(5);
+        let statList = [];
+        $.ajax({
+            url: '/data/' + 'stat_data_quality_' + '{{ dataname }}',
+            type: 'get',
+            async: true,
+            success: function (res) {
+                statList = eval(res);
+                let statColumns = [];
+
+                statColumns.push({
+                    title: '',
+                    class: 'w100',
+                    field: "dataQualityField"
+                })
+
+                let dataqualityfields = [];
+
+                for (let item in statList[0]) {
+                    if (statList[0].hasOwnProperty(item)) {
+                        for (let fn in statList[0][item]) {
+                            if (statList[0][item].hasOwnProperty(fn)) {
+                                let temp = {};
+                                temp["dataQualityField"] = stat_name_mapper(fn);
+                                for (let iii in statList) {
+                                    if (statList.hasOwnProperty(iii)) {
+                                        for (let iain in statList[iii]) {
+                                            if (statList[iii].hasOwnProperty(iain)) {
+                                                if (isInteger(statList[iii][iain][fn])) {
+                                                    temp[iain] = statList[iii][iain][fn]
+                                                } else {
+                                                    temp[iain] = statList[iii][iain][fn].toFixed(5);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                dataqualityfields.push(temp)
+                            }
+                        }
+                    }
+                }
+                for (let idx = 0; idx < statList.length; idx++) {
+                    for (let key in statList[idx]) {
+                        if (statList[idx].hasOwnProperty(key)) {
+                            statColumns.push({
+                                title: $('<div/>').text(key).html(),
+                                field: key,
+                            })
+                        }
+                    }
+                }
+
+                $('#stat_table').bootstrapTable({
+                    data: dataqualityfields,
+                    datatype: 'json',
+                    pagination: true,
+                    pageSize: '15',
+                    editable: {type: "text"},
+                    columns: statColumns,
+                    showColumns: true,
+                    showToggle: true,
+                    search: true,
+                    showExport: true,
+                    exportDataType: "all",
+                    exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
+                });
+            }
+        });
+
+        let algoList = [];
+        $.ajax({
+            url: '/data/' + 'algo_data_quality_' + '{{ dataname }}',
+            type: 'get',
+            async: true,
+            success: function (res) {
+                algoList = eval(res);
+                console.log('algo:', algoList);
+            }
+        });
+
+        let eudistList = [];
+        $.ajax({
+            url: '/data/' + 'eudist_data_quality_' + '{{ dataname }}',
+            type: 'get',
+            async: true,
+            success: function (res) {
+                eudistList = eval(res);
+                console.log('eudist:', eudistList);
+                let suspected = [];
+                for (let idx = 0; idx < eudistList.length; idx++) {
+                    suspected.push(eudistList[idx]['NO'])
+                }
+                console.log(suspected)
+            }
+        });
+
+        $(function () {
+            let data = {{ data|safe }};
+            let stat = {{ stat|safe }};
+            let eudist = {{ eudist|safe }};
+            let algo ={{ algo|safe }};
+
+            let editable = {type: "text"};
+
+            let suspected = [];
+            for (let it in eudist) {
+                if (eudist.hasOwnProperty(it)) {
+                    suspected.push(eudist[it]['NO'])}}
+
+            let raw_data = JSON.parse(JSON.stringify(data)); // 深拷贝 修改rawdata不影响data
+            //var quality_title = [];
+            //var raw_title = [];
+
+            //raw_title.push({title: 'NO', class: 'w100', field: "NO",});
+
+            //quality_title.push({title: '', class: 'w100', field: "dataQualityField"});
+
+            {#var dataqualityfields = [];#}
+            {#for (var item in stat) {#}
+            {#    for (var fn in stat[item]) {#}
+            {#        var temp = {};#}
+            {#        temp["dataQualityField"] = stat_name_mapper(fn);#}
+            {#        for (var iiiii in stat) {#}
+            {#            temp[iiiii] = stat[iiiii][fn].toFixed(5);#}
+            {#        }dataqualityfields.push(temp);}break;}#}
+
+            {#for (var item in stat) {#}
+            {#    raw_title.push({#}
+            {#        field: item,#}
+            {#        class: 'w100',#}
+            {#        title: $('<div/>').text(item).html(),});#}
+            {#    quality_title.push({#}
+            {#        field: item,#}
+            {#        class: 'w100',#}
+            {#        title: $('<div/>').text(item).html(),});}#}
+
+            for (let i in raw_data) {
+                if (raw_data.hasOwnProperty(i)) {
+                    for (let j in raw_data[i]) {
+                        if (raw_data[i].hasOwnProperty(j)) {
+                            if (typeof (raw_data[i][j]) == 'number' && j !== 'NO') {
+                                raw_data[i][j] = raw_data[i][j].toFixed(5);
+                            }
+                        }
                     }
                 }
             }
@@ -302,75 +437,80 @@
             check_title.push({
                 title: '操作',
                 formatter: function (value, row, index) {
-                    var idx = index;
-                    var url = "{% url 'edit' dataname 12345 %}";  // django 模板语言不支持使用JS变量，故用12345作占位符再替换
+                    let idx = index;
+                    let url = "{% url 'edit' dataname 12345 %}";  // django 模板语言不支持使用JS变量，故用12345作占位符再替换
                     url = url.replace(12345, idx);
-                    var s = '<a href="' + url + '">修改</a>';
+                    let s = '<a href="' + url + '">修改</a>';
                     return [s].join("")
                 }
             });
 
-            var lower = {};
-            var upper = {};
-            for (var item in stat) {
-                lower[item] = stat[item]['lower'];
-                upper[item] = stat[item]['upper'];
+            let lower = {};
+            let upper = {};
+            for (let item in stat) {
+                if (stat.hasOwnProperty(item)){
+                    lower[item] = stat[item]['lower'];
+                    upper[item] = stat[item]['upper'];
+                }
             }
-            var idx = 1;
-            for (var i in data[0]) {
-                if (typeof (data[0][i]) == 'number') {
-                    check_title[idx] = {
-                        field: i,
-                        title: $('<div/>').text(i).html(),
-                        {#editable:{type:'text'},#}
-                        class: 'w100',
+            let idx = 1;
+            for (let i in data[0]) {
+                if (data[0].hasOwnProperty(i)){
+                    if (typeof (data[0][i]) == 'number') {
+                        check_title[idx] = {
+                            field: i,
+                            title: $('<div/>').text(i).html(),
+                            formatter: function (value) {
+                                if (!isInteger(value)) {
+                                    return value.toFixed(5);
+                                }
+                                return value;
+                            },
+                            cellStyle: function (value, row, index, field) {
+                                if (value === '' || undefined) {
+                                    return {css: {"background-color": 'red'}};
+                                } else if ((Number(value) < Number(lower[field]) || Number(value) > Number(upper[field]))) {
+                                    return {css: {"background-color": 'yellow'}};
+    //                            } else if (suspected.includes(index) && field === 'NO') {
+    //                                return {css: {"background-color": 'yellow'}};
+                                } else {
+                                    return {}
+                                }
+                            },
 
-                        cellStyle: function (value, row, index, field) {
-                            if (value === '' || undefined) {
-                                return {css: {"background-color": 'red'}};
-                            } else if ((Number(value) < Number(lower[field]) || Number(value) > Number(upper[field]))) {
-                                return {css: {"background-color": 'yellow'}};
-//                            } else if (suspected.includes(index) && field === 'NO') {
-//                                return {css: {"background-color": 'yellow'}};
-                            } else {
-                                return {}
-                            }
-                        },
-
-                    };
-                    idx++;
+                        };
+                        idx++;
+                    }
                 }
             }
 
-            $('#raw_table').bootstrapTable({
-                data: raw_data,
-                datatype: 'json',
-                pagination: true,
-                pageSize: '15',
-                editable: editable,
-                columns: raw_title,
-                showColumns: true,
-                showToggle: true,
-                search: true,
-                showExport: true,
-                exportDataType: "all",
-                exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
-            });
+            {#$('#raw_table').bootstrapTable({#}
+            {#    data: raw_data,#}
+            {#    datatype: 'json',#}
+            {#    pagination: true,#}
+            {#    pageSize: '15',#}
+            {#    editable: editable,#}
+            {#    columns: raw_title,#}
+            {#    showColumns: true,#}
+            {#    showToggle: true,#}
+            {#    search: true,#}
+            {#    showExport: true,#}
+            {#    exportDataType: "all",#}
+            {#    exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],#}
 
-            $('#stat_table').bootstrapTable({
-                data: dataqualityfields,
-                datatype: 'json',
-                pagination: true,
-                pageSize: '15',
-                editable: editable,
-                columns: quality_title,
-                showColumns: true,
-                showToggle: true,
-                search: true,
-                showExport: true,
-                exportDataType: "all",
-                exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
-            });
+            {#$('#stat_table').bootstrapTable({#}
+            {#    data: dataqualityfields,#}
+            {#    datatype: 'json',#}
+            {#    pagination: true,#}
+            {#    pageSize: '15',#}
+            {#    editable: editable,#}
+            {#    columns: quality_title,#}
+            {#    showColumns: true,#}
+            {#    showToggle: true,#}
+            {#    search: true,#}
+            {#    showExport: true,#}
+            {#    exportDataType: "all",#}
+            {#    exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],#}
 
             $('#dc_table').bootstrapTable({
                 method: 'post',
@@ -408,9 +548,11 @@
                 rowAttributes: function (row, index) {
                     if (suspected.includes(index)) {
                         var cnt;
-                        for (it in eudist) {
-                            if (index === eudist[it]['NO']) {
-                                cnt = eudist[it]['count'];
+                        for (let it in eudist) {
+                            if (eudist.hasOwnProperty(it)) {
+                                if (index === eudist[it]['NO']) {
+                                    cnt = eudist[it]['count'];
+                                }
                             }
                         }
                         return {
@@ -432,24 +574,26 @@
 
     <script type="text/javascript">
 
-        var rawdata = {{ data|safe }};
-        var datafield = {};  // {field: [value]}
+        let rawdata = {{ data|safe }};
+        let datafield = {};  // {field: [value]}
 
-        for (var ii in rawdata[0]) {
-            datafield[ii] = [];
-            for (var iii = 0; iii < rawdata.length; iii++) {
-                datafield[ii].push(rawdata[iii][ii]);
+        for (let ii in rawdata[0]) {
+            if (rawdata[0].hasOwnProperty(ii)) {
+                datafield[ii] = [];
+                for (let iii = 0; iii < rawdata.length; iii++) {
+                    datafield[ii].push(rawdata[iii][ii]);
+                }
             }
         }
 
-        var fields = [];
-        for (var i in datafield) {
+        let fields = [];
+        for (let i in datafield) {
             fields.push(i);
         }
 
-        for (var i = 0; i < Object.keys(datafield).length; i++) {
+        for (let i = 0; i < Object.keys(datafield).length; i++) {
             try {
-                var data_chart = echarts.init(document.getElementById('data_chart' + i.toString()));
+                let data_chart = echarts.init(document.getElementById('data_chart' + i.toString()));
                 data_chart.setOption({
                     title: {text: fields[i]},
                     xAxis: {
@@ -472,8 +616,8 @@
     <script type="text/javascript ">
         {#import compatStyle from "../static/incubator-echarts-4.7.0/src/preprocessor/helper/compatStyle";#}
 
-        var attr = [];
-        var attrcorr = [];
+        let attr = [];
+        let attrcorr = [];
 
         {% for i in pearsonr %}
             if (!attr.includes('{{ i.0 }}')) {
@@ -485,9 +629,9 @@
             attrcorr.push(['{{ i.0 }}', '{{ i.1 }}', {{ i.2 }}]);
             attrcorr.push(['{{ i.1 }}', '{{ i.0 }}', {{ i.2 }}]);
         {% endfor %}
-        console.log(attr);
+        {#console.log(attr);#}
 
-        var corrchart = echarts.init(document.getElementById('corrchart'));
+        let corrchart = echarts.init(document.getElementById('corrchart'));
         corrchart.setOption({
             tooltip: {
                 position: 'top'
