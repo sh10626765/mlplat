@@ -19,7 +19,7 @@ urlpatterns = [
     path('predict/<str:data_name>/<str:method_name>', views.predict, name='predict'),
 
     path('edit/<str:name>/<int:number>', views.edit, name='edit'),
-    path('setverbose/<str:name>/<int:number>', views.setverbose, name='setverbose'),
+    path('setverbose/<str:name>/<int:number>/<str:method>', views.setverbose, name='setverbose'),
 
     path('test/', views.test, name='test'),
 ]

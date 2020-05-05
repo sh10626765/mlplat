@@ -3,7 +3,7 @@
 {% block title %}机器学习模型{% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container" style="margin-top: 2%">
         {#        <div class="row">#}
         {#            <div class="col-3">#}
         {#                <h5>机器学习模型：</h5>#}
@@ -65,7 +65,7 @@
                 </tfoot>
             </table>
         </div>
-        <a type="button" class="btn btn-primary" href="{% url 'predict' dataname ml_method %}">开始预测</a>
+        <a type="button" class="btn btn-info" href="{% url 'predict' dataname ml_method %}">开始预测</a>
         <a type="button" class="btn btn-default" href="{% url 'qualitycontrol' dataname %}">返回</a>
     </div>
 {% endblock %}

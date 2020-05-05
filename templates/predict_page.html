@@ -7,19 +7,44 @@
     <link rel="stylesheet" href="{% static 'kartik-v-bootstrap-fileinput/css/fileinput.css' %}">
     <script type="text/javascript" src="{% static 'kartik-v-bootstrap-fileinput/js/fileinput.js' %}"></script>
     <script type="text/javascript" src="{% static 'kartik-v-bootstrap-fileinput/js/locales/zh.js' %}"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'bootstrap-table-develop/dist/bootstrap-table.css' %}">
+
+    <script type="text/javascript" src="{% static 'bootstrap-table-develop/dist/bootstrap-table.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js' %}"></script>
+
+    <link rel="stylesheet" href="{% static 'x-editable-develop/dist/bootstrap3-editable/css/bootstrap-editable.css' %}">
+    <script type="text/javascript"
+            src="{% static 'x-editable-develop/dist/bootstrap3-editable/js/bootstrap-editable.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'bootstrap-table-develop/dist/extensions/editable/bootstrap-table-editable.js' %}"></script>
+
+    <script type="text/javascript"
+            src="{% static 'tableExport.jquery.plugin/libs/FileSaver/FileSaver.min.js' %}"></script>
+    {#    <script type="text/javascript"#}
+    {#            src="{% static 'tableExport.jquery.plugin/libs/js-xlsx/xlsx.core.min.js' %}"></script>#}
+    <script type="text/javascript"
+            src="{% static 'tableExport.jquery.plugin/libs/js-xlsx/xlsx.full.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'tableExport.jquery.plugin/tableExport.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'bootstrap-table-develop/dist/extensions/export/bootstrap-table-export.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container" style="margin-top: 2%">
+        <h3>输入相应数据开始预测</h3>
         {% for i in selected_features %}
-            <div class="row">
+            <div class="row" style="margin: auto">
                 <div class="col-2">
                     <label for="{{ i }}">{{ i }}</label>
                 </div>
                 <div class="col-10"><input type="text" id="{{ i }}"></div>
             </div>
         {% endfor %}
-        <div class="row">
+        <div class="row" style="margin: auto">
             <div class="col-2">
                 <label for="">Ea(eV)</label>
             </div>
@@ -27,14 +52,15 @@
                 <label id="target" for=""></label>
             </div>
             <div class="col-2">
-                <button class="btn btn-primary" id="" onclick="calc();">预测</button>
+                <button class="btn btn-info" id="" onclick="calc();">预测</button>
             </div>
         </div>
-        <div class="row">
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <input type="file" class="file" id="input-excel" name="input-excel">
-                </form>
+        <h3>上传文件开始预测</h3>
+        <div style="margin-left: 0; margin-right: 25%; padding: 0">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" class="file" id="input-excel" name="input-excel">
+            </form>
             <script>
                 $('#input-excel').fileinput({
                     showPreview: false,
@@ -44,9 +70,68 @@
                     language: 'zh',
                     type: 'post',
                     msgPlaceholder: "上传数据表格进行预测",
+                    browseClass: 'btn btn-info',
+                    uploadClass: 'btn btn-info',
                 })
             </script>
         </div>
+        {% if uploadtopredict == 'True' %}
+            <div class="row">
+                <div class="col-sm-12" style="overflow:auto;">
+                    <table id="predictresult_table"
+                           class="table table-sm table-hover table-responsive"></table>
+                </div>
+            </div>
+            <script type="text/javascript">
+
+                function isInteger(arg) {
+                    return new RegExp("^[0-9]*$").test(arg)
+                }
+
+                function isFloat(arg) {
+                    return new RegExp("^(-?\\d+)(\\.\\d+)?$").test(arg)
+                }
+
+                let result = {{ predictresult|safe }};
+                let resColumns = [];
+                let resData = [];
+                for (let col in result[0]) {
+                    if (result[0].hasOwnProperty(col)) {
+                        resColumns.push({
+                            title: col,
+                            field: col,
+                            formatter: function (value) {
+                                if (!isFloat(value)) {
+                                    return value;  // if value is not float or integer, return value
+                                }
+                                if (isInteger(value)) {
+                                    return value;  // if value is integer, return value
+                                }
+                                return value.toFixed(5);  // if value is float, return fixed float
+                            }
+                        });
+                    }
+                }
+                for (let item in result) {
+                    if (result.hasOwnProperty(item)) {
+                        resData.push(result[item])
+                    }
+                }
+
+                $('#predictresult_table').bootstrapTable({
+                    data: resData,
+                    pagination: true,
+                    pageSize: '15',
+                    columns: resColumns,
+                    showColumns: true,
+                    showToggle: true,
+                    search: true,
+                    showExport: true,
+                    exportDataType: "all",
+                    exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
+                });
+            </script>
+        {% endif %}
     </div>
 
     <script type="application/javascript">

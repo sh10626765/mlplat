@@ -20,14 +20,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a19f6c1d-b15e-4c7c-8ce2-6755da6e0855" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/mlplat.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mlplat.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mlplatapp/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mlplatapp/migrations/0002_auto_20200401_1555.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mlplatapp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mlplatapp/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mlplatapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/custom_retain_features.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/custom_retain_features.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/machine_learning.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/machine_learning.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/modify_data.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/modify_data.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/predict_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/predict_page.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/quality_control.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/quality_control.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/set_verbose.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/set_verbose.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/show_feature_select.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/show_feature_select.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/show_machine_learning.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/show_machine_learning.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +77,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../test1" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Django Server.mlplat">
+  <component name="RunManager" selected="Python.test">
     <configuration name="pso" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="mlplat" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -265,45 +272,49 @@
     <state x="1024" y="287" key="FileChooserDialogImpl/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586688866064" />
     <state x="1024" y="289" key="FileChooserDialogImpl/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1586678823591" />
     <state x="1024" y="289" key="FileChooserDialogImpl/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585232745405" />
-    <state width="936" height="260" key="GridCell.Tab.0.bottom" timestamp="1588608452617">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1007" height="188" key="GridCell.Tab.0.bottom" timestamp="1588707583443">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="936" height="260" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1080@0.0.1920.1040" timestamp="1588608452617" />
     <state width="936" height="260" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1588588631653" />
     <state width="1013" height="221" key="GridCell.Tab.0.bottom/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586797887315" />
     <state width="1012" height="188" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.-853.1080.1890@0.0.1920.1050" timestamp="1587618075791" />
-    <state width="1877" height="188" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588065092555" />
-    <state width="658" height="244" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1585812259413" />
+    <state width="1007" height="188" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588707583443" />
+    <state width="1007" height="188" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1588694982287" />
+    <state width="1009" height="188" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1588612836167" />
     <state width="633" height="224" key="GridCell.Tab.0.bottom/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586613671839" />
-    <state width="936" height="260" key="GridCell.Tab.0.center" timestamp="1588608452617">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1007" height="188" key="GridCell.Tab.0.center" timestamp="1588707583443">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="936" height="260" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1080@0.0.1920.1040" timestamp="1588608452617" />
     <state width="936" height="260" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1588588631653" />
     <state width="1013" height="221" key="GridCell.Tab.0.center/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586797887315" />
     <state width="1012" height="188" key="GridCell.Tab.0.center/0.0.1920.1050/1920.-853.1080.1890@0.0.1920.1050" timestamp="1587618075791" />
-    <state width="1877" height="188" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588065092555" />
-    <state width="658" height="244" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1585812259413" />
+    <state width="1007" height="188" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588707583443" />
+    <state width="1007" height="188" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1588694982287" />
+    <state width="1009" height="188" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1588612836167" />
     <state width="633" height="224" key="GridCell.Tab.0.center/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586613671839" />
-    <state width="936" height="260" key="GridCell.Tab.0.left" timestamp="1588608452616">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1007" height="188" key="GridCell.Tab.0.left" timestamp="1588707583443">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="936" height="260" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1080@0.0.1920.1040" timestamp="1588608452616" />
     <state width="936" height="260" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1588588631652" />
     <state width="1013" height="221" key="GridCell.Tab.0.left/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586797887315" />
     <state width="1012" height="188" key="GridCell.Tab.0.left/0.0.1920.1050/1920.-853.1080.1890@0.0.1920.1050" timestamp="1587618075790" />
-    <state width="1877" height="188" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588065092555" />
-    <state width="658" height="244" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1585812259413" />
+    <state width="1007" height="188" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588707583443" />
+    <state width="1007" height="188" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1588694982287" />
+    <state width="1009" height="188" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1588612836167" />
     <state width="633" height="224" key="GridCell.Tab.0.left/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586613671839" />
-    <state width="936" height="260" key="GridCell.Tab.0.right" timestamp="1588608452617">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1007" height="188" key="GridCell.Tab.0.right" timestamp="1588707583443">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="936" height="260" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1080@0.0.1920.1040" timestamp="1588608452617" />
     <state width="936" height="260" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1588588631653" />
     <state width="1013" height="221" key="GridCell.Tab.0.right/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586797887315" />
     <state width="1012" height="188" key="GridCell.Tab.0.right/0.0.1920.1050/1920.-853.1080.1890@0.0.1920.1050" timestamp="1587618075791" />
-    <state width="1877" height="188" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588065092555" />
-    <state width="658" height="244" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1585812259413" />
+    <state width="1007" height="188" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588707583443" />
+    <state width="1007" height="188" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1588694982287" />
+    <state width="1009" height="188" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1588612836167" />
     <state width="633" height="224" key="GridCell.Tab.0.right/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586613671839" />
     <state width="1877" height="352" key="GridCell.Tab.1.bottom" timestamp="1585040242303">
       <screen x="0" y="0" width="1920" height="1050" />
@@ -336,15 +347,17 @@
     </state>
     <state x="545" y="277" key="Vcs.Push.Dialog.v2/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1587889579276" />
     <state x="545" y="277" key="Vcs.Push.Dialog.v2/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586262976214" />
-    <state x="94" y="48" width="1736" height="866" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1587571681851">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state x="2014" y="48" width="1736" height="866" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1588657382811">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
     <state x="94" y="48" width="1736" height="866" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1050/1920.-853.1080.1890@0.0.1920.1050" timestamp="1587571681851" />
+    <state x="2014" y="48" width="1736" height="866" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1588657382811" />
     <state x="94" y="48" width="1736" height="866" key="com.intellij.history.integration.ui.views.FileHistoryDialog/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585228399830" />
-    <state x="92" y="92" width="1736" height="866" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog" timestamp="1587572516754">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state x="2012" y="92" width="1736" height="866" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog" timestamp="1588657382812">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
     <state x="92" y="92" width="1736" height="866" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog/0.0.1920.1050/1920.-853.1080.1890@0.0.1920.1050" timestamp="1587572516754" />
+    <state x="2012" y="92" width="1736" height="866" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1588657382812" />
     <state x="92" y="92" width="1736" height="866" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585228399830" />
     <state x="771" y="444" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1587889481823">
       <screen x="0" y="0" width="1920" height="1050" />
@@ -366,7 +379,7 @@
     <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586611469415" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/mlplat$test.coverage" NAME="test Coverage Results" MODIFIED="1587572433459" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/mlplat$test.coverage" NAME="test Coverage Results" MODIFIED="1588706819740" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/mlplat$pso.coverage" NAME="pso Coverage Results" MODIFIED="1586321858750" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.." />
   </component>
 </project>

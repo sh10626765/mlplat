@@ -47,8 +47,6 @@
 {% block content %}
 
     <div class="container" style="margin-top: 2%;">
-
-
         <div class="row">
             <button id="beginFeatureButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
                     onclick='window.location.href="{% url 'featureselection' dataname %}"'>特征选择
@@ -107,50 +105,166 @@
             </div>
 
             <div class="tab-pane fade" id="ck_quality" role="tabpanel" aria-labelledby="data_check_tab">
-                <div class="row">
-                    <div class="form-group">
-                        <label for="dc_method">异常样本检测算法：</label>
-                        <select name="dc_method_name" class="form-control" id="dc_method">
-                            {% for k, v in algo.items %}
-                                <option value="{{ k }}">{{ k }}</option>
-                            {% endfor %}
-                        </select>
+                <ul class="nav flex-column" id="ck_quality_tabs" role="tablist">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            下拉查看指定样本
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="nav-link dropdown-item" id="ck_quality_all"
+                               data-toggle="tab"
+                               role="tab" href="#dc_table_tab_all"
+                               aria-selected="true">所有样本</a>
+                            <a class="nav-link dropdown-item" id="ck_quality_lof"
+                               data-toggle="tab"
+                               role="tab" href="#dc_table_tab_lof"
+                               aria-selected="true">局部异常因子检测</a>
+                            <a class="nav-link dropdown-item" id="ck_quality_if"
+                               data-toggle="tab"
+                               role="tab" href="#dc_table_tab_if"
+                               aria-selected="true">孤立森林检测</a>
+                            <a class="nav-link dropdown-item" id="ck_quality_reg"
+                               data-toggle="tab"
+                               role="tab" href="#dc_table_tab_reg"
+                               aria-selected="true">回归检测</a>
+                            {#                            {% for k,v in algo.items %}#}
+                            {#                                <a class="nav-link dropdown-item" id="ck_quality_{{ k }}"#}
+                            {#                                   data-toggle="tab"#}
+                            {#                                   role="tab" href="#{{ k }}"#}
+                            {#                                   aria-selected="true">{{ k }}</a>#}
+                            {#                            {% endfor %}#}
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="ck_quality_content">
+                    <div class="tab-pane fade show active" id="dc_table_tab_all">
+                        <div class="col-sm-12 table-responsive" style="overflow:auto;">
+                            <table id="dc_table"
+                                   class="table table-sm table-bordered table-hover table-responsive"></table>
+                        </div>
                     </div>
-                    <div class="col-sm-12 table-responsive" style="overflow:auto;">
-                        <table id="dc_table" class="table table-sm table-bordered table-hover table-responsive"></table>
+                    <div class="tab-pane fade" id="dc_table_tab_lof">
+                        <div class="col-sm-12 table-responsive" style="overflow:auto;">
+                            <table id="dc_table_lof"
+                                   class="table table-sm table-bordered table-hover table-responsive"></table>
+                        </div>
                     </div>
+                    <div class="tab-pane fade" id="dc_table_tab_if">
+                        <div class="col-sm-12 table-responsive" style="overflow:auto;">
+                            <table id="dc_table_if"
+                                   class="table table-sm table-bordered table-hover table-responsive"></table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="dc_table_tab_reg">
+                        <div class="col-sm-12 table-responsive" style="overflow:auto;">
+                            <table id="dc_table_reg"
+                                   class="table table-sm table-bordered table-hover table-responsive"></table>
+                        </div>
+                    </div>
+                    {#                    {% for k,v in algo.items %}#}
+                    {#                        <div class="tab-pane fade" id="{{ k }}"#}
+                    {#                             role="tabpanel" aria-labelledby="ck_quality_{{ k }}">#}
+                    {#                            <div class="col-sm-12 table-responsive" style="overflow:auto;">#}
+                    {#                                <table id="dc_table_{{ k }}"#}
+                    {#                                       class="table table-sm table-bordered table-hover table-responsive"></table>#}
+                    {#                            </div>#}
+                    {#                        </div>#}
+                    {#                    {% endfor %}#}
                 </div>
+
+
+                {#                <div class="row">#}
+                {#                    <div class="col-sm-12 table-responsive" style="overflow:auto;">#}
+                {#                        <table id="dc_table" class="table table-sm table-bordered table-hover table-responsive"></table>#}
+                {#                    </div>#}
+                {#                </div>#}
                 <div class="row">
                     <h6>注：&nbsp;&nbsp;&nbsp;&nbsp;黄色背景的单元格表示该值超出本列盒图统计值的上下限</h6>
                 </div>
             </div>
 
             <div class="tab-pane fade" id="verbosity" role="tabpanel" aria-labelledby="verbosity_tab">
-                <div class="row"><h5>&nbsp;&nbsp;&nbsp;&nbsp;本标签页下显示Pearson系数较高的属性组</h5></div>
-                <div class="row"><h5>&nbsp;&nbsp;&nbsp;&nbsp;用户可根据实际情况筛选独立属性</h5></div>
-                <div class="row">
-                    <div id="corrchart" style="width: 1000px;height:600px;"></div>
-                    <table class="table table-sm table-bordered table-hover table-responsive">
-                        <thead>
-                        <tr>
-                            <th>属性1</th>
-                            <th>属性2</th>
-                            <th>Pearson's r</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for tuple in pearsonr %}
-                            <tr>
-                                <td>{{ tuple.0 }}</td>
-                                <td>{{ tuple.1 }}</td>
-                                <td>{{ tuple.2 }}</td>
-                                <td><a href="{% url 'setverbose' dataname forloop.counter0 %}">标记冗余属性</a></td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                {#                <div class="row"><h5>&nbsp;&nbsp;&nbsp;&nbsp;本标签页下显示Pearson系数较高的属性组</h5></div>#}
+                {#                <div class="row"><h5>&nbsp;&nbsp;&nbsp;&nbsp;用户可根据实际情况筛选独立属性</h5></div>#}
+                <ul class="nav flex-column" id="corr_tabs" role="tablist">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            下拉查看
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="nav-link dropdown-item" id="pearsonr"
+                               data-toggle="tab"
+                               role="tab" href="#pearsonr_tab"
+                               aria-selected="true">Pearson相关性</a>
+                            <a class="nav-link dropdown-item" id="kendallr"
+                               data-toggle="tab"
+                               role="tab" href="#kendallr_tab"
+                               aria-selected="true">Kendall相关性</a>
+                            <a class="nav-link dropdown-item" id="spearmanr"
+                               data-toggle="tab"
+                               role="tab" href="#spearmanr_tab"
+                               aria-selected="true">Spearman相关性</a>
+                        </div>
+                    </li>
+                </ul>
+                <div class="tab-content" id="corr_content">
+                    <div class="tab-pane fade show active" id="pearsonr_tab">
+                        <div class="row">
+                            <div id="pearsoncorrchart" style="width: 1000px;height:600px;"></div>
+                        </div>
+                        <div class="col-sm-12 table-responsive" style="overflow: auto">
+                            <table class="table table-sm table-bordered table-hover table-responsive"
+                                   id="pearson_corr_table"></table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="kendallr_tab">
+                        <div class="row">
+                            <div id="kendallcorrchart" style="width: 1000px;height:600px;"></div>
+                        </div>
+                        <div class="col-sm-12 table-responsive" style="overflow: auto">
+                            <table class="table table-sm table-bordered table-hover table-responsive"
+                                   id="kendall_corr_table"></table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="spearmanr_tab">
+                        <div class="row">
+                            <div id="spearmancorrchart" style="width: 1000px;height:600px;"></div>
+                        </div>
+                        <div class="col-sm-12 table-responsive" style="overflow: auto">
+                            <table class="table table-sm table-bordered table-hover table-responsive"
+                                   id="spearman_corr_table"></table>
+                        </div>
+                    </div>
                 </div>
+                {#                <div class="row">#}
+                {#                    <div id="corrchart" style="width: 1000px;height:600px;"></div>#}
+                {#                </div>#}
+                {#                <div class="col-sm-12 table-responsive" style="overflow: auto">#}
+                {#                    <table class="table table-sm table-bordered table-hover table-responsive" id="corr_table">#}
+                {#                        <thead>#}
+                {#                        <tr>#}
+                {#                            <th>属性1</th>#}
+                {#                            <th>属性2</th>#}
+                {#                            <th>相关系数</th>#}
+                {#                            <th>操作</th>#}
+                {#                        </tr>#}
+                {#                        </thead>#}
+                {#                        <tbody>#}
+                {#                        {% for tuple in pearsonr %}#}
+                {#                            <tr>#}
+                {#                                <td>{{ tuple.0 }}</td>#}
+                {#                                <td>{{ tuple.1 }}</td>#}
+                {#                                <td>{{ tuple.2 }}</td>#}
+                {#                                <td><a href="{% url 'setverbose' dataname forloop.counter0 %}">标记冗余属性</a></td>#}
+                {#                            </tr>#}
+                {#                        {% endfor %}#}
+                {#                        </tbody>#}
+                {#                    </table>#}
+                {#                </div>#}
+                {#            </div>#}
             </div>
 
             <div class="tab-pane fade" id="data_visualize" role="tabpanel" aria-labelledby="data_visualize_tab">
@@ -159,8 +273,6 @@
                 </div>
                 <div class="row">
                     <div class="col-2">
-                        {#                        <div class="nav flex-column nav-tabs" id="chart_tabs" role="tablist"#}
-                        {#                             aria-orientation="vertical">#}
                         <ul class="nav flex-column" id="chart_tabs" role="tablist">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
@@ -179,7 +291,6 @@
                                 </div>
                             </li>
                         </ul>
-                        {#                        </div>#}
                     </div>
                     <div class="col-10">
                         <div class="tab-content" id="chart_content">
@@ -194,7 +305,8 @@
                                         </div>
                                     {% else %}
                                         {% if forloop.counter0 > col_start %}
-                                            <div class="tab-pane fade" id="chart{{ forloop.counter0 }}" role="tabpanel"
+                                            <div class="tab-pane fade" id="chart{{ forloop.counter0 }}"
+                                                 role="tabpanel"
                                                  aria-labelledby="chart_tab{{ forloop.counter0 }}">
                                                 <div id="data_chart{{ forloop.counter0 }}"
                                                      style="width: 600px; height: 400px"></div>
@@ -208,7 +320,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
 
@@ -282,6 +393,187 @@
                     exportDataType: "all",
                     exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
                 });
+
+                let suspected = [];
+                let eudist = {{ eudist|safe }};
+                for (let it in eudist) {
+                    if (eudist.hasOwnProperty(it)) {
+                        suspected.push(eudist[it]['NO'])
+                    }
+                }
+                let check_title = [];
+                check_title.push({
+                    title: '操作',
+                    formatter: function (value, row, index) {
+                        let idx = index;
+                        let url = "{% url 'edit' dataname 12345 %}";  // django 模板语言不支持使用JS变量，故用12345作占位符再替换
+                        url = url.replace('12345', idx);
+                        let s = '<a href="' + url + '">修改</a>';
+                        return [s].join("")
+                    }
+                });
+
+                let lower = {};
+                let upper = {};
+                let stat = {{ stat|safe }};
+                for (let item in stat) {
+                    if (stat.hasOwnProperty(item)) {
+                        lower[item] = stat[item]['lower'];
+                        upper[item] = stat[item]['upper'];
+                    }
+                }
+                let idx = 1;
+                for (let i in sampleList[0]) {
+                    if (sampleList[0].hasOwnProperty(i)) {
+                        if (typeof (sampleList[0][i]) == 'number') {
+                            check_title[idx] = {
+                                field: i,
+                                title: $('<div/>').text(i).html(),
+                                formatter: function (value) {
+                                    if (!isInteger(value)) {
+                                        return value.toFixed(5);
+                                    }
+                                    return value;
+                                },
+                                cellStyle: function (value, row, index, field) {
+                                    if (value === '' || undefined) {
+                                        return {css: {"background-color": 'red'}};
+                                    } else if ((Number(value) < Number(lower[field]) || Number(value) > Number(upper[field]))) {
+                                        return {css: {"background-color": 'yellow'}};
+                                        //                            } else if (suspected.includes(index) && field === 'NO') {
+                                        //                                return {css: {"background-color": 'yellow'}};
+                                    } else {
+                                        return {}
+                                    }
+                                },
+
+                            };
+                            idx++;
+                        }
+                    }
+                }
+
+                $('#dc_table').bootstrapTable({
+                    data: sampleList,
+                    datatype: 'json',
+                    pagination: true,
+                    pageSize: '15',
+                    columns: check_title,
+                    showColumns: true,
+                    showToggle: true,
+                    search: true,
+                    showExport: true,
+                    exportDataType: "all",
+                    exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
+                    exportOptions: {ignoreColumn: [0]},
+//                rowStyle: function (row, index) {
+//                    if (suspected.includes(index)) {
+//                        return {css: {"background-color": 'yellow'}}
+//                    } else {
+//                        return {}
+//                    }
+//                    for (var i in algo['llof']) {
+//                        if (index === i) {
+//                            return {css: {"color": 'red'}}
+//                        }
+//                    }
+//                    for (var i in algo['lif']) {
+//                        if (index === i) {
+//                            return {css: {"color": 'red'}}
+//                        }
+//                    }
+//                    return {};
+//                },
+                    rowAttributes: function (row, index) {
+                        if (suspected.includes(index)) {
+                            let cnt;
+                            for (let it in eudist) {
+                                if (eudist.hasOwnProperty(it)) {
+                                    if (index === eudist[it]['NO']) {
+                                        cnt = eudist[it]['count'];
+                                    }
+                                }
+                            }
+                            return {
+                                'data-toggle': 'popover',
+                                'data-placement': 'bottom',
+                                'data-trigger': 'hover',
+                                'data-index': index,
+                                'title': ['NO:' + index, '该样本与其他' + cnt + '个样本规则差异大'].join(',')
+                            }
+                        } else {
+                            return {}
+                        }
+                    }
+                });
+
+                let algo = {{ algo|safe }};
+                let lofSampleList = [];
+                for (let idx = 0; idx < sampleList.length; idx++) {
+                    if (algo['lof'].includes(idx)) {
+                        lofSampleList.push(sampleList[idx])
+                    }
+                }
+
+                $('#dc_table_lof').bootstrapTable({
+                    data: lofSampleList,
+                    datatype: 'json',
+                    pagination: true,
+                    pageSize: '15',
+                    columns: check_title,
+                    showColumns: true,
+                    showToggle: true,
+                    search: true,
+                    showExport: true,
+                    exportDataType: "all",
+                    exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
+                    exportOptions: {ignoreColumn: [0]},
+                });
+
+                let ifSampleList = [];
+                for (let idx = 0; idx < sampleList.length; idx++) {
+                    if (algo['if'].includes(idx)) {
+                        ifSampleList.push(sampleList[idx])
+                    }
+                }
+
+                $('#dc_table_if').bootstrapTable({
+                    data: ifSampleList,
+                    datatype: 'json',
+                    pagination: true,
+                    pageSize: '15',
+                    columns: check_title,
+                    showColumns: true,
+                    showToggle: true,
+                    search: true,
+                    showExport: true,
+                    exportDataType: "all",
+                    exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
+                    exportOptions: {ignoreColumn: [0]},
+                });
+
+                let regSampleList = [];
+                for (let idx in eudist) {
+                    if (eudist.hasOwnProperty(idx)) {
+                        regSampleList.push(sampleList[eudist[idx]['NO']])
+                    }
+                }
+
+
+                $('#dc_table_reg').bootstrapTable({
+                    data: regSampleList,
+                    datatype: 'json',
+                    pagination: true,
+                    pageSize: '15',
+                    columns: check_title,
+                    showColumns: true,
+                    showToggle: true,
+                    search: true,
+                    showExport: true,
+                    exportDataType: "all",
+                    exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
+                    exportOptions: {ignoreColumn: [0]},
+                });
             }
         });
 
@@ -354,52 +646,47 @@
             }
         });
 
-        let algoList = [];
-        $.ajax({
-            url: '/data/' + 'algo_data_quality_' + '{{ dataname }}',
-            type: 'get',
-            async: true,
-            success: function (res) {
-                algoList = eval(res);
-                console.log('algo:', algoList);
-            }
-        });
-
-        let eudistList = [];
-        $.ajax({
-            url: '/data/' + 'eudist_data_quality_' + '{{ dataname }}',
-            type: 'get',
-            async: true,
-            success: function (res) {
-                eudistList = eval(res);
-                console.log('eudist:', eudistList);
-                let suspected = [];
-                for (let idx = 0; idx < eudistList.length; idx++) {
-                    suspected.push(eudistList[idx]['NO'])
-                }
-                console.log(suspected)
-            }
-        });
+        {#let algoList = [];#}
+        {#$.ajax({#}
+        {#    url: '/data/' + 'algo_data_quality_' + '{{ dataname }}',#}
+        {#    type: 'get',#}
+        {#    async: true,#}
+        {#    success: function (res) {#}
+        {#        algoList = eval(res);#}
+        {#        console.log('algo:', algoList);#}
+        {#    }#}
+        //});
+        {##}
+        {#let eudistList = [];#}
+        {#$.ajax({#}
+        {#    url: '/data/' + 'eudist_data_quality_' + '{{ dataname }}',#}
+        {#    type: 'get',#}
+        {#    async: true,#}
+        {#    success: function (res) {#}
+        {#        eudistList = eval(res);#}
+        {#        console.log('eudist:', eudistList);#}
+        {#    }#}
+        //});
 
         $(function () {
-            let data = {{ data|safe }};
-            let stat = {{ stat|safe }};
-            let eudist = {{ eudist|safe }};
-            let algo ={{ algo|safe }};
-
-            let editable = {type: "text"};
-
-            let suspected = [];
-            for (let it in eudist) {
-                if (eudist.hasOwnProperty(it)) {
-                    suspected.push(eudist[it]['NO'])}}
-
-            let raw_data = JSON.parse(JSON.stringify(data)); // 深拷贝 修改rawdata不影响data
+            {#let data = {{ data|safe }};#}
+            {#let stat = {{ stat|safe }};#}
+            {#let eudist = {{ eudist|safe }};#}
+            {#let algo ={{ algo|safe }};#}
+            {##}
+            {#let editable = {type: "text"};#}
+            {##}
+            {#let suspected = [];#}
+            {#for (let it in eudist) {#}
+            {#    if (eudist.hasOwnProperty(it)) {#}
+            {#        suspected.push(eudist[it]['NO'])#}
+            {#    }#}
+//            }
+            {##}
+            {#let raw_data = JSON.parse(JSON.stringify(data)); // 深拷贝 修改rawdata不影响data#}
             //var quality_title = [];
             //var raw_title = [];
-
             //raw_title.push({title: 'NO', class: 'w100', field: "NO",});
-
             //quality_title.push({title: '', class: 'w100', field: "dataQualityField"});
 
             {#var dataqualityfields = [];#}
@@ -421,68 +708,68 @@
             {#        class: 'w100',#}
             {#        title: $('<div/>').text(item).html(),});}#}
 
-            for (let i in raw_data) {
-                if (raw_data.hasOwnProperty(i)) {
-                    for (let j in raw_data[i]) {
-                        if (raw_data[i].hasOwnProperty(j)) {
-                            if (typeof (raw_data[i][j]) == 'number' && j !== 'NO') {
-                                raw_data[i][j] = raw_data[i][j].toFixed(5);
-                            }
-                        }
-                    }
-                }
-            }
+            {#for (let i in raw_data) {#}
+            {#    if (raw_data.hasOwnProperty(i)) {#}
+            {#        for (let j in raw_data[i]) {#}
+            {#            if (raw_data[i].hasOwnProperty(j)) {#}
+            {#                if (typeof (raw_data[i][j]) == 'number' && j !== 'NO') {#}
+            {#                    raw_data[i][j] = raw_data[i][j].toFixed(5);#}
+            {#                }#}
+            {#            }#}
+            {#        }#}
+            {#    }#}
+//            }
 
-            var check_title = [];
-            check_title.push({
-                title: '操作',
-                formatter: function (value, row, index) {
-                    let idx = index;
-                    let url = "{% url 'edit' dataname 12345 %}";  // django 模板语言不支持使用JS变量，故用12345作占位符再替换
-                    url = url.replace(12345, idx);
-                    let s = '<a href="' + url + '">修改</a>';
-                    return [s].join("")
-                }
-            });
+            {#let check_title = [];#}
+            {#check_title.push({#}
+            {#    title: '操作',#}
+            {#    formatter: function (value, row, index) {#}
+            {#        let idx = index;#}
+            {#        let url = "{% url 'edit' dataname 12345 %}";  // django 模板语言不支持使用JS变量，故用12345作占位符再替换#}
+            {#        url = url.replace('12345', idx);#}
+            {#        let s = '<a href="' + url + '">修改</a>';#}
+            {#        return [s].join("")#}
+//                }
+//            });
 
-            let lower = {};
-            let upper = {};
-            for (let item in stat) {
-                if (stat.hasOwnProperty(item)){
-                    lower[item] = stat[item]['lower'];
-                    upper[item] = stat[item]['upper'];
-                }
-            }
-            let idx = 1;
-            for (let i in data[0]) {
-                if (data[0].hasOwnProperty(i)){
-                    if (typeof (data[0][i]) == 'number') {
-                        check_title[idx] = {
-                            field: i,
-                            title: $('<div/>').text(i).html(),
-                            formatter: function (value) {
-                                if (!isInteger(value)) {
-                                    return value.toFixed(5);
-                                }
-                                return value;
-                            },
-                            cellStyle: function (value, row, index, field) {
-                                if (value === '' || undefined) {
-                                    return {css: {"background-color": 'red'}};
-                                } else if ((Number(value) < Number(lower[field]) || Number(value) > Number(upper[field]))) {
-                                    return {css: {"background-color": 'yellow'}};
-    //                            } else if (suspected.includes(index) && field === 'NO') {
-    //                                return {css: {"background-color": 'yellow'}};
-                                } else {
-                                    return {}
-                                }
-                            },
+            {#let lower = {};#}
+            {#let upper = {};#}
+            {#for (let item in stat) {#}
+            {#    if (stat.hasOwnProperty(item)) {#}
+            {#        lower[item] = stat[item]['lower'];#}
+            {#        upper[item] = stat[item]['upper'];#}
+//                }
+//            }
+            {#let idx = 1;#}
+            {#for (let i in data[0]) {#}
+            {#    if (data[0].hasOwnProperty(i)) {#}
+            {#        if (typeof (data[0][i]) == 'number') {#}
+            {#            check_title[idx] = {#}
+            {#                field: i,#}
+            {#                title: $('<div/>').text(i).html(),#}
+            {#                formatter: function (value) {#}
+            {#                    if (!isInteger(value)) {#}
+            {#                        return value.toFixed(5);#}
+//                                }
+            {#return value;#}
+//                            },
+            {#cellStyle: function (value, row, index, field) {#}
+            {#    if (value === '' || undefined) {#}
+            {#        return {css: {"background-color": 'red'}};#}
+            {#    } else if ((Number(value) < Number(lower[field]) || Number(value) > Number(upper[field]))) {#}
+            {#        return {css: {"background-color": 'yellow'}};#}
+            {#        //                            } else if (suspected.includes(index) && field === 'NO') {#}
+            {#        //                                return {css: {"background-color": 'yellow'}};#}
+            {#    } else {#}
+            {#        return {}#}
+//                                }
+//                            },
 
-                        };
-                        idx++;
-                    }
-                }
-            }
+//                        };
+            {#idx++;#}
+//                    }
+//                }
+//            }
 
             {#$('#raw_table').bootstrapTable({#}
             {#    data: raw_data,#}
@@ -512,62 +799,61 @@
             {#    exportDataType: "all",#}
             {#    exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],#}
 
-            $('#dc_table').bootstrapTable({
-                method: 'post',
-                data: data,
-                datatype: 'json',
-                pagination: true,
-                pageSize: '15',
-                columns: check_title,
-                showColumns: true,
-                showToggle: true,
-                search: true,
-                showExport: true,
-                exportDataType: "all",
-                exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
-                exportOptions: {ignoreColumn: [0]},
-//                rowStyle: function (row, index) {
-//                    if (suspected.includes(index)) {
-//                        return {css: {"background-color": 'yellow'}}
-//                    } else {
-//                        return {}
-//                    }
-//                    for (var i in algo['llof']) {
-//                        if (index === i) {
-//                            return {css: {"color": 'red'}}
-//                        }
-//                    }
-//                    for (var i in algo['lif']) {
-//                        if (index === i) {
-//                            return {css: {"color": 'red'}}
-//                        }
-//                    }
-//                    return {};
-//                },
-
-                rowAttributes: function (row, index) {
-                    if (suspected.includes(index)) {
-                        var cnt;
-                        for (let it in eudist) {
-                            if (eudist.hasOwnProperty(it)) {
-                                if (index === eudist[it]['NO']) {
-                                    cnt = eudist[it]['count'];
-                                }
-                            }
-                        }
-                        return {
-                            'data-toggle': 'popover',
-                            'data-placement': 'bottom',
-                            'data-trigger': 'hover',
-                            'data-index': index,
-                            'title': ['NO:' + index, '该样本与其他' + cnt + '个样本规则差异大'].join(',')
-                        }
-                    } else {
-                        return {}
-                    }
-                }
-
-            });
+            {#            $('#dc_table').bootstrapTable({#}
+            {#                method: 'post',#}
+            {#                data: data,#}
+            {#                datatype: 'json',#}
+            {#                pagination: true,#}
+            {#                pageSize: '15',#}
+            {#                columns: check_title,#}
+            {#                showColumns: true,#}
+            {#                showToggle: true,#}
+            {#                search: true,#}
+            {#                showExport: true,#}
+            {#                exportDataType: "all",#}
+            {#                exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],#}
+            {#                exportOptions: {ignoreColumn: [0]},#}
+            {#//                rowStyle: function (row, index) {#}
+            {#//                    if (suspected.includes(index)) {#}
+            {#//                        return {css: {"background-color": 'yellow'}}#}
+            {#//                    } else {#}
+            {#//                        return {}#}
+            {#//                    }#}
+            {#//                    for (var i in algo['llof']) {#}
+            {#//                        if (index === i) {#}
+            {#//                            return {css: {"color": 'red'}}#}
+            {#//                        }#}
+            {#//                    }#}
+            {#//                    for (var i in algo['lif']) {#}
+            {#//                        if (index === i) {#}
+            {#//                            return {css: {"color": 'red'}}#}
+            {#//                        }#}
+            {#//                    }#}
+            {#//                    return {};#}
+            {#//                },#}
+            {#                rowAttributes: function (row, index) {#}
+            {#                    if (suspected.includes(index)) {#}
+            {#                        let cnt;#}
+            {#                        for (let it in eudist) {#}
+            {#                            if (eudist.hasOwnProperty(it)) {#}
+            {#                                if (index === eudist[it]['NO']) {#}
+            {#                                    cnt = eudist[it]['count'];#}
+            {#                                }#}
+            {#                            }#}
+            {#                        }#}
+            {#                        return {#}
+            {#                            'data-toggle': 'popover',#}
+            {#                            'data-placement': 'bottom',#}
+            {#                            'data-trigger': 'hover',#}
+            {#                            'data-index': index,#}
+            {#                            'title': ['NO:' + index, '该样本与其他' + cnt + '个样本规则差异大'].join(',')#}
+            {#                        }#}
+            {#                    } else {#}
+            {#                        return {}#}
+            {#                    }#}
+            {#                }#}
+            {##}
+            {#            });#}
         })
     </script>
 
@@ -608,17 +894,92 @@
             } catch (e) {
                 console.log(i);
                 console.log(e);
-                continue
             }
         }
     </script>
 
     <script type="text/javascript ">
-        {#import compatStyle from "../static/incubator-echarts-4.7.0/src/preprocessor/helper/compatStyle";#}
+        let pearsonList = {{ pearsonr|safe }};
+        let kendallList = {{ kendallr|safe }};
+        let spearmanList = {{ spearmanr|safe }};
+
+        // TODO: reuse the code
+        for (let idx = 0; idx < pearsonList.length; idx++) {
+            pearsonList[idx][2] = pearsonList[idx][2].toFixed(5)
+            let url = '<a href="{% url 'setverbose' dataname 12345 'pearson' %}">标记冗余属性</a>';
+            url = url.replace('12345', idx)
+            pearsonList[idx].push(url);
+        }
+        for (let idx = 0; idx < kendallList.length; idx++) {
+            kendallList[idx][2] = kendallList[idx][2].toFixed(5)
+            let url = '<a href="{% url 'setverbose' dataname 12345 'kendall' %}">标记冗余属性</a>';
+            url = url.replace('12345', idx)
+            kendallList[idx].push(url);
+        }
+        for (let idx = 0; idx < spearmanList.length; idx++) {
+            spearmanList[idx][2] = spearmanList[idx][2].toFixed(5)
+            let url = '<a href="{% url 'setverbose' dataname 12345 'spearman' %}">标记冗余属性</a>';
+            url = url.replace('12345', idx)
+            spearmanList[idx].push(url);
+        }
+
+        $('#pearson_corr_table').bootstrapTable({
+            data: pearsonList,
+            pagination: true,
+            pageSize: '15',
+            editable: {type: "text"},
+            columns: [
+                {title: '属性1', width: 200},
+                {title: '属性2', width: 200},
+                {title: '相关系数', width: 400},
+                {title: '操作', width: 300}
+            ],
+            showColumns: true,
+            showToggle: true,
+            search: true,
+            showExport: true,
+            exportDataType: "all",
+            exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
+        })
+        $('#kendall_corr_table').bootstrapTable({
+            data: kendallList,
+            pagination: true,
+            pageSize: '15',
+            editable: {type: "text"},
+            columns: [
+                {title: '属性1', width: 200},
+                {title: '属性2', width: 200},
+                {title: '相关系数', width: 400},
+                {title: '操作', width: 300}
+            ],
+            showColumns: true,
+            showToggle: true,
+            search: true,
+            showExport: true,
+            exportDataType: "all",
+            exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
+        })
+        $('#spearman_corr_table').bootstrapTable({
+            data: spearmanList,
+            pagination: true,
+            pageSize: '15',
+            editable: {type: "text"},
+            columns: [
+                {title: '属性1', width: 200},
+                {title: '属性2', width: 200},
+                {title: '相关系数', width: 400},
+                {title: '操作', width: 300}
+            ],
+            showColumns: true,
+            showToggle: true,
+            search: true,
+            showExport: true,
+            exportDataType: "all",
+            exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
+        })
 
         let attr = [];
         let attrcorr = [];
-
         {% for i in pearsonr %}
             if (!attr.includes('{{ i.0 }}')) {
                 attr.push('{{ i.0 }}')
@@ -629,12 +990,15 @@
             attrcorr.push(['{{ i.0 }}', '{{ i.1 }}', {{ i.2 }}]);
             attrcorr.push(['{{ i.1 }}', '{{ i.0 }}', {{ i.2 }}]);
         {% endfor %}
-        {#console.log(attr);#}
 
-        let corrchart = echarts.init(document.getElementById('corrchart'));
+        let corrchart = echarts.init(document.getElementById('pearsoncorrchart'));
         corrchart.setOption({
             tooltip: {
                 position: 'top'
+            },
+            title: {
+                left: 30,
+                text: 'Pearson相关性'
             },
             animation: false,
             xAxis: {
@@ -656,7 +1020,6 @@
                 max: 1,
                 orient: 'horizontal',
                 left: 'center',
-
             },
             series: [{
                 type: 'heatmap',
@@ -671,6 +1034,116 @@
             }]
         })
 
+        let kattr = [];
+        let kattrcorr = [];
+        {% for i in kendallr %}
+            if (!kattr.includes('{{ i.0 }}')) {
+                kattr.push('{{ i.0 }}')
+            }
+            if (!kattr.includes('{{ i.1 }}')) {
+                kattr.push('{{ i.1 }}')
+            }
+            kattrcorr.push(['{{ i.0 }}', '{{ i.1 }}', {{ i.2 }}]);
+            kattrcorr.push(['{{ i.1 }}', '{{ i.0 }}', {{ i.2 }}]);
+        {% endfor %}
 
+        let kcorrchart = echarts.init(document.getElementById('kendallcorrchart'));
+        kcorrchart.setOption({
+            tooltip: {
+                position: 'top'
+            },
+            title: {
+                left: 30,
+                text: 'Kendall相关性'
+            },
+            animation: false,
+            xAxis: {
+                type: 'category',
+                data: kattr,
+                splitArea: {
+                    show: true
+                }
+            },
+            yAxis: {
+                type: 'category',
+                data: kattr,
+                splitArea: {
+                    show: true
+                }
+            },
+            visualMap: {
+                min: 0.8,
+                max: 1,
+                orient: 'horizontal',
+                left: 'center',
+            },
+            series: [{
+                type: 'heatmap',
+                data: kattrcorr,
+                label: {show: false},
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }]
+        })
+
+        let sattr = [];
+        let sattrcorr = [];
+        {% for i in spearmanr %}
+            if (!sattr.includes('{{ i.0 }}')) {
+                sattr.push('{{ i.0 }}')
+            }
+            if (!sattr.includes('{{ i.1 }}')) {
+                sattr.push('{{ i.1 }}')
+            }
+            sattrcorr.push(['{{ i.0 }}', '{{ i.1 }}', {{ i.2 }}]);
+            sattrcorr.push(['{{ i.1 }}', '{{ i.0 }}', {{ i.2 }}]);
+        {% endfor %}
+
+        let scorrchart = echarts.init(document.getElementById('spearmancorrchart'));
+        scorrchart.setOption({
+            tooltip: {
+                position: 'top'
+            },
+            title: {
+                left: 30,
+                text: 'Spearman相关性'
+            },
+            animation: false,
+            xAxis: {
+                type: 'category',
+                data: sattr,
+                splitArea: {
+                    show: true
+                }
+            },
+            yAxis: {
+                type: 'category',
+                data: sattr,
+                splitArea: {
+                    show: true
+                }
+            },
+            visualMap: {
+                min: 0.8,
+                max: 1,
+                orient: 'horizontal',
+                left: 'center',
+            },
+            series: [{
+                type: 'heatmap',
+                data: sattrcorr,
+                label: {show: false},
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }]
+        })
     </script>
 {% endblock %}

@@ -8,21 +8,36 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div>选择保留的特征：</div>
-        <div>{% for el in retainedfeatures %}
-            {{ el.name }},
-        {% endfor %}</div>
-        <div>特征选择结果：</div>
-        <div>
+    <div class="container" style="margin-top: 2%">
+        <h3>选择保留的特征：</h3>
+        <p>
+        {% if retainedfeatures %}
+            {% for el in retainedfeatures %}
+                {% if forloop.last %}
+                    {{ el.name }}
+                {% else %}
+                    {{ el.name }},
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            None
+        {% endif %}
+        </p>
+        <h3>特征选择结果：</h3>
+        <p>
             {% for el in result %}
-                {{ el }},
-            {% endfor %}</div>
-        <div>均方误差：{{ rmse }}，拟合度：{{ r2 }}</div>
+                {% if forloop.last %}
+                    {{ el }}
+                {% else %}
+                    {{ el }},
+                {% endif %}
+            {% endfor %}
+        </p>
+        <h3>均方误差：{{ rmse|floatformat:3 }}，拟合度：{{ r2|floatformat:3 }}</h3>
         <div class="row">
             <div id="evochart" style="width: 600px; height: 400px"></div>
         </div>
-        <button type="button" class="btn btn-primary"
+        <button type="button" class="btn btn-info"
                 onclick=' window.location.href="{% url 'machinelearning' dataname %}"' style="height: 70px">机器学习
         </button>
         <button type="button" class="btn btn-default"

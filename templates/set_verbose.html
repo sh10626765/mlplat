@@ -3,12 +3,12 @@
 {% block title %}标记冗余属性{% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container" style="margin-top: 2%;">
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
-                <div>注意：被标记属性将被视作冗余属性！</div>
-                <div>Pearson相关系数：{{ attrpair.2 }}</div>
+                <h3>注意：被标记属性将被视作冗余属性！</h3>
+                <p>{{ corr_method|capfirst }}相关系数：{{ attrpair.2|floatformat:5 }}</p>
                 <div class="col-sm-8">
                     <input type="checkbox" id="attr1" name="attr1" value="{{ attrpair.0 }}">
                     <label class="col-sm-4 control-label" for="attr1">{{ attrpair.0 }}</label>
@@ -23,7 +23,7 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-6">
-                    <input type="submit" class="btn btn-primary" value="提交">
+                    <input type="submit" class="btn btn-info" value="提交">
                     <a type="button" class="btn btn-default" href="{% url 'qualitycontrol' dataname %}">返回</a>
                 </div>
             </div>

@@ -173,8 +173,8 @@ class excelProcessor(object):
         desc['if'] = lif_idx
         return desc
 
-    def get_pearson_r(self):
-        pearson_corr_mat = self.dfattr.corr(method='pearson')
+    def get_corr_coef(self, method):
+        pearson_corr_mat = self.dfattr.corr(method=method)
 
         attr_relate = []  # 记录相关系数过高的特征编号和相关系数，例如：(1,2,0.9)表示特征1与特征2的相关系数为0.9
         for i in range(self.attr_num):

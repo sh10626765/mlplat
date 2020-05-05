@@ -48,19 +48,20 @@ def edit(request, name, number):
         return render(request, 'modify_data.html', {'dataitem': item, 'dataname': name, 'col_start': si})
 
 
-def setverbose(request, name, number):
+def setverbose(request, name, number, method):
     if request.method == 'GET':
         data = models.ReadData(name, host=HOST, port=PORT, database=DATABASE)
 
         excelproc = utils.excelProcessor(data)
-        corr = excelproc.get_pearson_r()
+        corr = excelproc.get_corr_coef(method)
         attr_name = excelproc.col_name[:-1]
         corr = [(attr_name[i[0]], attr_name[i[1]], i[2]) for i in corr]  # 将属性下标转为属性名
         corr.sort(key=lambda x: x[2], reverse=True)
 
         return render(request, 'set_verbose.html', {
             'dataname': name,
-            'attrpair': corr[number]
+            'attrpair': corr[number],
+            'corr_method': method,
         })
 
     if request.method == 'POST':
@@ -161,10 +162,16 @@ def qualitycontrol(request, data_name):  # , stat_quality_name, algo_quality_nam
         data = models.ReadData(data_name, host=HOST, port=PORT, database=DATABASE)
 
         excelproc = utils.excelProcessor(data)
-        corr = excelproc.get_pearson_r()
+        pearson_corr = excelproc.get_corr_coef('pearson')
+        kendall_corr = excelproc.get_corr_coef('kendall')
+        spearman_corr = excelproc.get_corr_coef('spearman')
         attr_name = excelproc.col_name[:-1]
-        corr = [(attr_name[i[0]], attr_name[i[1]], i[2]) for i in corr]  # 将属性下标转为属性名
-        corr.sort(key=lambda x: x[2], reverse=True)
+        pearson_corr = [[attr_name[i[0]], attr_name[i[1]], i[2]] for i in pearson_corr]  # 将属性下标转为属性名
+        pearson_corr.sort(key=lambda x: x[2], reverse=True)
+        kendall_corr = [[attr_name[i[0]], attr_name[i[1]], i[2]] for i in kendall_corr]  # 将属性下标转为属性名
+        kendall_corr.sort(key=lambda x: x[2], reverse=True)
+        spearman_corr = [[attr_name[i[0]], attr_name[i[1]], i[2]] for i in spearman_corr]  # 将属性下标转为属性名
+        spearman_corr.sort(key=lambda x: x[2], reverse=True)
 
         stat_data_quality = []  # 对表格数据进行质量检测，得到基本统计信息
         for key, val in excelproc.statistics_data_check().to_dict().items():
@@ -201,7 +208,9 @@ def qualitycontrol(request, data_name):  # , stat_quality_name, algo_quality_nam
             'stat': json.dumps(stat_dict),
             'algo': algo_dict,
             'eudist': json.dumps(eudist),
-            'pearsonr': corr,
+            'pearsonr': pearson_corr,
+            'kendallr': kendall_corr,
+            'spearmanr': spearman_corr,
             'col_start': si,
         })
 
@@ -361,7 +370,43 @@ def predict(request, data_name, method_name):
         fileinput = request.FILES.get('input-excel')  # read file from <input name="input-excel">
         fileinputname = fileinput.name  # get file name
         excelproc = utils.excelProcessor(fileinput)  # preprocess the file uploaded
-        pass
+
+        origin_data_to_predict = excelproc.df
+        for col in origin_data_to_predict:
+            origin_data_to_predict.rename(columns={col: col.replace('.', '').replace('$', '')}, inplace=True)
+
+        fs_result_all = models.ReadData('fs_result_' + data_name, HOST, PORT, DATABASE)
+        fs_result = None
+        for res_i in fs_result_all:
+            if res_i.get('method', None) == method_name:
+                fs_result = res_i
+
+        origin_data = utils.excelProcessor(models.ReadData(data_name, HOST, PORT, DATABASE))
+        feature_names = origin_data.col_name
+        selected_features = [feature_names[i] for i in fs_result.get('res', None)]
+
+        data_to_predict = origin_data_to_predict.loc[:, selected_features].values
+
+        targets = []
+        coef = fs_result.get('coef', None)
+        for sample in data_to_predict:
+            target = fs_result.get('intercept', None)
+            for idx in range(len(sample)):
+                target += sample[idx] * coef[idx]
+            targets.append(target)
+
+        origin_data_to_predict.insert(0, 'predict', targets)
+        print(origin_data_to_predict)
+
+        return render(request, 'predict_page.html',
+                      {
+                          'dataname': data_name,
+                          'selected_features': selected_features,
+                          'coef': fs_result.get('coef', None),
+                          'intercept': fs_result.get('intercept', None),
+                          'uploadtopredict': 'True',
+                          'predictresult': origin_data_to_predict.T.to_dict(),
+                      })
     if request.method == 'GET':
         fs_result_all = models.ReadData('fs_result_' + data_name, HOST, PORT, DATABASE)
         fs_result = None
@@ -380,4 +425,5 @@ def predict(request, data_name, method_name):
                           'selected_features': selected_features,
                           'coef': fs_result.get('coef', None),
                           'intercept': fs_result.get('intercept', None),
+                          'uploadtopredict': 'False',
                       })

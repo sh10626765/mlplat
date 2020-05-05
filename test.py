@@ -43,6 +43,10 @@ filepath = 'E:\\毕设\\data\\traindata-0.5D0 - he.xlsx'
 
 df = loaddata(filepath)
 
+# print(df)
+for i in df.loc[:, ['ranion', 'Ea(eV)']].iterrows():
+    print(i[1])
+
 data_x = df.iloc[:, 4:-1]
 data_y = df.iloc[:, -1]
 
