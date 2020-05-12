@@ -9,10 +9,9 @@
             position: fixed;
             width: 500px;
             height: 500px;
-            top: 10%;
-            left: 10%;
-            {#margin: -25px -150px;#}
-            background-color: #FFFFFF;
+            top: 25%;
+            left: 25%;
+        {#margin: -25px -150px;#} background-color: #FFFFFF;
             border: 1px solid #CCCCCC;
             text-align: center;
             padding: 20px;
@@ -22,24 +21,74 @@
 
 {% block content %}
     <div class="container" style="margin-top: 2%">
-        <h3>自定义保留特征</h3>
+        <div class="row">
+            <button id="showDataButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
+                    onclick='window.location.href="{% url 'qualitycontrol' dataname %}"'>数据预览
+            </button>
+            <button id="beginFSButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
+                    onclick='window.location.href="{% url 'domainknowledgeembedding' dataname %}"'>特征选择
+            </button>
+            <button id="beginMLButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
+                    onclick='window.location.href="{% url 'machinelearning' dataname 'qualitycontrol' %}"'>生成预测模型
+            </button>
+            {#                    <div class="col-sm-1">#}
+            {#                        <button id="beginPredictButton" type="button" class="btn btn-primary"#}
+            {#                                onclick=' window.location.href="{% url 'predict' dataname %}"'>开始预测#}
+            {#                        </button>#}
+            {#                    </div>#}
+            <script type="text/javascript">
+                let fullUrl = '{{ request.path }}'.substr(1, 100);
+                let idfy = fullUrl.substring(0, fullUrl.indexOf('/'));
+
+                console.log(idfy);
+                let showDataButton, beginFSButton, beginMLButton;
+                showDataButton = document.getElementById('showDataButton');
+                beginFSButton = document.getElementById('beginFSButton');
+                beginMLButton = document.getElementById('beginMLButton');
+                if (idfy === 'qualitycontrol') {
+                    showDataButton.disabled = true;
+                    showDataButton.className += ' btn btn-link';
+                    beginFSButton.disabled = false;
+                    beginFSButton.className.replace(' btn btn-link', '');
+                    beginMLButton.disabled = false;
+                    beginMLButton.className.replace(' btn btn-link', '');
+                } else if (idfy === 'featureselection') {
+                    beginFSButton.disabled = true;
+                    beginFSButton.className += ' btn btn-link';
+                    showDataButton.disabled = false;
+                    showDataButton.className.replace(' btn btn-link', '');
+                    beginMLButton.disabled = false;
+                    beginMLButton.className.replace(' btn btn-link', '');
+                } else if (idfy === 'machinelearning') {
+                    beginMLButton.disabled = true;
+                    beginMLButton.className += ' btn btn-link';
+                    beginFSButton.disabled = false;
+                    beginFSButton.className.replace(' btn btn-link', '');
+                    showDataButton.disabled = false;
+                    showDataButton.className.replace(' btn btn-link', '');
+                }
+            </script>
+        </div>
+        <h3 style="margin-top: 2%">选择核特征</h3>
 
         <form action="#" method="post" enctype="multipart/form-data">{% csrf_token %}
-            {% for featurename in featurenames %}
-                <div class="custom-checkbox">
-                    <input class="custom-checkbox" type="checkbox" id="{{ featurename }}" name="checkbox_list"
-                           value="{{ featurename }}">
-                    <label for="{{ featurename }}">{{ featurename }}</label>
-                </div>
-            {% endfor %}
+            <div class="row">
+                {% for featurename in featurenames %}
+                    <div class="custom-checkbox col-4">
+                        <input class="custom-checkbox" type="checkbox" id="{{ featurename }}" name="checkbox_list"
+                               value="{{ featurename }}">
+                        <label for="{{ featurename }}">{{ featurename }}</label>
+                    </div>
+                {% endfor %}
+            </div>
             <button type="submit" class="btn btn-info"
                     onclick="document.getElementById('loading').style.display='';">确定
             </button>
             <a type="button" class="btn btn-default"
-                    href="{% url 'qualitycontrol' dataname %}">返回
+               href="{% url 'qualitycontrol' dataname %}">返回
             </a>
         </form>
-        <div id="loading" style="display:none">
+        <div id="loading" style="display:none;">
             <img src="{% static 'image/loading.gif' %}" width="400" height="400" alt="Processing">
         </div>
     </div>

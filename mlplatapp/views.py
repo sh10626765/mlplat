@@ -14,13 +14,21 @@ HOST = 'localhost'
 PORT = 27017
 DATABASE = 'materialsData'
 si = 0  # 暂时，用于记录第一个数值型数据的列下标
+model = None
 
 
-def test(request):
+def test(request):  # for html testing
     return render(request, 'testhtml.html')
 
 
 def edit(request, name, number):
+    """
+    由qualitycontrol页面进入的数据修改功能
+    :param request:
+    :param name: 数据集的名称
+    :param number: 数据的NO编号
+    :return:
+    """
     if request.method == 'POST':
         val_list = request.POST.getlist('material_attr')  # 获取form表单数据皆为字符串，须对数字进行转换
         eval_val_list = [eval(item) if utils.is_number(item) else item for item in val_list]
@@ -49,6 +57,14 @@ def edit(request, name, number):
 
 
 def setverbose(request, name, number, method):
+    """
+    由qualitycontrol页面进入的冗余属性标记功能
+    :param request:
+    :param name: 数据集名
+    :param number: 页面上属性对的编号，对应冗余属性对（list）的下标
+    :param method: 相关系数类型
+    :return:
+    """
     if request.method == 'GET':
         data = models.ReadData(name, host=HOST, port=PORT, database=DATABASE)
 
@@ -85,6 +101,11 @@ def index(request):
 
 
 def show(request):
+    """
+    展示数据库中的现有数据集
+    :param request:
+    :return:
+    """
     if request.method == 'POST':
         pass
 
@@ -116,6 +137,12 @@ def show(request):
 
 
 def data(request, name):
+    """
+    直接给出数据库中的数据，用于ajax
+    :param request:
+    :param name: 数据集名
+    :return:
+    """
     if request.method == 'GET':
         data = models.ReadData(name, host=HOST, port=PORT, database=DATABASE)
         # return HttpResponse(data)
@@ -202,6 +229,9 @@ def qualitycontrol(request, data_name):  # , stat_quality_name, algo_quality_nam
         algo_dict = {}
         for i in algo:
             algo_dict.update(i)
+
+        pca_result = excelproc.get_two_primary_components()
+
         return render(request, 'quality_control.html', {
             'dataname': data_name,
             'data': data,
@@ -212,6 +242,7 @@ def qualitycontrol(request, data_name):  # , stat_quality_name, algo_quality_nam
             'kendallr': kendall_corr,
             'spearmanr': spearman_corr,
             'col_start': si,
+            'pca_result': pca_result,
         })
 
 
@@ -220,7 +251,7 @@ def download(request, name):
         data = models.ReadData(name, host=HOST, port=PORT, database=DATABASE)
         dataj = pd.read_json(json.dumps(data))
         WFP = os.path.join(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'excel_file'),
-                           str(name))
+                           str(name) + '_downloaded')
         # WFP = '././excel_file/' + str(name)
         dataj.to_excel(WFP, index=False)
         # res = FileResponse(file)
@@ -229,11 +260,11 @@ def download(request, name):
         return FileResponse(open(WFP, 'rb'))
 
 
-def dataprocess(request, data_name):
+def chooseDomainKnowledgeEmbeddingMethod(request, data_name):
     if request.method == 'POST':
         pass
     if request.method == 'GET':
-        return HttpResponse('this is data pre-process page for {}'.format(data_name))
+        return render(request, 'embed_domain_knowledge.html', {'dataname': data_name})
 
 
 def featureselection(request, data_name):
@@ -280,7 +311,9 @@ def featureselection(request, data_name):
                             'method': method,
                             'res': res,
                             'coef': list(ml_model.coef_),
-                            'intercept': ml_model.intercept_
+                            'intercept': ml_model.intercept_,
+                            'rmse': rmse,
+                            'r2': r2
                         }], True, HOST, PORT, DATABASE)
         ml_method = models.MachineLearningMethods(method_name=method)
         ml_method.save()
@@ -313,117 +346,214 @@ def featureselection(request, data_name):
                       })
 
 
-def machinelearning(request, data_name):
+def featureselectionBycontributionRules(request, data_name):
     if request.method == 'POST':
-        radio_list = request.POST.getlist('radio_list')
-        fs_result_all = models.ReadData('fs_result_' + data_name, HOST, PORT, DATABASE)
-        fs_result = None
-        for res_i in fs_result_all:
-            if res_i.get('method', None) in radio_list:
-                fs_result = res_i
+        pass
+    if request.method == 'GET':
+        return render(request, 'testhtml.html', {'dataname': data_name})
 
-        origin_data = utils.excelProcessor(models.ReadData(data_name, HOST, PORT, DATABASE))
-        feature_names = origin_data.col_name
 
-        selected_features = [feature_names[i] for i in fs_result.get('res', None)]
-        feture_coef = list(zip(selected_features, fs_result.get('coef', None)))
+def featureselectionByScore(request, data_name):
+    if request.method == 'POST':
+        pass
+    if request.method == 'GET':
+        return render(request, 'testhtml.html', {'dataname': data_name})
 
-        return render(request, 'show_machine_learning.html',
-                      {
-                          'dataname': data_name,
-                          'ml_method': fs_result.get('method', None),
-                          'coef': fs_result.get('coef', None),
-                          'intercept': fs_result.get('intercept', None),
-                          'selected_features': selected_features,
-                          'fc': feture_coef,
-                      })
+
+def machinelearning(request, data_name, from_where):
+    """
+    :param request:
+    :param data_name:
+    :param from_where: 用于判断从哪个页面进入本页
+    :return:
+    """
+    global model
+    if request.method == 'POST':
+        if from_where == 'featureselection':
+            radio_list = request.POST.getlist('radio_list')
+            fs_result_all = models.ReadData('fs_result_' + data_name, HOST, PORT, DATABASE)
+            fs_result = None
+            for res_i in fs_result_all:
+                if res_i.get('method', None) in radio_list:
+                    fs_result = res_i
+
+            origin_data = utils.excelProcessor(models.ReadData(data_name, HOST, PORT, DATABASE))
+            feature_names = origin_data.col_name
+
+            selected_features = [feature_names[i] for i in fs_result.get('res', None)]
+            feture_coef = list(zip(selected_features, fs_result.get('coef', None)))
+
+            return render(request, 'show_machine_learning.html',
+                          {
+                              'dataname': data_name,
+                              'ml_method': fs_result.get('method', None),
+                              'coef': fs_result.get('coef', None),
+                              'intercept': fs_result.get('intercept', None),
+                              'rmse': fs_result.get('rmse', None),
+                              'r2': fs_result.get('r2', None),
+                              'selected_features': selected_features,
+                              'fc': feture_coef,
+                              'from_where': from_where,
+                          })
         # return HttpResponse('Success! You have chosen {}'.format(radio_list))
+        if from_where == 'qualitycontrol':
+            radio_list = request.POST.getlist('radio_list')
+            model = None
+            if radio_list[0] == 'LinearRegression':
+                from sklearn.linear_model import LinearRegression
+                model = LinearRegression()
+                origin_data = utils.excelProcessor(models.ReadData(data_name, HOST, PORT, DATABASE))
+                model.fit(origin_data.X, origin_data.Y)
+            if radio_list[0] == 'Ridge':
+                from sklearn.linear_model import Ridge
+                model = Ridge()
+                origin_data = utils.excelProcessor(models.ReadData(data_name, HOST, PORT, DATABASE))
+                model.fit(origin_data.X, origin_data.Y)
+            if radio_list[0] == 'SVR':
+                from sklearn.svm import SVR
+                model = SVR()
+                origin_data = utils.excelProcessor(models.ReadData(data_name, HOST, PORT, DATABASE))
+                model.fit(origin_data.X, origin_data.Y)
+
+            return render(request, 'show_machine_learning.html',
+                          {
+                              'dataname': data_name,
+                              'ml_method': model,
+                              'from_where': from_where,
+                          })
 
     if request.method == 'GET':
-        ml_methods_orm = models.MachineLearningMethods.objects.all()  # 查询orm和mongodb中的ml方法，统一
-        ml_methods_mdb = [doc.get('method', None) for doc in
-                          models.ReadData('fs_result_' + data_name, HOST, PORT, DATABASE)]
+        if from_where == 'featureselection':
+            ml_methods_orm = models.MachineLearningMethods.objects.all()  # 查询orm和mongodb中的ml方法，统一
 
-        print(ml_methods_orm)
-        print(ml_methods_mdb)
-        for model_item in ml_methods_orm:
-            if model_item in ml_methods_mdb:
-                continue
-            else:
-                models.MachineLearningMethods.objects.filter(method_name=model_item.method_name).delete()
+            fs_res = models.ReadData('fs_result_' + data_name, HOST, PORT, DATABASE)
+            ml_methods_mdb = [doc.get('method', None) for doc in fs_res] if fs_res else []
 
-        # for data_item in ml_methods_mdb:
-        #     if models.MachineLearningMethods.objects.filter(method_name=data_item):
-        #         continue
-        #     else:
-        #         res = models.RmDoc({'method': data_item}, 'fs_result_' + data_name, HOST, PORT, DATABASE)
+            print(ml_methods_orm)
+            print(ml_methods_mdb)
+            for model_item in ml_methods_orm:
+                if model_item in ml_methods_mdb:
+                    continue
+                else:
+                    models.MachineLearningMethods.objects.filter(method_name=model_item.method_name).delete()
 
-        return render(request, 'machine_learning.html',
-                      {
-                          'dataname': data_name,
-                          'ml_methods': ml_methods_mdb,
-                      })
+            # for data_item in ml_methods_mdb:
+            #     if models.MachineLearningMethods.objects.filter(method_name=data_item):
+            #         continue
+            #     else:
+            #         res = models.RmDoc({'method': data_item}, 'fs_result_' + data_name, HOST, PORT, DATABASE)
+
+            return render(request, 'machine_learning.html',
+                          {
+                              'dataname': data_name,
+                              'ml_methods': ml_methods_mdb,
+                              'from_where': from_where,
+                          })
+        if from_where == 'qualitycontrol':
+            return render(request, 'machine_learning.html',
+                          {
+                              'dataname': data_name,
+                              'from_where': from_where,
+                              'ml_methods': ['LinearRegression', 'Ridge', 'SVR'],
+                          })
 
 
-def predict(request, data_name, method_name):
+def predict(request, data_name, method_name, from_where):
     if request.method == 'POST':
-        fileinput = request.FILES.get('input-excel')  # read file from <input name="input-excel">
-        fileinputname = fileinput.name  # get file name
-        excelproc = utils.excelProcessor(fileinput)  # preprocess the file uploaded
+        if from_where == 'featureselection':
+            fileinput = request.FILES.get('input-excel')  # read file from <input name="input-excel">
+            fileinputname = fileinput.name  # get file name
+            excelproc = utils.excelProcessor(fileinput)  # preprocess the file uploaded
 
-        origin_data_to_predict = excelproc.df
-        for col in origin_data_to_predict:
-            origin_data_to_predict.rename(columns={col: col.replace('.', '').replace('$', '')}, inplace=True)
+            origin_data_to_predict = excelproc.df
+            for col in origin_data_to_predict:
+                origin_data_to_predict.rename(columns={col: col.replace('.', '').replace('$', '')}, inplace=True)
 
-        fs_result_all = models.ReadData('fs_result_' + data_name, HOST, PORT, DATABASE)
-        fs_result = None
-        for res_i in fs_result_all:
-            if res_i.get('method', None) == method_name:
-                fs_result = res_i
+            fs_result_all = models.ReadData('fs_result_' + data_name, HOST, PORT, DATABASE)
+            fs_result = None
+            for res_i in fs_result_all:
+                if res_i.get('method', None) == method_name:
+                    fs_result = res_i
 
-        origin_data = utils.excelProcessor(models.ReadData(data_name, HOST, PORT, DATABASE))
-        feature_names = origin_data.col_name
-        selected_features = [feature_names[i] for i in fs_result.get('res', None)]
+            origin_data = utils.excelProcessor(models.ReadData(data_name, HOST, PORT, DATABASE))
+            feature_names = origin_data.col_name
+            selected_features = [feature_names[i] for i in fs_result.get('res', None)]
 
-        data_to_predict = origin_data_to_predict.loc[:, selected_features].values
+            data_to_predict = origin_data_to_predict.loc[:, selected_features].values
 
-        targets = []
-        coef = fs_result.get('coef', None)
-        for sample in data_to_predict:
-            target = fs_result.get('intercept', None)
-            for idx in range(len(sample)):
-                target += sample[idx] * coef[idx]
-            targets.append(target)
+            targets = []
+            coef = fs_result.get('coef', None)
+            for sample in data_to_predict:
+                target = fs_result.get('intercept', None)
+                for idx in range(len(sample)):
+                    target += sample[idx] * coef[idx]
+                targets.append(target)
 
-        origin_data_to_predict.insert(0, 'predict', targets)
-        print(origin_data_to_predict)
+            origin_data_to_predict.insert(0, 'predict', targets)
+            print(origin_data_to_predict)
 
-        return render(request, 'predict_page.html',
-                      {
-                          'dataname': data_name,
-                          'selected_features': selected_features,
-                          'coef': fs_result.get('coef', None),
-                          'intercept': fs_result.get('intercept', None),
-                          'uploadtopredict': 'True',
-                          'predictresult': origin_data_to_predict.T.to_dict(),
-                      })
+            return render(request, 'predict_page.html',
+                          {
+                              'dataname': data_name,
+                              'selected_features': selected_features,
+                              'coef': fs_result.get('coef', None),
+                              'intercept': fs_result.get('intercept', None),
+                              'uploadtopredict': 'True',
+                              'uploadonly': 'False',
+                              'predictresult': origin_data_to_predict.T.to_dict(),
+                          })
+        if from_where == 'qualitycontrol':
+            fileinput = request.FILES.get('input-excel')  # read file from <input name="input-excel">
+            fileinputname = fileinput.name  # get file name
+            excelproc = utils.excelProcessor(fileinput)  # preprocess the file uploaded
+
+            origin_data_to_predict = excelproc.df
+            for col in origin_data_to_predict:
+                origin_data_to_predict.rename(columns={col: col.replace('.', '').replace('$', '')}, inplace=True)
+
+            data_to_predict = excelproc.X
+
+            targets = model.predict(data_to_predict)
+            print(targets)
+            origin_data_to_predict.insert(0, 'predict', targets)
+            return render(request, 'predict_page.html',
+                          {
+                              'dataname': data_name,
+                              'selected_features': [],
+                              'coef': [],
+                              'intercept': [],
+                              'uploadtopredict': 'True',
+                              'predictresult': origin_data_to_predict.T.to_dict(),
+                          })
     if request.method == 'GET':
-        fs_result_all = models.ReadData('fs_result_' + data_name, HOST, PORT, DATABASE)
-        fs_result = None
-        for res_i in fs_result_all:
-            if res_i.get('method', None) == method_name:
-                fs_result = res_i
+        if from_where == 'featureselection':
+            fs_result_all = models.ReadData('fs_result_' + data_name, HOST, PORT, DATABASE)
+            fs_result = None
+            for res_i in fs_result_all:
+                if res_i.get('method', None) == method_name:
+                    fs_result = res_i
 
-        origin_data = utils.excelProcessor(models.ReadData(data_name, HOST, PORT, DATABASE))
-        feature_names = origin_data.col_name
+            origin_data = utils.excelProcessor(models.ReadData(data_name, HOST, PORT, DATABASE))
+            feature_names = origin_data.col_name
 
-        selected_features = [feature_names[i] for i in fs_result.get('res', None)]
-        feture_coef = list(zip(selected_features, fs_result.get('coef', None)))
-        return render(request, 'predict_page.html',
-                      {
-                          'dataname': data_name,
-                          'selected_features': selected_features,
-                          'coef': fs_result.get('coef', None),
-                          'intercept': fs_result.get('intercept', None),
-                          'uploadtopredict': 'False',
-                      })
+            selected_features = [feature_names[i] for i in fs_result.get('res', None)]
+            feture_coef = list(zip(selected_features, fs_result.get('coef', None)))
+            return render(request, 'predict_page.html',
+                          {
+                              'dataname': data_name,
+                              'selected_features': selected_features,
+                              'coef': fs_result.get('coef', None),
+                              'intercept': fs_result.get('intercept', None),
+                              'uploadtopredict': 'False',
+                              'uploadonly': 'False',
+                          })
+        if from_where == 'qualitycontrol':
+            return render(request, 'predict_page.html',
+                          {
+                              'dataname': data_name,
+                              'selected_features': [],
+                              'coef': [],
+                              'intercept': [],
+                              'uploadtopredict': 'False',
+                              'uploadonly': 'True'
+                          })

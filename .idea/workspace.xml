@@ -20,20 +20,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a19f6c1d-b15e-4c7c-8ce2-6755da6e0855" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/mlplat.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mlplat.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/embed_domain_knowledge.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mlplatapp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mlplatapp/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mlplatapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base_index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base_index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/custom_retain_features.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/custom_retain_features.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/machine_learning.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/machine_learning.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/modify_data.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/modify_data.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/predict_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/predict_page.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/quality_control.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/quality_control.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/set_verbose.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/set_verbose.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/show_feature_select.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/show_feature_select.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/show_machine_learning.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/show_machine_learning.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/testhtml.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/testhtml.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -60,6 +59,13 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="hiddenUrls">
+      <set>
+        <option value="https://github.com/sh10626765/mlplat.git" />
+      </set>
+    </option>
+  </component>
   <component name="ProjectId" id="1YkEPFvhuHUvnIzXqDuNZzpSm8v" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -74,8 +80,13 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../test1" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\PycharmProjects\mlplat\templates" />
+    </key>
   </component>
   <component name="RunManager" selected="Python.test">
     <configuration name="pso" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -174,6 +185,9 @@
       <workItem from="1587183693052" duration="2046000" />
       <workItem from="1587383926082" duration="106855000" />
       <workItem from="1588577405183" duration="25352000" />
+      <workItem from="1588844075195" duration="10269000" />
+      <workItem from="1589097907346" duration="223000" />
+      <workItem from="1589098168823" duration="22797000" />
     </task>
     <task id="LOCAL-00001" summary="outlier detecting based on Euclidean distance">
       <created>1585044217307</created>
@@ -210,7 +224,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587889558316</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="basic features finished">
+      <created>1588711201684</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1588711201684</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -244,7 +265,8 @@
     <MESSAGE value="add pearson's r to check verbose attr" />
     <MESSAGE value="add fs method" />
     <MESSAGE value="change the page style" />
-    <option name="LAST_COMMIT_MESSAGE" value="change the page style" />
+    <MESSAGE value="basic features finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="basic features finished" />
   </component>
   <component name="WindowStateProjectService">
     <state x="2428" y="204" width="800" height="676" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588580036563">
@@ -256,10 +278,14 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="640" y="264" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1586679308674" />
-    <state x="598" y="123" key="CommitChangelistDialog2" timestamp="1587889556931">
+    <state x="690" y="271" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1589264882842">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="598" y="123" key="CommitChangelistDialog2/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1587889556931" />
+    <state x="690" y="271" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589264882842" />
+    <state x="598" y="123" key="CommitChangelistDialog2" timestamp="1588711200768">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="598" y="123" key="CommitChangelistDialog2/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588711200768" />
     <state x="598" y="123" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1585744527063" />
     <state x="598" y="123" key="CommitChangelistDialog2/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586262352999" />
     <state x="92" y="92" width="1736" height="866" key="DiffContextDialog" timestamp="1587384243333">
@@ -272,48 +298,52 @@
     <state x="1024" y="287" key="FileChooserDialogImpl/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586688866064" />
     <state x="1024" y="289" key="FileChooserDialogImpl/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1586678823591" />
     <state x="1024" y="289" key="FileChooserDialogImpl/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585232745405" />
-    <state width="1007" height="188" key="GridCell.Tab.0.bottom" timestamp="1588707583443">
+    <state width="1000" height="357" key="GridCell.Tab.0.bottom" timestamp="1589208390343">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state width="1000" height="357" key="GridCell.Tab.0.bottom/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589208390343" />
     <state width="936" height="260" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1080@0.0.1920.1040" timestamp="1588608452617" />
     <state width="936" height="260" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1588588631653" />
     <state width="1013" height="221" key="GridCell.Tab.0.bottom/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586797887315" />
     <state width="1012" height="188" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.-853.1080.1890@0.0.1920.1050" timestamp="1587618075791" />
-    <state width="1007" height="188" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588707583443" />
-    <state width="1007" height="188" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1588694982287" />
+    <state width="1007" height="188" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588711205049" />
+    <state width="1002" height="357" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1588770528406" />
     <state width="1009" height="188" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1588612836167" />
     <state width="633" height="224" key="GridCell.Tab.0.bottom/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586613671839" />
-    <state width="1007" height="188" key="GridCell.Tab.0.center" timestamp="1588707583443">
+    <state width="1000" height="357" key="GridCell.Tab.0.center" timestamp="1589208390343">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state width="1000" height="357" key="GridCell.Tab.0.center/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589208390343" />
     <state width="936" height="260" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1080@0.0.1920.1040" timestamp="1588608452617" />
     <state width="936" height="260" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1588588631653" />
     <state width="1013" height="221" key="GridCell.Tab.0.center/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586797887315" />
     <state width="1012" height="188" key="GridCell.Tab.0.center/0.0.1920.1050/1920.-853.1080.1890@0.0.1920.1050" timestamp="1587618075791" />
-    <state width="1007" height="188" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588707583443" />
-    <state width="1007" height="188" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1588694982287" />
+    <state width="1007" height="188" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588711205048" />
+    <state width="1002" height="357" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1588770528406" />
     <state width="1009" height="188" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1588612836167" />
     <state width="633" height="224" key="GridCell.Tab.0.center/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586613671839" />
-    <state width="1007" height="188" key="GridCell.Tab.0.left" timestamp="1588707583443">
+    <state width="1000" height="357" key="GridCell.Tab.0.left" timestamp="1589208390343">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state width="1000" height="357" key="GridCell.Tab.0.left/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589208390343" />
     <state width="936" height="260" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1080@0.0.1920.1040" timestamp="1588608452616" />
     <state width="936" height="260" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1588588631652" />
     <state width="1013" height="221" key="GridCell.Tab.0.left/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586797887315" />
     <state width="1012" height="188" key="GridCell.Tab.0.left/0.0.1920.1050/1920.-853.1080.1890@0.0.1920.1050" timestamp="1587618075790" />
-    <state width="1007" height="188" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588707583443" />
-    <state width="1007" height="188" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1588694982287" />
+    <state width="1007" height="188" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588711205048" />
+    <state width="1002" height="357" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1588770528406" />
     <state width="1009" height="188" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1588612836167" />
     <state width="633" height="224" key="GridCell.Tab.0.left/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586613671839" />
-    <state width="1007" height="188" key="GridCell.Tab.0.right" timestamp="1588707583443">
+    <state width="1000" height="357" key="GridCell.Tab.0.right" timestamp="1589208390343">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state width="1000" height="357" key="GridCell.Tab.0.right/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589208390343" />
     <state width="936" height="260" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1080@0.0.1920.1040" timestamp="1588608452617" />
     <state width="936" height="260" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1588588631653" />
     <state width="1013" height="221" key="GridCell.Tab.0.right/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586797887315" />
     <state width="1012" height="188" key="GridCell.Tab.0.right/0.0.1920.1050/1920.-853.1080.1890@0.0.1920.1050" timestamp="1587618075791" />
-    <state width="1007" height="188" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588707583443" />
-    <state width="1007" height="188" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1588694982287" />
+    <state width="1007" height="188" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588711205049" />
+    <state width="1002" height="357" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1588770528406" />
     <state width="1009" height="188" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1588612836167" />
     <state width="633" height="224" key="GridCell.Tab.0.right/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586613671839" />
     <state width="1877" height="352" key="GridCell.Tab.1.bottom" timestamp="1585040242303">
@@ -342,10 +372,10 @@
     <state x="693" y="208" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1080@0.0.1920.1040" timestamp="1588577652142" />
     <state x="747" y="177" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1583740189774" />
     <state x="693" y="210" key="SettingsEditor/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585228997526" />
-    <state x="545" y="277" key="Vcs.Push.Dialog.v2" timestamp="1587889579276">
+    <state x="545" y="277" key="Vcs.Push.Dialog.v2" timestamp="1588711255951">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="545" y="277" key="Vcs.Push.Dialog.v2/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1587889579276" />
+    <state x="545" y="277" key="Vcs.Push.Dialog.v2/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588711255951" />
     <state x="545" y="277" key="Vcs.Push.Dialog.v2/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586262976214" />
     <state x="2014" y="48" width="1736" height="866" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1588657382811">
       <screen x="1920" y="0" width="1920" height="1050" />
@@ -369,6 +399,10 @@
     </state>
     <state x="1456" y="314" width="1074" height="822" key="dock-window-1/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1587888848754" />
     <state x="121" y="66" width="669" height="921" key="dock-window-1/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1584496872613" />
+    <state x="2586" y="127" width="587" height="795" key="find.popup" timestamp="1588749919468">
+      <screen x="1920" y="0" width="1920" height="1050" />
+    </state>
+    <state x="2586" y="127" width="587" height="795" key="find.popup/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1588749919468" />
     <state x="766" y="328" key="git4idea.merge.GitMergeDialog" timestamp="1584984947353">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -379,7 +413,7 @@
     <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586611469415" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/mlplat$test.coverage" NAME="test Coverage Results" MODIFIED="1588706819740" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/mlplat$test.coverage" NAME="test Coverage Results" MODIFIED="1589208088504" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/mlplat$pso.coverage" NAME="pso Coverage Results" MODIFIED="1586321858750" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.." />
   </component>
 </project>

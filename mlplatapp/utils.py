@@ -3,6 +3,7 @@ import numpy
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.ensemble import IsolationForest
 from sklearn.metrics import pairwise_distances
+from sklearn.decomposition import PCA
 from sklearn import preprocessing
 
 
@@ -183,3 +184,7 @@ class excelProcessor(object):
                 if temp > 0.8:
                     attr_relate.append((i, j, temp))
         return attr_relate
+
+    def get_two_primary_components(self):
+        pca = PCA(n_components=2)
+        return pca.fit_transform(self.valuearray).tolist()

@@ -1,72 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-</head>
-<body>
-<table>
-    <tr>
-        <td><input type="button" value="add" onclick="setOp('+', 'add');"/></td>
-        <td><input type="button" value="miner" onclick="setOp('-', 'miner');"/></td>
-        <td><input type="button" value="times" onclick="setOp('*', 'times');"/></td>
-        <td><input type="button" value="divide" onclick="setOp('/', 'divide');"/></td>
-    </tr>
-</table>
-<table id="tb_calc" style="display:none;">
-    <tr>
-        <td><input id="x" type="text" style="width:100px" value="" name="x"/></td>
-        <td>
-            <lable id="op" name="op"></lable>
-        </td>
-        <td><input id="y" type="text" style="width:100px" value="" name="y"/></td>
-        <td><input id="opTips" type="button" value="" onclick="calc();"/></td>
-        <td>
-            <lable id="z" name="z"></lable>
-        </td>
-    </tr>
-</table>
-<script type="application/javascript">
-    function setOp(op, opTips) {
-        var tb = document.getElementById("tb_calc");
-        tb.style.display = "none";
+{% extends 'base_index.html' %}
+{% load static %}
 
-        document.getElementById("x").value = "";
-        document.getElementById("y").value = "";
-        document.getElementById("z").innerText = "";
-        document.getElementById("op").innerText = op;
-        document.getElementById("opTips").value = opTips;
+{% block script %}
+{% endblock %}
 
-        tb.style.display = "block";
-    }
+{% block style %}
+{% endblock %}
 
-    function calc() {
-        var x = parseInt(document.getElementById("x").value);
-        var y = parseInt(document.getElementById("y").value);
-        var op = document.getElementById("op").innerText;
-
-        var z = "";
-        switch (op) {
-            case '+':
-                z = x + y;
-                break;
-            case '-':
-                z = x - y;
-                break;
-            case '*':
-                ;
-                z = x * y;
-                break;
-            case '/':
-                ;
-                z = x / y;
-                break;
-            default:
-                z = '';
-        }
-        console.log(x, op, y, '=', z);
-        document.getElementById("z").innerText = z;
-    }
-</script>
-</body>
-</html>
+{% block content %}
+    <div class="container">
+        <h1 style="margin-top: 2%">
+            建设中...
+        </h1>
+    </div>
+{% endblock %}

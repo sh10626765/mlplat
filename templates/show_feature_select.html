@@ -9,17 +9,66 @@
 
 {% block content %}
     <div class="container" style="margin-top: 2%">
-        <h3>选择保留的特征：</h3>
+        <div class="row">
+            <button id="showDataButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
+                    onclick='window.location.href="{% url 'qualitycontrol' dataname %}"'>数据预览
+            </button>
+            <button id="beginFSButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
+                    onclick='window.location.href="{% url 'domainknowledgeembedding' dataname %}"'>特征选择
+            </button>
+            <button id="beginMLButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
+                    onclick='window.location.href="{% url 'machinelearning' dataname 'featureselection' %}"'>生成预测模型
+            </button>
+            {#                    <div class="col-sm-1">#}
+            {#                        <button id="beginPredictButton" type="button" class="btn btn-primary"#}
+            {#                                onclick=' window.location.href="{% url 'predict' dataname %}"'>开始预测#}
+            {#                        </button>#}
+            {#                    </div>#}
+            <script type="text/javascript">
+                let fullUrl = '{{ request.path }}'.substr(1, 100);
+                let idfy = fullUrl.substring(0, fullUrl.indexOf('/'));
+
+                console.log(idfy);
+                let showDataButton, beginFSButton, beginMLButton;
+                showDataButton = document.getElementById('showDataButton');
+                beginFSButton = document.getElementById('beginFSButton');
+                beginMLButton = document.getElementById('beginMLButton');
+                if (idfy === 'qualitycontrol') {
+                    showDataButton.disabled = true;
+                    showDataButton.className += ' btn btn-link';
+                    beginFSButton.disabled = false;
+                    beginFSButton.className.replace(' btn btn-link', '');
+                    beginMLButton.disabled = false;
+                    beginMLButton.className.replace(' btn btn-link', '');
+                } else if (idfy === 'featureselection') {
+                    beginFSButton.disabled = true;
+                    beginFSButton.className += ' btn btn-link';
+                    showDataButton.disabled = false;
+                    showDataButton.className.replace(' btn btn-link', '');
+                    beginMLButton.disabled = false;
+                    beginMLButton.className.replace(' btn btn-link', '');
+                } else if (idfy === 'machinelearning') {
+                    beginMLButton.disabled = true;
+                    beginMLButton.className += ' btn btn-link';
+                    beginFSButton.disabled = false;
+                    beginFSButton.className.replace(' btn btn-link', '');
+                    showDataButton.disabled = false;
+                    showDataButton.className.replace(' btn btn-link', '');
+                }
+            </script>
+        </div>
+
+        <h3 style="margin-top: 2%">选择保留的特征：</h3>
         <p>
-        {% if retainedfeatures %}
-            {% for el in retainedfeatures %}
-                {% if forloop.last %}
-                    {{ el.name }}
-                {% else %}
-                    {{ el.name }},
-                {% endif %}
-            {% endfor %}
-        {% else %}
+            {% if retainedfeatures %}
+                {% for el in retainedfeatures %}
+                    {% if forloop.last %}
+                        {{ el.name }}
+                    {% else %}
+                        {{ el.name }},
+                    {% endif %}
+                {% endfor %}
+            {% else %}
             None
         {% endif %}
         </p>
@@ -38,7 +87,8 @@
             <div id="evochart" style="width: 600px; height: 400px"></div>
         </div>
         <button type="button" class="btn btn-info"
-                onclick=' window.location.href="{% url 'machinelearning' dataname %}"' style="height: 70px">机器学习
+                onclick=' window.location.href="{% url 'machinelearning' dataname 'featureselection' %}"'
+                style="height: 70px">生成预测模型
         </button>
         <button type="button" class="btn btn-default"
                 onclick=' window.location.href="{% url 'qualitycontrol' dataname %}"' style="height: 70px">返回

@@ -1,6 +1,11 @@
 {% extends 'base_index.html' %}
+{% load static %}
 
-{% block title %}机器学习模型{% endblock %}
+{% block script %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block title %}特征选择{% endblock %}
 
 {% block content %}
     <div class="container" style="margin-top: 2%">
@@ -9,7 +14,7 @@
                     onclick='window.location.href="{% url 'qualitycontrol' dataname %}"'>数据预览
             </button>
             <button id="beginFSButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
-                    onclick='window.location.href="{% url 'domainknowledgeembedding' dataname %}"'>特征选择
+                    onclick='window.location.href="{% url 'featureselection' dataname %}"'>特征选择
             </button>
             <button id="beginMLButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
                     onclick='window.location.href="{% url 'machinelearning' dataname 'qualitycontrol' %}"'>生成预测模型
@@ -35,7 +40,7 @@
                     beginFSButton.className.replace(' btn btn-link', '');
                     beginMLButton.disabled = false;
                     beginMLButton.className.replace(' btn btn-link', '');
-                } else if (idfy === 'featureselection') {
+                } else if (idfy === 'featureselection' || idfy === 'domainknowledgeembedding') {
                     beginFSButton.disabled = true;
                     beginFSButton.className += ' btn btn-link';
                     showDataButton.disabled = false;
@@ -52,51 +57,31 @@
                 }
             </script>
         </div>
+        <h3 style="margin-top: 2%">领域知识嵌入方式</h3>
 
-        {% if from_where == 'featureselection' %}
-            <div class="row">
-                <table style="margin-top: 2%; margin-left: 2%; margin-bottom: 2%">
-                    <thead>
-                    <tr>
-                        <th>机器学习模型：</th>
-                        <th colspan="2"><h6>{{ ml_method }}</h6></th>
-                    </tr>
-                    <tr>
-                        <th>已选特征</th>
-                        <th>回归系数</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for i in fc %}
-                    <tr>
-                        <td>{{ i.0 }}</td>
-                        <td>{{ i.1 }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-                    <tfoot>
-                    <tr>
-                        <td><strong>截距系数：</strong></td>
-                        <td colspan="2"><h6>{{ intercept }}</h6></td>
-                    </tr>
-                    <tr>
-                        <td><strong>均方根误差RMSE：</strong></td>
-                        <td colspan="2"><h6>{{ rmse }}</h6></td>
-                    </tr>
-                    <tr>
-                        <td><strong>拟合优度R^2：</strong></td>
-                        <td colspan="2"><h6>{{ r2 }}</h6></td>
-                    </tr>
-                    </tfoot>
-                </table>
+
+        <div class="index_app" id="index_ms" onClick="window.location.href = '{% url "featureselection" dataname %}'">
+            <div class="index_app_pic"><img alt="" src="{% static 'image/index_ms.png' %}" width="100%" height="100%">
             </div>
-            <a type="button" class="btn btn-info" href="{% url 'predict' dataname ml_method from_where %}">开始预测</a>
-            <a type="button" class="btn btn-default" href="{% url 'qualitycontrol' dataname %}">返回</a>
-        {% elif from_where == 'qualitycontrol' %}
-            <h3>机器学习模型：</h3>
-            <p>{{ ml_method }}</p>
-            <a type="button" class="btn btn-info" href="{% url 'predict' dataname ml_method from_where %}">开始预测</a>
-            <a type="button" class="btn btn-default" href="{% url 'qualitycontrol' dataname %}">返回</a>
-        {% endif %}
+            <div class="index_app_name">
+                <div class="index_app_name_word">基于特征核的特征选择</div>
+            </div>
+        </div>
+        <div class="index_app" id="index_ms"
+             onClick="window.location.href = '{% url "featureselectionbycontrirules" dataname %}'">
+            <div class="index_app_pic"><img alt="" src="{% static 'image/ICSD_Logo.png' %}" width="100%" height="100%">
+            </div>
+            <div class="index_app_name">
+                <div class="index_app_name_word">基于贡献规则的特征选择</div>
+            </div>
+        </div>
+        <div class="index_app" id="index_ms"
+             onClick="window.location.href = '{% url "featureselectionbyscore" dataname %}'">
+            <div class="index_app_pic"><img alt="" src="{% static 'image/index_3ds.png' %}" width="100%" height="100%">
+            </div>
+            <div class="index_app_name">
+                <div class="index_app_name_word">基于特征评分的特征选择</div>
+            </div>
+        </div>
     </div>
 {% endblock %}

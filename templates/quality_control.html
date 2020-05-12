@@ -26,10 +26,8 @@
     <script type="text/javascript" src="{% static 'tableExport.jquery.plugin/tableExport.js' %}"></script>
     <script type="text/javascript"
             src="{% static 'bootstrap-table-develop/dist/extensions/export/bootstrap-table-export.js' %}"></script>
-
-    <link rel="stylesheet"
-          href="{% static 'bootstrap-directional-button/dist/bootstrap-directional-buttons.css' %}">
     <script type="text/javascript" src="{% static 'incubator-echarts-4.7.0/dist/echarts.js' %}"></script>
+    <script type="text/javascript" src="{% static 'incubator-echarts-4.7.0/dist/extension/dataTool.js' %}"></script>
 {% endblock %}
 
 {% block style %}
@@ -48,20 +46,55 @@
 
     <div class="container" style="margin-top: 2%;">
         <div class="row">
-            <button id="beginFeatureButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
-                    onclick='window.location.href="{% url 'featureselection' dataname %}"'>特征选择
+            <button id="showDataButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
+                    onclick='window.location.href="{% url 'qualitycontrol' dataname %}"'>数据预览
+            </button>
+            <button id="beginFSButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
+                    onclick='window.location.href="{% url 'domainknowledgeembedding' dataname %}"'>特征选择
             </button>
             <button id="beginMLButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
-                    onclick=' window.location.href="{% url 'machinelearning' dataname %}"'>机器学习
+                    onclick='window.location.href="{% url 'machinelearning' dataname 'qualitycontrol' %}"'>生成预测模型
             </button>
             {#                    <div class="col-sm-1">#}
             {#                        <button id="beginPredictButton" type="button" class="btn btn-primary"#}
             {#                                onclick=' window.location.href="{% url 'predict' dataname %}"'>开始预测#}
             {#                        </button>#}
             {#                    </div>#}
+            <script type="text/javascript">
+                let fullUrl = '{{ request.path }}'.substr(1, 100);
+                let idfy = fullUrl.substring(0, fullUrl.indexOf('/'));
+
+                console.log(idfy);
+                let showDataButton, beginFSButton, beginMLButton;
+                showDataButton = document.getElementById('showDataButton');
+                beginFSButton = document.getElementById('beginFSButton');
+                beginMLButton = document.getElementById('beginMLButton');
+                if (idfy === 'qualitycontrol') {
+                    showDataButton.disabled = true;
+                    showDataButton.className += ' btn btn-link';
+                    beginFSButton.disabled = false;
+                    beginFSButton.className.replace(' btn btn-link', '');
+                    beginMLButton.disabled = false;
+                    beginMLButton.className.replace(' btn btn-link', '');
+                } else if (idfy === 'featureselection') {
+                    beginFSButton.disabled = true;
+                    beginFSButton.className += ' btn btn-link';
+                    showDataButton.disabled = false;
+                    showDataButton.className.replace(' btn btn-link', '');
+                    beginMLButton.disabled = false;
+                    beginMLButton.className.replace(' btn btn-link', '');
+                } else if (idfy === 'machinelearning') {
+                    beginMLButton.disabled = true;
+                    beginMLButton.className += ' btn btn-link';
+                    beginFSButton.disabled = false;
+                    beginFSButton.className.replace(' btn btn-link', '');
+                    showDataButton.disabled = false;
+                    showDataButton.className.replace(' btn btn-link', '');
+                }
+            </script>
         </div>
 
-        <ul class="nav nav-tabs" id="data_tabs" role="tablist" style="padding-top: 2%;">
+        <ul class="nav nav-tabs" id="data_tabs" role="tablist" style="padding-top: 2%; margin-bottom: 2%">
             <li class="nav-item">
                 <a class="nav-link active" href="#raw_data" data-toggle="tab">原始数据</a>
             </li>
@@ -75,7 +108,7 @@
                 <a class="nav-link" href="#verbosity" data-toggle="tab">冗余属性筛选</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#data_visualize" data-toggle="tab">数据可视</a>
+                <a class="nav-link" href="#data_visualize" data-toggle="tab">数据分布</a>
             </li>
         </ul>
 
@@ -268,53 +301,128 @@
             </div>
 
             <div class="tab-pane fade" id="data_visualize" role="tabpanel" aria-labelledby="data_visualize_tab">
-                <div class="row">
-                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;本标签页下显示样本各维度属性的分布信息</h5>
-                </div>
+                {#                <div class="row">#}
+                {#                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;本标签页下显示样本各维度属性的分布信息</h5>#}
+                {#                </div>#}
                 <div class="row">
                     <div class="col-2">
-                        <ul class="nav flex-column" id="chart_tabs" role="tablist">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                                   aria-haspopup="true" aria-expanded="false">
-                                    下拉查看
-                                </a>
-                                <div class="dropdown-menu">
+                        <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical"
+                             id="chart_type_tab">
+                            <a href="#histogram" class="nav-link active" id="histogram_tab" data-toggle="pill"
+                               role="tab" aria-controls="histogram" aria-selected="true">直方图</a>
+                            <a href="#boxplot" class="nav-link" id="boxplot_tab" data-toggle="pill"
+                               role="tab" aria-controls="boxplot" aria-selected="false">箱型图</a>
+                            <a href="#scatter" class="nav-link" id="scatter_tab" data-toggle="pill"
+                               role="tab" aria-controls="scatter" aria-selected="false">散点图</a>
+                        </div>
+                    </div>
+                    <div class="col-10">
+                        <div class="tab-content" id="chart_type_content">
+                            <div class="tab-pane fade show active" id="histogram" role="tabpanel"
+                                 aria-labelledby="histogram_tab">
+                                <ul class="nav flex-column" id="chart_tabs" role="tablist">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+                                           role="button"
+                                           aria-haspopup="true" aria-expanded="false">
+                                            下拉查看各属性分布直方图
+                                        </a>
+                                        <div class="dropdown-menu" style="height: 200px; overflow-y: scroll">
+                                            {% with data|first as dm %}
+                                                {% for i in dm %}
+                                                    <a class="nav-link dropdown-item"
+                                                       id="chart_tab{{ forloop.counter0 }}"
+                                                       data-toggle="tab"
+                                                       role="tab" href="#chart{{ forloop.counter0 }}"
+                                                       aria-selected="true">{{ i }}</a>
+                                                {% endfor %}
+                                            {% endwith %}
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="chart_content">
                                     {% with data|first as dm %}
                                         {% for i in dm %}
-                                            <a class="nav-link dropdown-item" id="chart_tab{{ forloop.counter0 }}"
-                                               data-toggle="tab"
-                                               role="tab" href="#chart{{ forloop.counter0 }}"
-                                               aria-selected="true">{{ i }}</a>
+                                            {% if forloop.counter0 == col_start %}
+                                                <div class="tab-pane fade show active" id="chart{{ forloop.counter0 }}"
+                                                     role="tabpanel" aria-labelledby="chart_tab{{ forloop.counter0 }}">
+                                                    <div id="data_chart{{ forloop.counter0 }}"
+                                                         style="width: 600px; height: 400px"></div>
+                                                </div>
+                                            {% else %}
+                                                {% if forloop.counter0 > col_start %}
+                                                    <div class="tab-pane fade" id="chart{{ forloop.counter0 }}"
+                                                         role="tabpanel"
+                                                         aria-labelledby="chart_tab{{ forloop.counter0 }}">
+                                                        <div id="data_chart{{ forloop.counter0 }}"
+                                                             style="width: 600px; height: 400px"></div>
+                                                    </div>
+                                                {% endif %}
+                                            {% endif %}
                                         {% endfor %}
                                     {% endwith %}
                                 </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-10">
-                        <div class="tab-content" id="chart_content">
-
-                            {% with data|first as dm %}
-                                {% for i in dm %}
-                                    {% if forloop.counter0 == col_start %}
-                                        <div class="tab-pane fade show active" id="chart{{ forloop.counter0 }}"
-                                             role="tabpanel" aria-labelledby="chart_tab{{ forloop.counter0 }}">
-                                            <div id="data_chart{{ forloop.counter0 }}"
-                                                 style="width: 600px; height: 400px"></div>
+                            </div>
+                            <div class="tab-pane fade" id="boxplot" role="tabpanel" aria-labelledby="boxplot_tab">
+                                <ul class="nav flex-column" id="bpchart_tabs" role="tablist">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+                                           role="button"
+                                           aria-haspopup="true" aria-expanded="false">
+                                            下拉查看各属性分布箱型图
+                                        </a>
+                                        <div class="dropdown-menu" style="height: 200px; overflow-y: scroll">
+                                            {% with data|first as dm %}
+                                                {% for i in dm %}
+                                                    <a class="nav-link dropdown-item"
+                                                       id="bpchart_tab{{ forloop.counter0 }}"
+                                                       data-toggle="tab"
+                                                       role="tab" href="#bpchart{{ forloop.counter0 }}"
+                                                       aria-selected="true">{{ i }}</a>
+                                                {% endfor %}
+                                            {% endwith %}
                                         </div>
-                                    {% else %}
-                                        {% if forloop.counter0 > col_start %}
-                                            <div class="tab-pane fade" id="chart{{ forloop.counter0 }}"
-                                                 role="tabpanel"
-                                                 aria-labelledby="chart_tab{{ forloop.counter0 }}">
-                                                <div id="data_chart{{ forloop.counter0 }}"
-                                                     style="width: 600px; height: 400px"></div>
-                                            </div>
-                                        {% endif %}
-                                    {% endif %}
-                                {% endfor %}
-                            {% endwith %}
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="bpchart_content">
+                                    {% with data|first as dm %}
+                                        {% for i in dm %}
+                                            {% if forloop.counter0 == col_start %}
+                                                <div class="tab-pane fade show active"
+                                                     id="bpchart{{ forloop.counter0 }}"
+                                                     role="tabpanel"
+                                                     aria-labelledby="bpchart_tab{{ forloop.counter0 }}">
+                                                    <div id="bpdata_chart{{ forloop.counter0 }}"
+                                                         style="width: 600px; height: 400px"></div>
+                                                    <div class="row">
+                                                        <h6>注：&nbsp;&nbsp;&nbsp;&nbsp;Q1为下四分位数，Q3为上四分位数，IQR为四分位距</h6>
+                                                    </div>
+                                                </div>
+                                            {% else %}
+                                                {% if forloop.counter0 > col_start %}
+                                                    <div class="tab-pane fade" id="bpchart{{ forloop.counter0 }}"
+                                                         role="tabpanel"
+                                                         aria-labelledby="bpchart_tab{{ forloop.counter0 }}">
+                                                        <div id="bpdata_chart{{ forloop.counter0 }}"
+                                                             style="width: 600px; height: 400px"></div>
+                                                        <div class="row">
+                                                            <h6>
+                                                                注：&nbsp;&nbsp;&nbsp;&nbsp;Q1为下四分位数，Q3为上四分位数，IQR为四分位距</h6>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endwith %}
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="scatter" role="tabpanel" aria-labelledby="scatter_tab">
+                                <div id="scatterchart" style="width: 600px; height: 400px"></div>
+                                <div class="row">
+                                    <h6>
+                                        注：&nbsp;&nbsp;&nbsp;&nbsp;上图为数据样本降维后的数据，坐标值仅供参考</h6>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -382,7 +490,7 @@
 
                 $('#raw_table').bootstrapTable({
                     data: sampleList,
-                    datatype: 'json',
+                    theadClasses: "thead-light",
                     pagination: true,
                     pageSize: '15',
                     columns: sampleColumns,
@@ -455,7 +563,7 @@
 
                 $('#dc_table').bootstrapTable({
                     data: sampleList,
-                    datatype: 'json',
+                    theadClasses: "thead-light",
                     pagination: true,
                     pageSize: '15',
                     columns: check_title,
@@ -517,7 +625,7 @@
 
                 $('#dc_table_lof').bootstrapTable({
                     data: lofSampleList,
-                    datatype: 'json',
+                    theadClasses: "thead-light",
                     pagination: true,
                     pageSize: '15',
                     columns: check_title,
@@ -539,7 +647,7 @@
 
                 $('#dc_table_if').bootstrapTable({
                     data: ifSampleList,
-                    datatype: 'json',
+                    theadClasses: "thead-light",
                     pagination: true,
                     pageSize: '15',
                     columns: check_title,
@@ -562,7 +670,7 @@
 
                 $('#dc_table_reg').bootstrapTable({
                     data: regSampleList,
-                    datatype: 'json',
+                    theadClasses: "thead-light",
                     pagination: true,
                     pageSize: '15',
                     columns: check_title,
@@ -631,7 +739,7 @@
 
                 $('#stat_table').bootstrapTable({
                     data: dataqualityfields,
-                    datatype: 'json',
+                    theadClasses: "thead-light",
                     pagination: true,
                     pageSize: '15',
                     editable: {type: "text"},
@@ -859,7 +967,6 @@
 
 
     <script type="text/javascript">
-
         let rawdata = {{ data|safe }};
         let datafield = {};  // {field: [value]}
 
@@ -876,12 +983,16 @@
         for (let i in datafield) {
             fields.push(i);
         }
+        let fielddata = [];
+        for (let i in datafield) {
+            fielddata.push(datafield[i])
+        }
 
         for (let i = 0; i < Object.keys(datafield).length; i++) {
             try {
                 let data_chart = echarts.init(document.getElementById('data_chart' + i.toString()));
                 data_chart.setOption({
-                    title: {text: fields[i]},
+                    title: {text: fields[i], left: 'center'},
                     xAxis: {
                         data: datafield['NO']
                     },
@@ -891,11 +1002,68 @@
                         data: datafield[fields[i]]
                     }]
                 });
+
+                let bpdata = echarts.dataTool.prepareBoxplotData([fielddata[i]]);
+                let bpdata_chart = echarts.init(document.getElementById('bpdata_chart' + i.toString()));
+                bpdata_chart.setOption({
+                    title: [{text: fields[i], left: 'center'}, {
+                        text: 'upper: Q3 + 1.5 * IQR \nlower: Q1 - 1.5 * IQR',
+                        borderColor: '#999', borderWidth: 1,
+                        textStyle: {fontSize: 14}, left: '10%', top: '90%'
+                    }],
+                    tooltip: {trigger: 'item'},
+                    grid: {left: '10%', right: '10%', bottom: '15%'},
+                    xAxis: {type: 'category', data: bpdata.axisData},
+                    yAxis: {type: 'value'},
+                    series: [
+                        {
+                            name: 'boxplot', type: 'boxplot', data: bpdata.boxData,
+                            tooltip: {
+                                formatter: function (param) {
+                                    return [
+                                        'upper: ' + param.data[5],
+                                        'Q3: ' + param.data[4],
+                                        'median: ' + param.data[3],
+                                        'Q1: ' + param.data[2],
+                                        'lower: ' + param.data[1]
+                                    ].join('<br/>');
+                                }
+                            }
+                        }, {
+                            name: 'outlier', type: 'scatter', data: bpdata.outliers
+                        }
+                    ]
+                });
+
             } catch (e) {
                 console.log(i);
                 console.log(e);
             }
         }
+
+        let pca_res = {{ pca_result|safe }};
+        for (idx in pca_res) {
+            if (pca_res.hasOwnProperty(idx)) {
+                pca_res[idx].push(idx)
+            }
+        }
+        let scatterchart = echarts.init(document.getElementById('scatterchart'));
+        scatterchart.setOption({
+            xAxis: {},
+            yAxis: {},
+            tooltip: {
+                showDelay: 0,
+                formatter: function (param) {
+                    return '样本编号: ' + param.value[2];
+                }
+            },
+            series: [{
+                data: pca_res,
+                type: 'scatter',
+                symbolSize: 10,
+            }]
+
+        });
     </script>
 
     <script type="text/javascript ">
@@ -925,6 +1093,7 @@
 
         $('#pearson_corr_table').bootstrapTable({
             data: pearsonList,
+            theadClasses: "thead-light",
             pagination: true,
             pageSize: '15',
             editable: {type: "text"},
@@ -943,6 +1112,7 @@
         })
         $('#kendall_corr_table').bootstrapTable({
             data: kendallList,
+            theadClasses: "thead-light",
             pagination: true,
             pageSize: '15',
             editable: {type: "text"},
@@ -961,6 +1131,7 @@
         })
         $('#spearman_corr_table').bootstrapTable({
             data: spearmanList,
+            theadClasses: "thead-light",
             pagination: true,
             pageSize: '15',
             editable: {type: "text"},

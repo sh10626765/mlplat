@@ -9,8 +9,10 @@ from sklearn.ensemble import IsolationForest
 from sklearn.metrics import pairwise_distances, mean_squared_error, mean_absolute_error
 from sklearn.decomposition import PCA
 from sklearn.model_selection import KFold, LeaveOneOut
-from sklearn.linear_model import LinearRegression
-from sklearn.svm import SVC
+from sklearn.linear_model import LinearRegression, LogisticRegressionCV, LogisticRegression, ridge_regression, Ridge
+from sklearn.svm import SVC, SVR
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import r2_score
 from sklearn import preprocessing
 import matplotlib.pyplot as plt
 
@@ -43,44 +45,54 @@ filepath = 'E:\\毕设\\data\\traindata-0.5D0 - he.xlsx'
 
 df = loaddata(filepath)
 
-# print(df)
-for i in df.loc[:, ['ranion', 'Ea(eV)']].iterrows():
-    print(i[1])
-
 data_x = df.iloc[:, 4:-1]
 data_y = df.iloc[:, -1]
+
+data = df.iloc[:, 4:]
 
 sample_num = len(df)
 feature_num = len([i for i in data_x])
 
-corr = data_x.corr()
 
-al = []
+def get_model(model):
+    if model == 'svr':
+        return SVR()
+    if model == 'ridge':
+        return Ridge()
+    if model == 'ols':
+        return LinearRegression()
 
-for i in range(feature_num):
-    for j in range(i + 1, feature_num):
-        if abs(corr.iloc[i, j]) > 0.8:
-            al.append({i, j})
-print(al)
 
-al_d = {}
-
-for i in range(feature_num):
-    for j in al:
-        if i in j:
-            al_d[i] = al_d.get(i, 0) + 1
-
-print(sorted(al_d.items(), key=lambda d: d[1], reverse=True))
-
-for i in al:
-    for j in al:
-        if i & j:
-            i.update(j)
-aal = []
-for i in al:
-    if i not in aal:
-        aal.append(i)
-print(aal)
+pca = PCA(n_components=2)
+print(pca.fit_transform(data))
+# corr = data_x.corr()
+#
+# al = []
+#
+# for i in range(feature_num):
+#     for j in range(i + 1, feature_num):
+#         if abs(corr.iloc[i, j]) > 0.8:
+#             al.append({i, j})
+# print(al)
+#
+# al_d = {}
+#
+# for i in range(feature_num):
+#     for j in al:
+#         if i in j:
+#             al_d[i] = al_d.get(i, 0) + 1
+#
+# print(sorted(al_d.items(), key=lambda d: d[1], reverse=True))
+#
+# for i in al:
+#     for j in al:
+#         if i & j:
+#             i.update(j)
+# aal = []
+# for i in al:
+#     if i not in aal:
+#         aal.append(i)
+# print(aal)
 
 
 # x = dfnd.values

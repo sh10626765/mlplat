@@ -20,6 +20,9 @@
     <script type="text/javascript" src="{% static 'bootstrap-4.4.1-dist/js/bootstrap.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/ChemDoodleWeb.js' %}"></script>
 
+    <link rel="stylesheet"
+          href="{% static 'bootstrap-directional-button/dist/bootstrap-directional-buttons.css' %}">
+
     {% block script %}{% endblock %}
     {% block style %}{% endblock %}
 
@@ -28,25 +31,36 @@
 
 <div class="jumbotron bg-info jumbotron-fluid header" style="margin-bottom:0; padding:0 0">
     <div class="row">
-{#        <h1 class="col z-index:10"#}
-{#            style="margin-bottom:0; padding:3.5rem 0.5rem;text-align:center;font-weight: bold;font-size:3rem;">#}
-{#            {% trans "面向锂电池材料的机器学习平台" %}</h1>#}
-        <img src="{% static 'image/title_new.png' %}" alt="" class="col-6" style="padding: 3.5rem 4rem; height: 200px;">
-        <div class="header-pic" style="top:0;"></div>
+        {#        <h1 class="col z-index:10"#}
+        {#            style="margin-bottom:0; padding:3.5rem 0.5rem;text-align:center;font-weight: bold;font-size:3rem;">#}
+        {#            {% trans "面向锂电池材料的机器学习平台" %}</h1>#}
+        <div class="col-8">
+            <div class="header-pic" style="top:0;">
+            </div>
+            <img src="{% static 'image/title_new.png' %}"
+                 style="padding-left: 4rem; padding-right: 4rem; padding-top: 2rem; height: 150px" alt="">
 
-        <div id="carouselExampleControls" class="col-6 carousel slide" data-ride="carousel">
+            <p style="padding-left: 6rem; padding-right: 4rem; padding-top: 1rem;"><i>
+                Machine Learning for the Property Prediction and Novel
+                Materials Discovery of Solid Electrolyte Material to Improve the interpretability of machine
+                learning results or processes by Embedding Domain Knowledge.
+            </i></p>
+        </div>
+
+        <div id="carouselExampleControls" class="col-4 carousel slide" data-ride="carousel" style="padding-top: 1rem">
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="{% static 'image/llzomepsmall.png' %}" class="d-block w-30" alt="" style="height: 200px">
+                <div class="carousel-item active"
+                     style="background-image: url('{% static 'image/llzomepsmall.png' %}')">
+                    <img src="{% static 'image/llzomepsmall.png' %}" class="d-block w-30" alt="" style="height: 210px">
                 </div>
-                <div class="carousel-item">
-                    <img src="{% static 'image/llzosmall.png' %}" class="d-block w-30" alt="" style="height: 200px">
+                <div class="carousel-item" style="background-image: url('{% static 'image/llzosmall.png' %}')">
+                    <img src="{% static 'image/llzosmall.png' %}" alt="" style="height: 210px">
                 </div>
-                <div class="carousel-item">
-                    <img src="{% static 'image/nzpmepsmall.png' %}" class="d-block w-30" alt="" style="height: 200px">
+                <div class="carousel-item" style="background-image: url('{% static 'image/nzpmepsmall.png' %}')">
+                    <img src="{% static 'image/nzpmepsmall.png' %}" class="d-block w-30" alt="" style="height: 210px">
                 </div>
-                <div class="carousel-item">
-                    <img src="{% static 'image/nzpsmall.png' %}" class="d-block w-30" alt="" style="height: 200px">
+                <div class="carousel-item" style="background-image: url('{% static 'image/nzpsmall.png' %}')">
+                    <img src="{% static 'image/nzpsmall.png' %}" class="d-block w-30" alt="" style="height: 210px">
                 </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -110,13 +124,13 @@
 
 <div class="row">
     <p class="text-black" style="font-size:14px;margin:auto;text-align:center">
-        面向锂电池材料的机器学习平台, 联系邮箱：<a href="mailto:webmaster@bmaterials.cn">webmaster@bmaterials.cn</a>
+        上海大学固态电解质机器学习平台, 联系邮箱：<a href="mailto:webmaster@bmaterials.cn">webmaster@bmaterials.cn</a>
     </p>
 </div>
 
 <div class="bottom_" style="">
+    <img src="{% static 'image/shusmall.png' %}" class="bottom_logo" alt="" style="padding-right: 2%">
     <img src="{% static 'image/group_logo.png' %}" class="bottom_logo" alt="">
-    <img src="{% static 'image/shusmall.png' %}" class="bottom_logo" alt="">
 </div>
 <a style="position: fixed;bottom: 3em;right: 3em;text-decoration: none;color: #EEEEEE;background-color: rgba(0, 0, 0, 0.3);font-size: 12px;padding: 1em;border-radius: 3px;border: 1px solid #CCCCCC;display: none;"
    href="#" class="back-to-top">{% trans "回到顶端" %}</a>
