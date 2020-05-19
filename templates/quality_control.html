@@ -27,6 +27,7 @@
     <script type="text/javascript"
             src="{% static 'bootstrap-table-develop/dist/extensions/export/bootstrap-table-export.js' %}"></script>
     <script type="text/javascript" src="{% static 'incubator-echarts-4.7.0/dist/echarts.js' %}"></script>
+    <script type="text/javascript" src="{% static 'incubator-echarts-4.7.0/echarts-gl.js' %}"></script>
     <script type="text/javascript" src="{% static 'incubator-echarts-4.7.0/dist/extension/dataTool.js' %}"></script>
 {% endblock %}
 
@@ -46,52 +47,18 @@
 
     <div class="container" style="margin-top: 2%;">
         <div class="row">
-            <button id="showDataButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
-                    onclick='window.location.href="{% url 'qualitycontrol' dataname %}"'>数据预览
+            <button id="uploadButton" type="button" class="btn btn-lg btn btn-success btn-arrow-right"
+                    onclick='window.location.href="{% url 'upload' %}"'>数据上传
+            </button>
+            <button id="showDataButton" type="button" class="btn btn-lg btn btn-success btn-arrow-right" disabled
+                    onclick='window.location.href="{% url 'qualitycontrol' dataname %}"'>数据质量检测
             </button>
             <button id="beginFSButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
-                    onclick='window.location.href="{% url 'domainknowledgeembedding' dataname %}"'>特征选择
+                    onclick='window.location.href="{% url 'domainknowledgeembedding' dataname %}"'>构效关系建模
             </button>
             <button id="beginMLButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
-                    onclick='window.location.href="{% url 'machinelearning' dataname 'qualitycontrol' %}"'>生成预测模型
+                    onclick='window.location.href="{% url 'machinelearning' dataname 'qualitycontrol' %}"'>性能预测
             </button>
-            {#                    <div class="col-sm-1">#}
-            {#                        <button id="beginPredictButton" type="button" class="btn btn-primary"#}
-            {#                                onclick=' window.location.href="{% url 'predict' dataname %}"'>开始预测#}
-            {#                        </button>#}
-            {#                    </div>#}
-            <script type="text/javascript">
-                let fullUrl = '{{ request.path }}'.substr(1, 100);
-                let idfy = fullUrl.substring(0, fullUrl.indexOf('/'));
-
-                console.log(idfy);
-                let showDataButton, beginFSButton, beginMLButton;
-                showDataButton = document.getElementById('showDataButton');
-                beginFSButton = document.getElementById('beginFSButton');
-                beginMLButton = document.getElementById('beginMLButton');
-                if (idfy === 'qualitycontrol') {
-                    showDataButton.disabled = true;
-                    showDataButton.className += ' btn btn-link';
-                    beginFSButton.disabled = false;
-                    beginFSButton.className.replace(' btn btn-link', '');
-                    beginMLButton.disabled = false;
-                    beginMLButton.className.replace(' btn btn-link', '');
-                } else if (idfy === 'featureselection') {
-                    beginFSButton.disabled = true;
-                    beginFSButton.className += ' btn btn-link';
-                    showDataButton.disabled = false;
-                    showDataButton.className.replace(' btn btn-link', '');
-                    beginMLButton.disabled = false;
-                    beginMLButton.className.replace(' btn btn-link', '');
-                } else if (idfy === 'machinelearning') {
-                    beginMLButton.disabled = true;
-                    beginMLButton.className += ' btn btn-link';
-                    beginFSButton.disabled = false;
-                    beginFSButton.className.replace(' btn btn-link', '');
-                    showDataButton.disabled = false;
-                    showDataButton.className.replace(' btn btn-link', '');
-                }
-            </script>
         </div>
 
         <ul class="nav nav-tabs" id="data_tabs" role="tablist" style="padding-top: 2%; margin-bottom: 2%">
@@ -272,51 +239,22 @@
                         </div>
                     </div>
                 </div>
-                {#                <div class="row">#}
-                {#                    <div id="corrchart" style="width: 1000px;height:600px;"></div>#}
-                {#                </div>#}
-                {#                <div class="col-sm-12 table-responsive" style="overflow: auto">#}
-                {#                    <table class="table table-sm table-bordered table-hover table-responsive" id="corr_table">#}
-                {#                        <thead>#}
-                {#                        <tr>#}
-                {#                            <th>属性1</th>#}
-                {#                            <th>属性2</th>#}
-                {#                            <th>相关系数</th>#}
-                {#                            <th>操作</th>#}
-                {#                        </tr>#}
-                {#                        </thead>#}
-                {#                        <tbody>#}
-                {#                        {% for tuple in pearsonr %}#}
-                {#                            <tr>#}
-                {#                                <td>{{ tuple.0 }}</td>#}
-                {#                                <td>{{ tuple.1 }}</td>#}
-                {#                                <td>{{ tuple.2 }}</td>#}
-                {#                                <td><a href="{% url 'setverbose' dataname forloop.counter0 %}">标记冗余属性</a></td>#}
-                {#                            </tr>#}
-                {#                        {% endfor %}#}
-                {#                        </tbody>#}
-                {#                    </table>#}
-                {#                </div>#}
-                {#            </div>#}
             </div>
 
             <div class="tab-pane fade" id="data_visualize" role="tabpanel" aria-labelledby="data_visualize_tab">
-                {#                <div class="row">#}
-                {#                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;本标签页下显示样本各维度属性的分布信息</h5>#}
-                {#                </div>#}
                 <div class="row">
-                    <div class="col-2">
+                    <div class="col-3">
                         <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical"
                              id="chart_type_tab">
                             <a href="#histogram" class="nav-link active" id="histogram_tab" data-toggle="pill"
-                               role="tab" aria-controls="histogram" aria-selected="true">直方图</a>
+                               role="tab" aria-controls="histogram" aria-selected="true">单维度值分布直方图</a>
                             <a href="#boxplot" class="nav-link" id="boxplot_tab" data-toggle="pill"
-                               role="tab" aria-controls="boxplot" aria-selected="false">箱型图</a>
+                               role="tab" aria-controls="boxplot" aria-selected="false">单维度值分布箱型图</a>
                             <a href="#scatter" class="nav-link" id="scatter_tab" data-toggle="pill"
-                               role="tab" aria-controls="scatter" aria-selected="false">散点图</a>
+                               role="tab" aria-controls="scatter" aria-selected="false">样本空间分布散点图</a>
                         </div>
                     </div>
-                    <div class="col-10">
+                    <div class="col-9">
                         <div class="tab-content" id="chart_type_content">
                             <div class="tab-pane fade show active" id="histogram" role="tabpanel"
                                  aria-labelledby="histogram_tab">
@@ -418,6 +356,7 @@
                             </div>
                             <div class="tab-pane fade" id="scatter" role="tabpanel" aria-labelledby="scatter_tab">
                                 <div id="scatterchart" style="width: 600px; height: 400px"></div>
+                                <div id="scatter3dchart" style="width: 600px; height: 400px"></div>
                                 <div class="row">
                                     <h6>
                                         注：&nbsp;&nbsp;&nbsp;&nbsp;上图为数据样本降维后的数据，坐标值仅供参考</h6>
@@ -1041,16 +980,75 @@
             }
         }
 
-        let pca_res = {{ pca_result|safe }};
-        for (idx in pca_res) {
-            if (pca_res.hasOwnProperty(idx)) {
-                pca_res[idx].push(idx)
+        let pca_ores = {{ pca_result|safe }};
+        let pca3_ores = {{ pca_result3|safe }};
+        for (idx in pca_ores) {
+            if (pca_ores.hasOwnProperty(idx)) {
+                pca_ores[idx].push(idx)
+                if (pca3_ores.hasOwnProperty(idx)) {
+                    pca3_ores[idx].push(idx)
+                }
             }
         }
+
+        let pca_res = pca_ores;
+        let pca3d_res = pca3_ores;
+        let algo_ores = {{ algo|safe }};
+
+        Array.prototype.indexOf = function (val) {
+            for (let i = 0; i < this.length; i++) {
+                if (this[i] === val) return i;
+            }
+            return -1;
+        };
+        Array.prototype.remove = function (val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
+
+        let lof_res = [];
+        let lof3d_res = [];
+        let if_res = [];
+        let if3d_res = [];
+        for (let j in algo_ores['lof']) {
+            if (algo_ores['lof'].hasOwnProperty(j)) {
+                lof_res.push(pca_ores[j]);
+                lof3d_res.push(pca3_ores[j]);
+                pca_res.remove(pca_ores[j]);
+                pca3d_res.remove(pca3_ores[j]);
+            }
+        }
+        for (let j in algo_ores['if']) {
+            if (algo_ores['if'].hasOwnProperty(j)) {
+                if_res.push(pca_ores[j]);
+                if3d_res.push(pca3_ores[j]);
+                pca_res.remove(pca_ores[j]);
+                pca3d_res.remove(pca3_ores[j]);
+            }
+        }
+
+
+        let eudist_ores = {{ eudist|safe }};
+        let eudist_res = [];
+        let eudist3d_res = [];
+        for (let i in eudist_ores) {
+            if (eudist_ores.hasOwnProperty(i)) {
+                eudist_res.push(pca_ores[eudist_ores[i]['NO']]);
+                eudist3d_res.push(pca3_ores[eudist_ores[i]['NO']]);
+                pca_res.remove(pca_ores[eudist_ores[i]['NO']]);
+                pca3d_res.remove(pca3_ores[eudist_ores[i]['NO']]);
+            }
+        }
+        console.log(pca3d_res)
+
+
         let scatterchart = echarts.init(document.getElementById('scatterchart'));
         scatterchart.setOption({
             xAxis: {},
             yAxis: {},
+            legend: {data: ['LOF检验异常', 'IF检验异常', '异常的相似样本', '正常样本']},
             tooltip: {
                 showDelay: 0,
                 formatter: function (param) {
@@ -1058,11 +1056,74 @@
                 }
             },
             series: [{
+                name: 'LOF检验异常',
+                data: lof_res,
+                type: "scatter",
+                symbol: 'triangle',
+                symbolSize: 13,
+                itemStyle: {normal: {color: 'green'}},
+            }, {
+                name: 'IF检验异常',
+                data: if_res,
+                type: "scatter",
+                symbol: 'triangle',
+                symbolSize: 13,
+                itemStyle: {normal: {color: 'orange'}},
+            }, {
+                name: '异常的相似样本',
+                data: eudist_res,
+                type: "scatter",
+                symbol: 'triangle',
+                symbolSize: 13,
+                itemStyle: {normal: {color: 'blue'}},
+            }, {
+                name: '正常样本',
                 data: pca_res,
                 type: 'scatter',
                 symbolSize: 10,
             }]
+        });
 
+        let scatter3dchart = echarts.init(document.getElementById('scatter3dchart'));
+        scatter3dchart.setOption({
+            xAxis3D: {},
+            yAxis3D: {},
+            zAxis3D: {},
+            grid3D: {},
+            legend: {data: ['LOF检验异常', 'IF检验异常', '异常的相似样本', '正常样本']},
+            tooltip: {
+                showDelay: 0,
+                formatter: function (param) {
+                    return '样本编号: ' + param.value[2];
+                }
+            },
+            series: [{
+                name: 'LOF检验异常',
+                data: lof3d_res,
+                type: "scatter3D",
+                symbol: 'triangle',
+                symbolSize: 13,
+                itemStyle: {normal: {color: 'green'}},
+            }, {
+                name: 'IF检验异常',
+                data: if3d_res,
+                type: "scatter3D",
+                symbol: 'triangle',
+                symbolSize: 13,
+                itemStyle: {normal: {color: 'orange'}},
+            }, {
+                name: '异常的相似样本',
+                data: eudist3d_res,
+                type: "scatter3D",
+                symbol: 'triangle',
+                symbolSize: 13,
+                itemStyle: {normal: {color: 'blue'}},
+            }, {
+                name: '正常样本',
+                data: pca3d_res,
+                type: 'scatter3D',
+                symbolSize: 10,
+            }]
         });
     </script>
 

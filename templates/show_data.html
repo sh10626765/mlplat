@@ -1,27 +1,54 @@
 {% extends 'base_index.html' %}
+{% load static %}
 
 {% block title %}数据查看{% endblock %}
 
 {% block script %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'bootstrap-table-develop/dist/bootstrap-table.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'bootstrap-table-develop/dist/extensions/filter-control/bootstrap-table-filter-control.css' %}">
+
+    <script type="text/javascript" src="{% static 'bootstrap-table-develop/dist/bootstrap-table.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'bootstrap-table-develop/dist/extensions/filter-control/bootstrap-table-filter-control.js' %}"></script>
+
+    <script type="text/javascript"
+            src="{% static 'bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js' %}"></script>
 {% endblock %}
 
 {% block content %}
     <div class="container">
-        <table class="table table-sm table-hover table-responsive">
+        <table data-toggle="table" class="table table-sm table-hover table-responsive" id="table"
+               data-search="true"
+               data-show-toggle="true"
+               data-filter-control="true"
+        >
             <thead>
             <tr>
-                <th>数据名</th>
-                <th>收录时间</th>
+                <th data-sortable="true" data-filter-control="input">数据名</th>
+                <th data-sortable="true" data-filter-control="select">数据领域类型</th>
+                <th data-sortable="true" data-filter-control="select">方向类型</th>
+                <th data-sortable="true" data-filter-control="select">数据来源</th>
+                <th data-sortable="true" data-filter-control="select">数据分类</th>
+                <th data-sortable="true">提交者</th>
+                <th data-sortable="true">收录时间</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
             {% for dataitem in dataset %}
                 <tr>
-                    {#                    <td><a href="{% url 'download' dataitem.data_name %}">{{ dataitem.data_name }}</a></td>#}
-                    <td><a href="{% url 'qualitycontrol' dataitem.data_name %}">{{ dataitem.data_name }}</a></td>
+                    <td><a href="{% url 'descinfo' dataitem.data_name %}">{{ dataitem.data_name }}</a></td>
+                    <td>{{ dataitem.data_field }}</td>
+                    <td>{{ dataitem.data_interest }}</td>
+                    <td>{{ dataitem.origin }}</td>
+                    <td>{{ dataitem.origin_type }}</td>
+                    <td>{{ dataitem.submitter }}</td>
                     <td>{{ dataitem.pub_date }}</td>
-                    <td><a href="{% url 'download' dataitem.data_name %}">下载</a></td>
+                    <td><a href="{% url 'qualitycontrol' dataitem.data_name %}">机器学习</a>&nbsp;&nbsp;<a
+                            href="{% url 'download' dataitem.data_name %}">下载</a></td>
                 </tr>
             {% endfor %}
 

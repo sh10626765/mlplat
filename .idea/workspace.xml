@@ -20,8 +20,219 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a19f6c1d-b15e-4c7c-8ce2-6755da6e0855" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/bootstrap-table-locale-all.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/bootstrap-table-locale-all.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/bootstrap-table-vue.esm.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/bootstrap-table-vue.esm.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/bootstrap-table-vue.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/bootstrap-table-vue.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/bootstrap-table.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/bootstrap-table.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/bootstrap-table.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/bootstrap-table.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/accent-neutralise/bootstrap-table-accent-neutralise.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/accent-neutralise/bootstrap-table-accent-neutralise.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/addrbar/bootstrap-table-addrbar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/addrbar/bootstrap-table-addrbar.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/auto-refresh/bootstrap-table-auto-refresh.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/auto-refresh/bootstrap-table-auto-refresh.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/cell-input/bootstrap-table-cell-input.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/cell-input/bootstrap-table-cell-input.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/cell-input/bootstrap-table-cell-input.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/cell-input/bootstrap-table-cell-input.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/cookie/bootstrap-table-cookie.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/cookie/bootstrap-table-cookie.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/copy-rows/bootstrap-table-copy-rows.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/copy-rows/bootstrap-table-copy-rows.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/defer-url/bootstrap-table-defer-url.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/defer-url/bootstrap-table-defer-url.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/editable/bootstrap-table-editable.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/editable/bootstrap-table-editable.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/export/bootstrap-table-export.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/export/bootstrap-table-export.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/filter-control/bootstrap-table-filter-control.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/filter-control/bootstrap-table-filter-control.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/filter-control/bootstrap-table-filter-control.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/filter-control/bootstrap-table-filter-control.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/fixed-columns/bootstrap-table-fixed-columns.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/fixed-columns/bootstrap-table-fixed-columns.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/fixed-columns/bootstrap-table-fixed-columns.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/fixed-columns/bootstrap-table-fixed-columns.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/group-by-v2/bootstrap-table-group-by.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/group-by-v2/bootstrap-table-group-by.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/group-by-v2/bootstrap-table-group-by.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/group-by-v2/bootstrap-table-group-by.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/i18n-enhance/bootstrap-table-i18n-enhance.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/i18n-enhance/bootstrap-table-i18n-enhance.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/key-events/bootstrap-table-key-events.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/key-events/bootstrap-table-key-events.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/mobile/bootstrap-table-mobile.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/mobile/bootstrap-table-mobile.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/multiple-sort/bootstrap-table-multiple-sort.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/multiple-sort/bootstrap-table-multiple-sort.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/page-jump-to/bootstrap-table-page-jump-to.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/page-jump-to/bootstrap-table-page-jump-to.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/page-jump-to/bootstrap-table-page-jump-to.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/page-jump-to/bootstrap-table-page-jump-to.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/pipeline/bootstrap-table-pipeline.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/pipeline/bootstrap-table-pipeline.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/print/bootstrap-table-print.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/print/bootstrap-table-print.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/reorder-columns/bootstrap-table-reorder-columns.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/reorder-columns/bootstrap-table-reorder-columns.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/reorder-rows/bootstrap-table-reorder-rows.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/reorder-rows/bootstrap-table-reorder-rows.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/reorder-rows/bootstrap-table-reorder-rows.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/reorder-rows/bootstrap-table-reorder-rows.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/resizable/bootstrap-table-resizable.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/resizable/bootstrap-table-resizable.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/sticky-header/bootstrap-table-sticky-header.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/sticky-header/bootstrap-table-sticky-header.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/sticky-header/bootstrap-table-sticky-header.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/sticky-header/bootstrap-table-sticky-header.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/toolbar/bootstrap-table-toolbar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/toolbar/bootstrap-table-toolbar.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/treegrid/bootstrap-table-treegrid.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/extensions/treegrid/bootstrap-table-treegrid.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-af-ZA.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-af-ZA.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-ar-SA.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-ar-SA.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-ca-ES.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-ca-ES.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-cs-CZ.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-cs-CZ.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-da-DK.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-da-DK.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-de-DE.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-de-DE.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-el-GR.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-el-GR.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-en-US.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-en-US.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-es-AR.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-es-AR.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-es-CL.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-es-CL.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-es-CR.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-es-CR.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-es-ES.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-es-ES.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-es-MX.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-es-MX.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-es-NI.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-es-NI.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-es-SP.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-es-SP.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-et-EE.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-et-EE.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-eu-EU.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-eu-EU.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-fa-IR.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-fa-IR.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-fi-FI.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-fi-FI.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-fr-BE.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-fr-BE.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-fr-CH.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-fr-CH.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-fr-FR.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-fr-FR.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-fr-LU.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-fr-LU.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-he-IL.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-he-IL.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-hr-HR.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-hr-HR.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-hu-HU.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-hu-HU.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-id-ID.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-id-ID.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-it-IT.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-it-IT.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-ja-JP.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-ja-JP.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-ka-GE.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-ka-GE.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-ko-KR.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-ko-KR.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-ms-MY.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-ms-MY.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-nb-NO.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-nb-NO.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-nl-BE.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-nl-BE.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-nl-NL.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-nl-NL.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-pl-PL.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-pl-PL.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-pt-BR.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-pt-BR.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-pt-PT.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-pt-PT.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-ro-RO.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-ro-RO.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-ru-RU.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-ru-RU.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-sk-SK.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-sk-SK.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-sr-Cyrl-RS.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-sr-Cyrl-RS.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-sr-Latn-RS.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-sr-Latn-RS.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-sv-SE.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-sv-SE.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-th-TH.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-th-TH.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-tr-TR.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-tr-TR.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-uk-UA.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-uk-UA.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-ur-PK.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-ur-PK.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-uz-Latn-UZ.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-uz-Latn-UZ.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-vi-VN.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-vi-VN.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-zh-CN.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-zh-CN.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-zh-TW.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/locale/bootstrap-table-zh-TW.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/themes/bulma/bootstrap-table-bulma.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/themes/bulma/bootstrap-table-bulma.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/themes/bulma/bootstrap-table-bulma.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/themes/bulma/bootstrap-table-bulma.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/themes/foundation/bootstrap-table-foundation.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/themes/foundation/bootstrap-table-foundation.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/themes/foundation/bootstrap-table-foundation.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/themes/foundation/bootstrap-table-foundation.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/themes/materialize/bootstrap-table-materialize.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/themes/materialize/bootstrap-table-materialize.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/themes/materialize/bootstrap-table-materialize.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/themes/materialize/bootstrap-table-materialize.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/themes/semantic/bootstrap-table-semantic.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/themes/semantic/bootstrap-table-semantic.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/themes/semantic/bootstrap-table-semantic.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/bootstrap-table-develop/dist-old/themes/semantic/bootstrap-table-semantic.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/incubator-echarts-4.7.0/echarts-gl.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/data_info.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2bb4726e-582a-4f8f-b611-32edaa39c7dd.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2bb4726e-582a-4f8f-b611-32edaa39c7dd.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mlplatapp/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mlplatapp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mlplatapp/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mlplatapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mlplatapp/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base_index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base_index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/custom_retain_features.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/custom_retain_features.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/embed_domain_knowledge.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/embed_domain_knowledge.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/machine_learning.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/machine_learning.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/predict_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/predict_page.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/quality_control.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/quality_control.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/show_data.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/show_data.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/show_feature_select.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/show_feature_select.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/show_machine_learning.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/show_machine_learning.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/upload_data.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/upload_data.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,15 +279,59 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/manage.py" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\PycharmProjects\mlplat\templates" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Django Server.mlplat">
+    <configuration name="makemigrations" type="PythonConfigurationType" factoryName="Python">
+      <module name="mlplat" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="E:\ProgramData\Anaconda3\envs\pjongo\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
+      <option name="PARAMETERS" value="makemigrations" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="migrate" type="PythonConfigurationType" factoryName="Python">
+      <module name="mlplat" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="E:\ProgramData\Anaconda3\envs\pjongo\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
+      <option name="PARAMETERS" value="migrate" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="pso" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="mlplat" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -145,6 +400,13 @@
       <option name="customRunCommand" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Django Server.mlplat" />
+      <item itemvalue="Python.makemigrations" />
+      <item itemvalue="Python.migrate" />
+      <item itemvalue="Python.pso" />
+      <item itemvalue="Python.test" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.test" />
@@ -175,7 +437,8 @@
       <workItem from="1588577405183" duration="25352000" />
       <workItem from="1588844075195" duration="10269000" />
       <workItem from="1589097907346" duration="223000" />
-      <workItem from="1589098168823" duration="23915000" />
+      <workItem from="1589098168823" duration="27043000" />
+      <workItem from="1589773597280" duration="45273000" />
     </task>
     <task id="LOCAL-00001" summary="outlier detecting based on Euclidean distance">
       <created>1585044217307</created>
@@ -226,7 +489,14 @@
       <option name="project" value="LOCAL" />
       <updated>1589268168904</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="v0.1">
+      <created>1589269143867</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1589269143867</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -268,9 +538,10 @@
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2428" y="204" width="800" height="676" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588580036563">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="508" y="198" width="848" height="658" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589869416671">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="508" y="198" width="848" height="658" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589869416671" />
     <state x="2428" y="204" width="800" height="676" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1588580036563" />
     <state x="414" y="183" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1584709484526" />
     <state x="640" y="264" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1586679308674">
@@ -281,10 +552,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="690" y="271" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589264882842" />
-    <state x="598" y="123" key="CommitChangelistDialog2" timestamp="1589268167943">
+    <state x="598" y="123" key="CommitChangelistDialog2" timestamp="1589269143160">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="598" y="123" key="CommitChangelistDialog2/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589268167943" />
+    <state x="598" y="123" key="CommitChangelistDialog2/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589269143160" />
     <state x="598" y="123" key="CommitChangelistDialog2/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588711200768" />
     <state x="598" y="123" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1585744527063" />
     <state x="598" y="123" key="CommitChangelistDialog2/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586262352999" />
@@ -292,16 +563,17 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="92" y="92" width="1736" height="866" key="DiffContextDialog/0.0.1920.1050/1920.-853.1080.1890@0.0.1920.1050" timestamp="1587384243333" />
-    <state x="1024" y="287" key="FileChooserDialogImpl" timestamp="1586688866064">
-      <screen x="0" y="0" width="1920" height="1041" />
+    <state x="1024" y="289" key="FileChooserDialogImpl" timestamp="1589779832067">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="1024" y="289" key="FileChooserDialogImpl/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589779832067" />
     <state x="1024" y="287" key="FileChooserDialogImpl/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586688866064" />
     <state x="1024" y="289" key="FileChooserDialogImpl/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1586678823591" />
     <state x="1024" y="289" key="FileChooserDialogImpl/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585232745405" />
-    <state width="1000" height="357" key="GridCell.Tab.0.bottom" timestamp="1589268180863">
+    <state width="1877" height="330" key="GridCell.Tab.0.bottom" timestamp="1589871376294">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1000" height="357" key="GridCell.Tab.0.bottom/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589268180863" />
+    <state width="1877" height="330" key="GridCell.Tab.0.bottom/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589871376294" />
     <state width="936" height="260" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1080@0.0.1920.1040" timestamp="1588608452617" />
     <state width="936" height="260" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1588588631653" />
     <state width="1013" height="221" key="GridCell.Tab.0.bottom/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586797887315" />
@@ -310,10 +582,10 @@
     <state width="1002" height="357" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1588770528406" />
     <state width="1009" height="188" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1588612836167" />
     <state width="633" height="224" key="GridCell.Tab.0.bottom/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586613671839" />
-    <state width="1000" height="357" key="GridCell.Tab.0.center" timestamp="1589268180863">
+    <state width="1877" height="330" key="GridCell.Tab.0.center" timestamp="1589871376293">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1000" height="357" key="GridCell.Tab.0.center/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589268180863" />
+    <state width="1877" height="330" key="GridCell.Tab.0.center/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589871376293" />
     <state width="936" height="260" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1080@0.0.1920.1040" timestamp="1588608452617" />
     <state width="936" height="260" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1588588631653" />
     <state width="1013" height="221" key="GridCell.Tab.0.center/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586797887315" />
@@ -322,10 +594,10 @@
     <state width="1002" height="357" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1588770528406" />
     <state width="1009" height="188" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1588612836167" />
     <state width="633" height="224" key="GridCell.Tab.0.center/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586613671839" />
-    <state width="1000" height="357" key="GridCell.Tab.0.left" timestamp="1589268180863">
+    <state width="1877" height="330" key="GridCell.Tab.0.left" timestamp="1589871376293">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1000" height="357" key="GridCell.Tab.0.left/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589268180863" />
+    <state width="1877" height="330" key="GridCell.Tab.0.left/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589871376293" />
     <state width="936" height="260" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1080@0.0.1920.1040" timestamp="1588608452616" />
     <state width="936" height="260" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1588588631652" />
     <state width="1013" height="221" key="GridCell.Tab.0.left/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586797887315" />
@@ -334,10 +606,10 @@
     <state width="1002" height="357" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1588770528406" />
     <state width="1009" height="188" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1588612836167" />
     <state width="633" height="224" key="GridCell.Tab.0.left/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586613671839" />
-    <state width="1000" height="357" key="GridCell.Tab.0.right" timestamp="1589268180863">
+    <state width="1877" height="330" key="GridCell.Tab.0.right" timestamp="1589871376293">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1000" height="357" key="GridCell.Tab.0.right/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589268180863" />
+    <state width="1877" height="330" key="GridCell.Tab.0.right/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589871376293" />
     <state width="936" height="260" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1080@0.0.1920.1040" timestamp="1588608452617" />
     <state width="936" height="260" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1588588631653" />
     <state width="1013" height="221" key="GridCell.Tab.0.right/0.0.1920.1041/1920.0.1920.1050@0.0.1920.1041" timestamp="1586797887315" />
@@ -362,20 +634,22 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1877" height="352" key="GridCell.Tab.1.right/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585040242303" />
-    <state width="226" height="542" key="HiddenNamespacesPopup" timestamp="1588580042395">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state width="226" height="527" key="HiddenNamespacesPopup" timestamp="1589869374469">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state width="226" height="527" key="HiddenNamespacesPopup/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589869374469" />
     <state width="226" height="542" key="HiddenNamespacesPopup/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1588580042395" />
-    <state x="693" y="208" key="SettingsEditor" timestamp="1588577652142">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="693" y="210" key="SettingsEditor" timestamp="1589269594901">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="693" y="210" key="SettingsEditor/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589269594901" />
     <state x="693" y="208" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1080@0.0.1920.1040" timestamp="1588577652142" />
     <state x="747" y="177" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1583740189774" />
     <state x="693" y="210" key="SettingsEditor/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1585228997526" />
-    <state x="545" y="277" key="Vcs.Push.Dialog.v2" timestamp="1589268523370">
+    <state x="545" y="277" key="Vcs.Push.Dialog.v2" timestamp="1589269604565">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="545" y="277" key="Vcs.Push.Dialog.v2/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589268523370" />
+    <state x="545" y="277" key="Vcs.Push.Dialog.v2/-1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1589269604565" />
     <state x="545" y="277" key="Vcs.Push.Dialog.v2/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588711255951" />
     <state x="545" y="277" key="Vcs.Push.Dialog.v2/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586262976214" />
     <state x="2014" y="48" width="1736" height="866" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1588657382811">
@@ -414,7 +688,9 @@
     <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/1920.0.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1586611469415" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/mlplat$makemigrations.coverage" NAME="makemigrations Coverage Results" MODIFIED="1589780073423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/mlplat$test.coverage" NAME="test Coverage Results" MODIFIED="1589208088504" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/mlplat$pso.coverage" NAME="pso Coverage Results" MODIFIED="1586321858750" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.." />
+    <SUITE FILE_PATH="coverage/mlplat$migrate.coverage" NAME="migrate Coverage Results" MODIFIED="1589780131938" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

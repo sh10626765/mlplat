@@ -64,6 +64,29 @@ def RmDoc(doc_filter, collection, host, port, database):
 
 class Data(models.Model):
     data_name = models.CharField(max_length=200, primary_key=True)
+    data_abstract = models.CharField(max_length=200, blank=True, null=True)
+    data_keywords = models.CharField(max_length=200, blank=True, null=True)
+    data_field = models.CharField(max_length=200, default='')
+    data_interest = models.CharField(max_length=200, default='')
+    sample_num = models.IntegerField(default=0)
+    dim_num = models.IntegerField(default=0)
+
+    submitter = models.CharField(max_length=200, default='')
+    collater = models.CharField(max_length=200, default='')
+    submitter_organization = models.CharField(max_length=200, blank=True, null=True)
+    submitter_email = models.EmailField(default='')
+    submitter_phone = models.CharField(max_length=200, blank=True, null=True)
+    submitter_address = models.CharField(max_length=200, blank=True, null=True)
+
+    origin = models.CharField(max_length=200, default='')
+    origin_type = models.CharField(max_length=200, default='')
+    origin_decision = models.CharField(max_length=200, blank=True, null=True)
+    origin_platenumber = models.CharField(max_length=200, blank=True, null=True)
+    origin_materialname = models.CharField(max_length=200, blank=True, null=True)
+    origin_expcondition = models.CharField(max_length=200, blank=True, null=True)
+    origin_exparguments = models.CharField(max_length=200, blank=True, null=True)
+    origin_expdevice = models.CharField(max_length=200, blank=True, null=True)
+
     pub_date = models.DateTimeField('date published')
 
 

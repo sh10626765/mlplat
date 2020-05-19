@@ -185,6 +185,6 @@ class excelProcessor(object):
                     attr_relate.append((i, j, temp))
         return attr_relate
 
-    def get_two_primary_components(self):
-        pca = PCA(n_components=2)
+    def get_primary_components(self, ncomponents):
+        pca = PCA(n_components=ncomponents)
         return pca.fit_transform(self.valuearray).tolist()

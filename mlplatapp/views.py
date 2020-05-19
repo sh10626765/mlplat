@@ -13,6 +13,7 @@ from .feature_select import BPSO_FK, GA_FK
 HOST = 'localhost'
 PORT = 27017
 DATABASE = 'materialsData'
+DESC_INFO_DATABASE = 'colDescription'
 si = 0  # 暂时，用于记录第一个数值型数据的列下标
 model = None
 
@@ -114,6 +115,7 @@ def show(request):
         model_info = models.Data.objects.all()  # return type: QuerySet of Data object
         # materialsData 中存在的集合
         data_info = models.ReadColl(host=HOST, port=PORT, database=DATABASE)
+        data_desc_info = models.ReadColl(host=HOST, port=PORT, database=DESC_INFO_DATABASE)
 
         # 判断materialsData中的集合信息是否与Data表中信息一致
         # 一致则保留，否则视作冗余信息，删除
@@ -149,6 +151,13 @@ def data(request, name):
         return render(request, 'data_detail.html', {'data': data})
 
 
+def info(request, name):
+    if request.method == 'GET':
+        desc_info = models.ReadData(dataName=name, host=HOST, port=PORT, database=DESC_INFO_DATABASE)
+        return render(request, 'data_info.html',
+                      {'dataitem': models.Data.objects.filter(data_name=name), 'descinfo': desc_info})
+
+
 def upload(request):
     global si
     if request.method == 'POST':
@@ -167,7 +176,65 @@ def upload(request):
 
         # 数据质量检测结果存入数据库
         # 数据质量检测结果仅作为中间数据存储，数据库不保留这些信息
-        modeldata = models.Data(data_name=data_name_in_db, pub_date=timezone.now())
+
+        data_abstract = request.POST.get('data_abstract')
+        data_keywords = request.POST.get('data_keywords')
+        data_field = request.POST.get('domainType')
+        data_interest = request.POST.get('areaType')
+        sample_num = request.POST.get('data_size_m')
+        dim_num = request.POST.get('data_size_n')
+
+        dim_desc = request.POST.getlist('dimDesc')
+        col_name = excelproc.col_name
+        dim_desc_dict = []
+        for e in col_name:
+            dim_desc_dict.append({
+                '名称': e,
+                '符号': e,
+                '描述信息': dim_desc[col_name.index(e)],
+            })
+        _, _ = models.SavaData(data_name_in_db, dim_desc_dict, False, host=HOST, port=PORT,
+                               database=DESC_INFO_DATABASE)
+
+        submitter = request.POST.get('submmitter')
+        collater = request.POST.get('proofreader')
+        submitter_organization = request.POST.get('submmitter_orgnization')
+        submitter_email = request.POST.get('submmitter_email')
+        submitter_phone = request.POST.get('submmitter_phone')
+        submitter_address = request.POST.get('submmitter_address')
+
+        origin = request.POST.get('div_select')
+        origin_type = request.POST.get('div_select1')
+        origin_decision = request.POST.get('eKeyElemColumn')
+        origin_platenumber = request.POST.get('eMaterialTrademark')
+        origin_materialname = request.POST.get('eMName')
+        origin_expcondition = request.POST.get('expconName')
+        origin_exparguments = request.POST.get('expParasetting')
+        origin_expdevice = request.POST.get('expDeviceName')
+
+        modeldata = models.Data(
+            data_name=data_name_in_db,
+            data_abstract=data_abstract,
+            data_keywords=data_keywords,
+            data_field=data_field,
+            data_interest=data_interest,
+            sample_num=sample_num,
+            dim_num=dim_num,
+            submitter=submitter,
+            collater=collater,
+            submitter_email=submitter_email,
+            submitter_phone=submitter_phone,
+            submitter_organization=submitter_organization,
+            submitter_address=submitter_address,
+            origin=origin,
+            origin_type=origin_type,
+            origin_decision=origin_decision,
+            origin_platenumber=origin_platenumber,
+            origin_materialname=origin_materialname,
+            origin_expcondition=origin_expcondition,
+            origin_exparguments=origin_exparguments,
+            origin_expdevice=origin_expdevice,
+            pub_date=timezone.now())
         modeldata.save()
 
         return redirect(reverse('qualitycontrol', kwargs={
@@ -230,7 +297,8 @@ def qualitycontrol(request, data_name):  # , stat_quality_name, algo_quality_nam
         for i in algo:
             algo_dict.update(i)
 
-        pca_result = excelproc.get_two_primary_components()
+        pca_result = excelproc.get_primary_components(2)
+        pca_result_3 = excelproc.get_primary_components(3)
 
         return render(request, 'quality_control.html', {
             'dataname': data_name,
@@ -243,6 +311,7 @@ def qualitycontrol(request, data_name):  # , stat_quality_name, algo_quality_nam
             'spearmanr': spearman_corr,
             'col_start': si,
             'pca_result': pca_result,
+            'pca_result3': pca_result_3,
         })
 
 

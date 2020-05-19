@@ -1,0 +1,227 @@
+{% extends 'base_index.html' %}
+{% load static %}
+
+{% block title %}
+    详细信息
+{% endblock %}
+
+{% block script %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'bootstrap-table-develop/dist/bootstrap-table.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'bootstrap-table-develop/dist/extensions/filter-control/bootstrap-table-filter-control.css' %}">
+
+    <script type="text/javascript" src="{% static 'bootstrap-table-develop/dist/bootstrap-table.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'bootstrap-table-develop/dist/extensions/filter-control/bootstrap-table-filter-control.js' %}"></script>
+
+    <script type="text/javascript"
+            src="{% static 'bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% with dataitem.first as item %}
+            <h3 style="margin-top: 2%; text-align: center">{{ item.data_name }}</h3>
+
+            <div class="row">
+                <label for="data_abstract" class="col-sm-2 control-label"
+                       style="text-align: right; display: inline-block; height:35px; line-height: 35px">数据摘要</label>
+                <div class="form-group col-md-8">
+                    <input type="text" id="data_abstract" name="data_abstract"
+                           class="form-control validate[maxSize[255]]" value="{{ item.data_abstract }}" disabled>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <label for="data_size_m" class="col-sm-2 control-label"
+                       style="text-align: right; display: inline-block; height:35px; line-height: 35px">样本数</label>
+                <div class="form-group col-md-3">
+                    <input type="text" value="{{ item.sample_num }}"
+                           class="form-control validate[required] validate[custom[number]] validate[maxSize[10]]"
+                           disabled id="data_size_m" name="data_size_m">
+                </div>
+                <label for="data_size_n" class="col-sm-2 control-label"
+                       style="text-align: right; display: inline-block; height:35px; line-height: 35px">维度</label>
+                <div class="form-group col-md-3">
+                    <input value="{{ item.dim_num }}" type="text"
+                           class="form-control validate[required] validate[custom[number]] validate[maxSize[10]]"
+                           disabled id="data_size_n" name="data_size_n">
+                </div>
+            </div>
+
+
+            <div class="row">
+                <label for="data_keywords" class="col-sm-2  control-label"
+                       style="text-align: right; display: inline-block; height:35px; line-height: 35px">关键词</label>
+                <div class="form-group col-md-8">
+                    <input value="{{ item.data_keywords }}" type="text"
+                           class="form-control validate[required] validate[maxSize[255]] 	"
+                           disabled
+                           id="data_keywords" name="data_keywords">
+                </div>
+            </div>
+
+            <div class="row">
+                <label for="domainType" class="col-sm-2  control-label"
+                       style="text-align: right; display: inline-block; height:35px; line-height: 35px">数据领域类型</label>
+                <div class="form-group col-md-3">
+                                        <span class="select-box radius mt-20" style="margin: 0">
+                                            <select disabled id="domainType" class="form-control" size="1"
+                                                    name="domainType">
+                                                <option selected>{{ item.data_field }}</option>
+                                            </select>
+                                        </span>
+                </div>
+                <label for="areaType" class="col-sm-2 control-label"
+                       style="text-align: right; display: inline-block; height:35px; line-height: 35px">方向类型</label>
+                <div class="form-group col-md-3">
+                                        <span class="select-box radius mt-20" style="margin: 0">
+                                            <select disabled id="areaType" class="form-control" size="1"
+                                                    name="areaType">
+                                                <option selected>{{ item.data_interest }}</option>
+                                            </select>
+                                        </span>
+                </div>
+            </div>
+
+            <div class="row">
+                <label for="submmitter" class="col-sm-2  control-label"
+                       style="text-align: right; display: inline-block; height:35px; line-height: 35px">提交者</label>
+                <div class="form-group col-md-3">
+                    <input type="text" disabled
+                           class="form-control validate[required] validate[maxSize[255]]"
+                           value="{{ item.submitter }}" id="submmitter" name="submmitter">
+                </div>
+                <label for="submmitter_orgnization" class="col-sm-2  control-label"
+                       style="text-align: right; display: inline-block; height:35px; line-height: 35px">所在单位</label>
+                <div class="form-group col-md-3">
+                    <input type="text" disabled
+                           class="form-control validate[required] validate[maxSize[255]]"
+                           value="{{ item.submitter_organization }}" id="submmitter_orgnization"
+                           name="submmitter_orgnization">
+                </div>
+            </div>
+            <div class="row">
+                <label for="proofreader" class="col-sm-2  control-label"
+                       style="text-align: right; display: inline-block; height:35px; line-height: 35px">校对者</label>
+                <div class="form-group col-md-3">
+                    <input type="text" class="form-control validate[maxSize[255]]" disabled
+                           value="{{ item.collater }}" id="proofreader" name="proofreader">
+                </div>
+            </div>
+            <div class="row">
+                <label for="submmitter_email" class="col-sm-2  control-label"
+                       style="text-align: right; display: inline-block; height:35px; line-height: 35px">邮箱</label>
+                <div class="form-group col-md-3">
+                    <input value="{{ item.submitter_email }}" type="text" disabled
+                           class="form-control validate[required] validate[maxSize[255]] validate[custom[email]]"
+                           placeholder="邮箱" id="submmitter_email" name="submmitter_email">
+                </div>
+                <label for="submmitter_phone" class="col-sm-2  control-label"
+                       style="text-align: right; display: inline-block; height:35px; line-height: 35px">电话</label>
+                <div class="form-group col-md-3">
+                    <input value="{{ item.submitter_phone }}" type="text" disabled
+                           class="form-control validate[required] validate[maxSize[255]] validate[custom[phone]]"
+                           placeholder="电话" id="submmitter_phone" name="submmitter_phone">
+                </div>
+            </div>
+
+            <div class="row">
+                <label for="submmitter_address" class="col-sm-2  control-label"
+                       style="text-align: right; display: inline-block; height:35px; line-height: 35px">通讯地址</label>
+                <div class="form-group col-md-3">
+                    <input type="text" disabled value="{{ item.submitter_address }}"
+                           class="form-control validate[required] validate[maxSize[255]]"
+                           placeholder="通讯地址" id="submmitter_address" name="submmitter_address">
+                </div>
+            </div>
+
+            <div class="row">
+                <label for="div_select" class="col-sm-2  control-label"
+                       style="text-align: right;display: inline-block; height:35px; line-height: 35px">数据分类</label>
+                <div class="form-group col-md-3">
+                                        <span class="select-box radius mt-20" style="margin: 0">
+                                            <select disabled id="div_select" class="form-control" size="1"
+                                                    name="div_select">
+                                                <option selected>{{ item.origin }}</option>
+                                            </select>
+                                        </span>
+                </div>
+                <label for="eKeyElemColumn" class="col-sm-2 control-label"
+                       style="text-align: right; display: inline-block; height:35px; line-height: 35px">决策属性</label>
+                <div class="form-group col-md-3">
+                    <input type="text" class="form-control validate[maxSize[255]] " disabled
+                           value="{{ item.origin_decision }}"
+                           placeholder="决策属性" id="eKeyElemColumn">
+                </div>
+            </div>
+            <div class="row">
+                <label for="eMaterialTrademark" class="col-sm-2 control-label"
+                       style="text-align: right; display: inline-block; height:35px; line-height: 35px">牌号</label>
+                <div class="form-group col-md-3">
+                    <input type="text" class="form-control validate[maxSize[255]] " placeholder="牌号" disabled
+                           id="eMaterialTrademark" value="{{ item.origin_platenumber }}">
+                </div>
+                <label for="eMName" class="col-sm-2  control-label"
+                       style="text-align: right; display: inline-block; height:35px; line-height: 35px">材料名称</label>
+                <div class="form-group col-md-3">
+                    <input type="text" class="form-control validate[maxSize[255]]" disabled
+                           placeholder="材料名称" id="eMName" value="{{ item.origin_materialname }}">
+                </div>
+            </div>
+            <div class="row">
+                <label for="expconName" class="col-sm-2 control-label"
+                       style="text-align: right; display: inline-block; height:35px; line-height: 35px">实验条件名称</label>
+                <div class="form-group col-md-3">
+                    <input type="text" class="form-control validate[maxSize[255]]" disabled
+                           placeholder="实验条件名称" id="expconName" value="{{ item.origin_expcondition }}">
+                </div>
+                <label for="expParasetting" class="col-sm-2  control-label"
+                       style="text-align: right; display: inline-block; height:35px; line-height: 35px">实验参数设置</label>
+                <div class="form-group col-md-3">
+                    <input type="text" class="form-control validate[maxSize[255]]" disabled
+                           placeholder="实验参数设置" id="expParasetting" value="{{ item.origin_exparguments }}">
+                </div>
+            </div>
+            <div class="row">
+                <label for="expDeviceName" class="col-sm-2 control-label"
+                       style="text-align: right;padding-left: 4px; display: inline-block; height:35px; line-height: 35px">实验设备名称与型号</label>
+                <div class="form-group col-md-3">
+                    <input type="text" class="form-control validate[maxSize[255]]" disabled
+                           placeholder="实验设备名称与型号" id="expDeviceName" value="{{ item.origin_expdevice }}">
+                </div>
+                <label for="div_select1" class="col-sm-2  control-label"
+                       style="text-align: right; display: inline-block; height:35px; line-height: 35px">数据来源</label>
+                <div class="form-group col-md-3">
+                                        <span class="select-box radius mt-20"
+                                              style="margin: 0">
+                                            <select disabled id="div_select1" class="form-control" size="1"
+                                                    name="div_select1">
+                                                <option selected>{{ item.origin_type }}</option>
+                                            </select>
+                                        </span>
+                </div>
+            </div>
+
+            <table class="table table-sm table-bordered table-hover table-responsive" id="table"></table>
+            <script>
+                let dexcinfo = {{ descinfo|safe }};
+                console.log(dexcinfo)
+
+                $('#table').bootstrapTable({
+                    data: dexcinfo,
+                    theadClasses: "thead-light",
+                    columns: [
+                        {title: '名称', field: '名称', width: 300},
+                        {title: '符号', field: '符号', width: 300},
+                        {title: '描述信息', field: '描述信息', width: 600}],
+                    showToggle: true,
+                })
+            </script>
+        {% endwith %}
+
+    </div>
+{% endblock %}

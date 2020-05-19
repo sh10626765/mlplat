@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('upload/', views.upload, name='upload'),
     path('show/', views.show, name='show'),
+    path('descinfo/<str:name>', views.info, name='descinfo'),
 
     path('data/<str:name>', views.data, name='data'),
     path('statquality/<str:name>', views.data, name='statquality'),

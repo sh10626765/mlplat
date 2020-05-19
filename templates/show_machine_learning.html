@@ -5,52 +5,18 @@
 {% block content %}
     <div class="container" style="margin-top: 2%">
         <div class="row">
-            <button id="showDataButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
-                    onclick='window.location.href="{% url 'qualitycontrol' dataname %}"'>数据预览
+            <button id="uploadButton" type="button" class="btn btn-lg btn btn-success btn-arrow-right"
+                    onclick='window.location.href="{% url 'upload' %}"'>数据上传
             </button>
-            <button id="beginFSButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
-                    onclick='window.location.href="{% url 'domainknowledgeembedding' dataname %}"'>特征选择
+            <button id="showDataButton" type="button" class="btn btn-lg btn btn-success btn-arrow-right"
+                    onclick='window.location.href="{% url 'qualitycontrol' dataname %}"'>数据质量检测
+            </button>
+            <button id="beginFSButton" type="button" class="btn btn-lg btn btn-success btn-arrow-right" disabled
+                    onclick='window.location.href="{% url 'domainknowledgeembedding' dataname %}"'>构效关系建模
             </button>
             <button id="beginMLButton" type="button" class="btn btn-lg btn btn-info btn-arrow-right"
-                    onclick='window.location.href="{% url 'machinelearning' dataname 'qualitycontrol' %}"'>生成预测模型
+                    onclick='window.location.href="{% url 'machinelearning' dataname 'qualitycontrol' %}"'>性能预测
             </button>
-            {#                    <div class="col-sm-1">#}
-            {#                        <button id="beginPredictButton" type="button" class="btn btn-primary"#}
-            {#                                onclick=' window.location.href="{% url 'predict' dataname %}"'>开始预测#}
-            {#                        </button>#}
-            {#                    </div>#}
-            <script type="text/javascript">
-                let fullUrl = '{{ request.path }}'.substr(1, 100);
-                let idfy = fullUrl.substring(0, fullUrl.indexOf('/'));
-
-                console.log(idfy);
-                let showDataButton, beginFSButton, beginMLButton;
-                showDataButton = document.getElementById('showDataButton');
-                beginFSButton = document.getElementById('beginFSButton');
-                beginMLButton = document.getElementById('beginMLButton');
-                if (idfy === 'qualitycontrol') {
-                    showDataButton.disabled = true;
-                    showDataButton.className += ' btn btn-link';
-                    beginFSButton.disabled = false;
-                    beginFSButton.className.replace(' btn btn-link', '');
-                    beginMLButton.disabled = false;
-                    beginMLButton.className.replace(' btn btn-link', '');
-                } else if (idfy === 'featureselection') {
-                    beginFSButton.disabled = true;
-                    beginFSButton.className += ' btn btn-link';
-                    showDataButton.disabled = false;
-                    showDataButton.className.replace(' btn btn-link', '');
-                    beginMLButton.disabled = false;
-                    beginMLButton.className.replace(' btn btn-link', '');
-                } else if (idfy === 'machinelearning') {
-                    beginMLButton.disabled = true;
-                    beginMLButton.className += ' btn btn-link';
-                    beginFSButton.disabled = false;
-                    beginFSButton.className.replace(' btn btn-link', '');
-                    showDataButton.disabled = false;
-                    showDataButton.className.replace(' btn btn-link', '');
-                }
-            </script>
         </div>
 
         {% if from_where == 'featureselection' %}
