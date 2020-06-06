@@ -66,16 +66,19 @@
                 <a class="nav-link active" href="#raw_data" data-toggle="tab">原始数据</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#stat_quality" data-toggle="tab">数据统计</a>
+                <a class="nav-link" href="#distribution" data-toggle="tab">数据分布特征分析</a> {# TODO:  #}
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#ck_quality" data-toggle="tab">异常检测</a>
+                <a class="nav-link" href="#ck_quality" data-toggle="tab">数据的正确性检验</a> {# TODO: 盒图检验，规则检验，增加全属性盒图 #}
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#verbosity" data-toggle="tab">冗余属性筛选</a>
+                <a class="nav-link" href="#correlation" data-toggle="tab">数据的相关性检验</a> {# TODO: 图等宽 #}
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#data_visualize" data-toggle="tab">数据分布</a>
+                <a class="nav-link" href="#reliability" data-toggle="tab">数据的可靠性检验</a> {# TODO: 正确性检验中的样本级别异常识别 #}
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#balance" data-toggle="tab">数据的平衡性检验</a>
             </li>
         </ul>
 
@@ -92,164 +95,13 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="stat_quality" role="tabpanel" aria-labelledby="data_statistics_tab">
-                <div class="row">
-                    <div class="col-sm-12 table-responsive" style="overflow:auto;">
-                        <table id="stat_table"
-                               class="table table-sm table-bordered table-hover table-responsive"></table>
-                    </div>
-                </div>
-                <div class="row">
-                    <h6>注：&nbsp;&nbsp;&nbsp;&nbsp;上表内容为数据的基本统计信息</h6>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="ck_quality" role="tabpanel" aria-labelledby="data_check_tab">
-                <ul class="nav flex-column" id="ck_quality_tabs" role="tablist">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                           aria-haspopup="true" aria-expanded="false">
-                            下拉查看指定样本
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="nav-link dropdown-item" id="ck_quality_all"
-                               data-toggle="tab"
-                               role="tab" href="#dc_table_tab_all"
-                               aria-selected="true">所有样本</a>
-                            <a class="nav-link dropdown-item" id="ck_quality_lof"
-                               data-toggle="tab"
-                               role="tab" href="#dc_table_tab_lof"
-                               aria-selected="true">局部异常因子检测</a>
-                            <a class="nav-link dropdown-item" id="ck_quality_if"
-                               data-toggle="tab"
-                               role="tab" href="#dc_table_tab_if"
-                               aria-selected="true">孤立森林检测</a>
-                            <a class="nav-link dropdown-item" id="ck_quality_reg"
-                               data-toggle="tab"
-                               role="tab" href="#dc_table_tab_reg"
-                               aria-selected="true">相似样本对比分析</a>
-                            {#                            {% for k,v in algo.items %}#}
-                            {#                                <a class="nav-link dropdown-item" id="ck_quality_{{ k }}"#}
-                            {#                                   data-toggle="tab"#}
-                            {#                                   role="tab" href="#{{ k }}"#}
-                            {#                                   aria-selected="true">{{ k }}</a>#}
-                            {#                            {% endfor %}#}
-                        </div>
-                    </li>
-                </ul>
-
-                <div class="tab-content" id="ck_quality_content">
-                    <div class="tab-pane fade show active" id="dc_table_tab_all">
-                        <div class="col-sm-12 table-responsive" style="overflow:auto;">
-                            <table id="dc_table"
-                                   class="table table-sm table-bordered table-hover table-responsive"></table>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="dc_table_tab_lof">
-                        <div class="col-sm-12 table-responsive" style="overflow:auto;">
-                            <table id="dc_table_lof"
-                                   class="table table-sm table-bordered table-hover table-responsive"></table>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="dc_table_tab_if">
-                        <div class="col-sm-12 table-responsive" style="overflow:auto;">
-                            <table id="dc_table_if"
-                                   class="table table-sm table-bordered table-hover table-responsive"></table>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="dc_table_tab_reg">
-                        <div class="col-sm-12 table-responsive" style="overflow:auto;">
-                            <table id="dc_table_reg"
-                                   class="table table-sm table-bordered table-hover table-responsive"></table>
-                        </div>
-                    </div>
-                    {#                    {% for k,v in algo.items %}#}
-                    {#                        <div class="tab-pane fade" id="{{ k }}"#}
-                    {#                             role="tabpanel" aria-labelledby="ck_quality_{{ k }}">#}
-                    {#                            <div class="col-sm-12 table-responsive" style="overflow:auto;">#}
-                    {#                                <table id="dc_table_{{ k }}"#}
-                    {#                                       class="table table-sm table-bordered table-hover table-responsive"></table>#}
-                    {#                            </div>#}
-                    {#                        </div>#}
-                    {#                    {% endfor %}#}
-                </div>
-
-
-                {#                <div class="row">#}
-                {#                    <div class="col-sm-12 table-responsive" style="overflow:auto;">#}
-                {#                        <table id="dc_table" class="table table-sm table-bordered table-hover table-responsive"></table>#}
-                {#                    </div>#}
-                {#                </div>#}
-                <div class="row">
-                    <h6>注：&nbsp;&nbsp;&nbsp;&nbsp;黄色背景的单元格表示该值超出本列盒图统计值的上下限</h6>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="verbosity" role="tabpanel" aria-labelledby="verbosity_tab">
-                {#                <div class="row"><h5>&nbsp;&nbsp;&nbsp;&nbsp;本标签页下显示Pearson系数较高的属性组</h5></div>#}
-                {#                <div class="row"><h5>&nbsp;&nbsp;&nbsp;&nbsp;用户可根据实际情况筛选独立属性</h5></div>#}
-                <ul class="nav flex-column" id="corr_tabs" role="tablist">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                           aria-haspopup="true" aria-expanded="false">
-                            下拉查看
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="nav-link dropdown-item" id="pearsonr"
-                               data-toggle="tab"
-                               role="tab" href="#pearsonr_tab"
-                               aria-selected="true">Pearson相关性</a>
-                            <a class="nav-link dropdown-item" id="kendallr"
-                               data-toggle="tab"
-                               role="tab" href="#kendallr_tab"
-                               aria-selected="true">Kendall相关性</a>
-                            <a class="nav-link dropdown-item" id="spearmanr"
-                               data-toggle="tab"
-                               role="tab" href="#spearmanr_tab"
-                               aria-selected="true">Spearman相关性</a>
-                        </div>
-                    </li>
-                </ul>
-                <div class="tab-content" id="corr_content">
-                    <div class="tab-pane fade show active" id="pearsonr_tab">
-                        <div class="row">
-                            <div id="pearsoncorrchart" style="width: 1000px;height:600px;"></div>
-                        </div>
-                        <div class="col-sm-12 table-responsive" style="overflow: auto">
-                            <table class="table table-sm table-bordered table-hover table-responsive"
-                                   id="pearson_corr_table"></table>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="kendallr_tab">
-                        <div class="row">
-                            <div id="kendallcorrchart" style="width: 1000px;height:600px;"></div>
-                        </div>
-                        <div class="col-sm-12 table-responsive" style="overflow: auto">
-                            <table class="table table-sm table-bordered table-hover table-responsive"
-                                   id="kendall_corr_table"></table>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="spearmanr_tab">
-                        <div class="row">
-                            <div id="spearmancorrchart" style="width: 1000px;height:600px;"></div>
-                        </div>
-                        <div class="col-sm-12 table-responsive" style="overflow: auto">
-                            <table class="table table-sm table-bordered table-hover table-responsive"
-                                   id="spearman_corr_table"></table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="data_visualize" role="tabpanel" aria-labelledby="data_visualize_tab">
+            <div class="tab-pane fade" id="distribution" role="tabpanel" aria-labelledby="data_statistics_tab">
                 <div class="row">
                     <div class="col-3">
                         <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical"
                              id="chart_type_tab">
                             <a href="#histogram" class="nav-link active" id="histogram_tab" data-toggle="pill"
                                role="tab" aria-controls="histogram" aria-selected="true">单维度值分布直方图</a>
-                            <a href="#boxplot" class="nav-link" id="boxplot_tab" data-toggle="pill"
-                               role="tab" aria-controls="boxplot" aria-selected="false">单维度值分布箱型图</a>
                             <a href="#scatter" class="nav-link" id="scatter_tab" data-toggle="pill"
                                role="tab" aria-controls="scatter" aria-selected="false">样本空间分布散点图</a>
                         </div>
@@ -301,7 +153,43 @@
                                     {% endwith %}
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="boxplot" role="tabpanel" aria-labelledby="boxplot_tab">
+                            <div class="tab-pane fade" id="scatter" role="tabpanel" aria-labelledby="scatter_tab">
+                                <div id="scatterchart" style="width: 600px; height: 400px"></div>
+                                <div id="scatter3dchart" style="width: 600px; height: 400px"></div>
+                                <div class="row">
+                                    <h6>
+                                        注：&nbsp;&nbsp;&nbsp;&nbsp;上图为数据样本降维后的数据，坐标值仅供参考</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 table-responsive" style="overflow:auto;">
+                        <table id="stat_table"
+                               class="table table-sm table-bordered table-hover table-responsive"></table>
+                    </div>
+                </div>
+                <div class="row">
+                    <h6>注：&nbsp;&nbsp;&nbsp;&nbsp;上表内容为数据的基本统计信息</h6>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="ck_quality" role="tabpanel" aria-labelledby="data_check_tab">
+                <div class="row">
+                    <div class="col-2">
+                        <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical"
+                             id="chart_type_tab">
+                            <a href="#boxplot" class="nav-link" id="boxplot_tab" data-toggle="pill"
+                               role="tab" aria-controls="boxplot" aria-selected="false">单维度值分布箱型图</a>
+                            <a href="#boxplotall" class="nav-link" id="boxplotall_tab" data-toggle="pill"
+                               role="tab" aria-controls="scatter" aria-selected="false">箱型图总览</a>
+                        </div>
+                    </div>
+                    <div class="col-10">
+                        <div class="tab-content" id="chart_type_content">
+                            <div class="tab-pane fade show active" id="boxplot" role="tabpanel"
+                                 aria-labelledby="boxplot_tab">
                                 <ul class="nav flex-column" id="bpchart_tabs" role="tablist">
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
@@ -354,17 +242,158 @@
                                     {% endwith %}
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="scatter" role="tabpanel" aria-labelledby="scatter_tab">
-                                <div id="scatterchart" style="width: 600px; height: 400px"></div>
-                                <div id="scatter3dchart" style="width: 600px; height: 400px"></div>
+                            <div class="tab-pane fade" id="boxplotall" role="tabpanel" aria-labelledby="boxplotall_tab">
+                                <div id="bpallchart" style="width: 800px; height: 400px"></div>
                                 <div class="row">
-                                    <h6>
-                                        注：&nbsp;&nbsp;&nbsp;&nbsp;上图为数据样本降维后的数据，坐标值仅供参考</h6>
+                                    <h6>注：&nbsp;&nbsp;&nbsp;&nbsp;上图中数据为最大最小归一化后的值，仅供参考</h6>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <ul class="nav flex-column" id="ck_quality_tabs" role="tablist">
+                    <li class="nav-item dropdown">
+                        {#                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"#}
+                        {#                           aria-haspopup="true" aria-expanded="false">#}
+                        {#                            <span id="buttonTextDc">所有样本</span>#}
+                        {#                        </a>#}
+                        <div class="dropdown-menu">
+                            <a class="nav-link dropdown-item" id="ck_quality_all"
+                               data-toggle="tab" onclick="selectShowDc($(this).text())"
+                               role="tab" href="#dc_table_tab_all"
+                               aria-selected="true">所有样本</a>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="ck_quality_content">
+                    <div class="tab-pane fade show active" id="dc_table_tab_all">
+                        <div class="col-sm-12 table-responsive" style="overflow:auto;">
+                            <table id="dc_table"
+                                   class="table table-sm table-bordered table-hover table-responsive"></table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <h6>注：&nbsp;&nbsp;&nbsp;&nbsp;黄色背景的单元格表示该值超出本列盒图统计值的上下限</h6>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="correlation" role="tabpanel" aria-labelledby="correlation_tab">
+                <ul class="nav flex-column" id="corr_tabs" role="tablist">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            <span id="buttonTextCorr">Pearson相关性</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="nav-link dropdown-item" id="pearsonr"
+                               data-toggle="tab" onclick="selectShowCorr($(this).text())"
+                               role="tab" href="#pearsonr_tab"
+                               aria-selected="true">Pearson相关性</a>
+                            <a class="nav-link dropdown-item" id="kendallr"
+                               data-toggle="tab" onclick="selectShowCorr($(this).text())"
+                               role="tab" href="#kendallr_tab"
+                               aria-selected="true">Kendall相关性</a>
+                            <a class="nav-link dropdown-item" id="spearmanr"
+                               data-toggle="tab" onclick="selectShowCorr($(this).text())"
+                               role="tab" href="#spearmanr_tab"
+                               aria-selected="true">Spearman相关性</a>
+                        </div>
+                        <script>
+                            function selectShowCorr(a) {
+                                $('#buttonTextCorr').text(a)
+                            }
+                        </script>
+                    </li>
+                </ul>
+                <div class="tab-content" id="corr_content">
+                    <div class="tab-pane fade show active" id="pearsonr_tab">
+                        <div class="row">
+                            <div id="pearsoncorrchart" style="width: 1000px;height:600px;margin: 0 auto"></div>
+                        </div>
+                        <div class="col-sm-12 table-responsive" style="overflow: auto">
+                            <table class="table table-sm table-bordered table-hover table-responsive"
+                                   id="pearson_corr_table"></table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="kendallr_tab">
+                        <div class="row">
+                            <div id="kendallcorrchart" style="margin: 0 auto;width: 1000px;height:600px;"></div>
+                        </div>
+                        <div class="col-sm-12 table-responsive" style="overflow: auto">
+                            <table class="table table-sm table-bordered table-hover table-responsive"
+                                   id="kendall_corr_table"></table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="spearmanr_tab">
+                        <div class="row">
+                            <div id="spearmancorrchart" style="margin: 0 auto;width: 1000px;height:600px;"></div>
+                        </div>
+                        <div class="col-sm-12 table-responsive" style="overflow: auto">
+                            <table class="table table-sm table-bordered table-hover table-responsive"
+                                   id="spearman_corr_table"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="reliability" role="tabpanel" aria-labelledby="reliability_tab">
+                <ul class="nav flex-column" id="ck_reliability_tabs" role="tablist">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            <span id="buttonTextDc">局部异常因子检测</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="nav-link dropdown-item" id="ck_reliability_lof"
+                               data-toggle="tab" onclick="selectShowDc($(this).text())"
+                               role="tab" href="#dc_table_tab_lof"
+                               aria-selected="true">局部异常因子检测</a>
+                            <a class="nav-link dropdown-item" id="ck_reliability_if"
+                               data-toggle="tab" onclick="selectShowDc($(this).text())"
+                               role="tab" href="#dc_table_tab_if"
+                               aria-selected="true">孤立森林检测</a>
+                            <a class="nav-link dropdown-item" id="ck_reliability_reg"
+                               data-toggle="tab" onclick="selectShowDc($(this).text())"
+                               role="tab" href="#dc_table_tab_reg"
+                               aria-selected="true">相似样本对比分析</a>
+                            <script>
+                                function selectShowDc(a) {
+                                    $('#buttonTextDc').text(a)
+                                }
+                            </script>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="ck_reliability_content">
+                    <div class="tab-pane fade show active" id="dc_table_tab_lof">
+                        <div class="col-sm-12 table-responsive" style="overflow:auto;">
+                            <table id="dc_table_lof"
+                                   class="table table-sm table-bordered table-hover table-responsive"></table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="dc_table_tab_if">
+                        <div class="col-sm-12 table-responsive" style="overflow:auto;">
+                            <table id="dc_table_if"
+                                   class="table table-sm table-bordered table-hover table-responsive"></table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="dc_table_tab_reg">
+                        <div class="col-sm-12 table-responsive" style="overflow:auto;">
+                            <table id="dc_table_reg"
+                                   class="table table-sm table-bordered table-hover table-responsive"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="balance" role="tabpanel" aria-labelledby="balance_tab"></div>
+
+            <div class="tab-pane fade" id="data_visualize" role="tabpanel" aria-labelledby="data_visualize_tab">
+
             </div>
         </div>
     </div>
@@ -927,6 +956,41 @@
             fielddata.push(datafield[i])
         }
 
+        function getMaxV(distributionInfo) {
+            let max = 0
+            for (let idx = 0; idx < distributionInfo.length; idx++) {
+                if (max < distributionInfo[idx])
+                    max = distributionInfo[idx]
+            }
+            return max
+        }
+
+        // 获取最小值
+        function getMinV(distributionInfo) {
+            let min = 1000000
+            for (let idx = 0; idx < distributionInfo.length; idx++) {
+                if (min > distributionInfo[idx])
+                    min = distributionInfo[idx]
+            }
+            return min
+        }
+
+        // 归一化处理
+        function normalization(distribution, max, min) {
+            return (distribution - min) / (max - min)
+        }
+
+        let normed_fielddata = [];
+        for (let v in fielddata) {
+            if (fielddata.hasOwnProperty(v)) {
+                let etmp = [];
+                for (let eidx = 0; eidx < fielddata[v].length; eidx++) {
+                    etmp.push(normalization(fielddata[v][eidx], getMaxV(fielddata[v]), getMinV(fielddata[v])))
+                }
+                normed_fielddata.push(etmp);
+            }
+        }
+
         for (let i = 0; i < Object.keys(datafield).length; i++) {
             try {
                 let data_chart = echarts.init(document.getElementById('data_chart' + i.toString()));
@@ -979,6 +1043,39 @@
                 console.log(e);
             }
         }
+
+        let bpalldata = echarts.dataTool.prepareBoxplotData(normed_fielddata);
+        bpalldata.axisData = {{ col_name|safe }};
+        let bpallchart = echarts.init(document.getElementById('bpallchart'));
+        bpallchart.setOption({
+            title: [{text: '箱型图总览', left: 'center'}, {
+                text: 'upper: Q3 + 1.5 * IQR \nlower: Q1 - 1.5 * IQR',
+                borderColor: '#999', borderWidth: 1,
+                textStyle: {fontSize: 14}, left: '10%', top: '90%'
+            }],
+            tooltip: {trigger: 'item'},
+            grid: {left: '10%', right: '10%', bottom: '15%'},
+            xAxis: {type: 'category', data: bpalldata.axisData},
+            yAxis: {type: 'value'},
+            series: [
+                {
+                    name: 'boxplot', type: 'boxplot', data: bpalldata.boxData,
+                    tooltip: {
+                        formatter: function (param) {
+                            return [
+                                'upper: ' + param.data[5],
+                                'Q3: ' + param.data[4],
+                                'median: ' + param.data[3],
+                                'Q1: ' + param.data[2],
+                                'lower: ' + param.data[1]
+                            ].join('<br/>');
+                        }
+                    }
+                }, {
+                    name: 'outlier', type: 'scatter', data: bpalldata.outliers, symbolSize: 5
+                }
+            ]
+        });
 
         let pca_ores = {{ pca_result|safe }};
         let pca3_ores = {{ pca_result3|safe }};
@@ -1041,7 +1138,6 @@
                 pca3d_res.remove(pca3_ores[eudist_ores[i]['NO']]);
             }
         }
-        console.log(pca3d_res)
 
 
         let scatterchart = echarts.init(document.getElementById('scatterchart'));
@@ -1228,10 +1324,6 @@
             tooltip: {
                 position: 'top'
             },
-            title: {
-                left: 30,
-                text: 'Pearson相关性'
-            },
             animation: false,
             xAxis: {
                 type: 'category',
@@ -1284,10 +1376,6 @@
             tooltip: {
                 position: 'top'
             },
-            title: {
-                left: 30,
-                text: 'Kendall相关性'
-            },
             animation: false,
             xAxis: {
                 type: 'category',
@@ -1339,10 +1427,6 @@
         scorrchart.setOption({
             tooltip: {
                 position: 'top'
-            },
-            title: {
-                left: 30,
-                text: 'Spearman相关性'
             },
             animation: false,
             xAxis: {

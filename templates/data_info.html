@@ -207,6 +207,12 @@
             </div>
 
             <table class="table table-sm table-bordered table-hover table-responsive" id="table"></table>
+            <div class="row" style="margin-top: 2%;margin-bottom: 2%">
+                <div class="col-4"></div>
+                <a class="btn btn-info" href="{% url 'qualitycontrol' item.data_name %}">机器学习</a>
+                <div class="col-2"></div>
+                <a class="btn btn-info" href="{% url 'show' %}">返回</a>
+            </div>
             <script>
                 let dexcinfo = {{ descinfo|safe }};
                 console.log(dexcinfo)
@@ -215,8 +221,9 @@
                     data: dexcinfo,
                     theadClasses: "thead-light",
                     columns: [
-                        {title: '名称', field: '名称', width: 300},
-                        {title: '符号', field: '符号', width: 300},
+                        {title: '名称', field: '名称', width: 200},
+                        {title: '符号', field: '符号', width: 200},
+                        {title: '值域', field: '值域', width: 200},
                         {title: '描述信息', field: '描述信息', width: 600}],
                     showToggle: true,
                 })

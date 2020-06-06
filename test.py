@@ -1,20 +1,11 @@
 import pandas as pd
 import numpy as np
-from mlplatapp import utils
-import pymongo
-import random
-
-from sklearn.neighbors import LocalOutlierFactor
-from sklearn.ensemble import IsolationForest
-from sklearn.metrics import pairwise_distances, mean_squared_error, mean_absolute_error
-from sklearn.decomposition import PCA
-from sklearn.model_selection import KFold, LeaveOneOut
-from sklearn.linear_model import LinearRegression, LogisticRegressionCV, LogisticRegression, ridge_regression, Ridge
-from sklearn.svm import SVC, SVR
-from sklearn.metrics import mean_squared_error
-from sklearn.metrics import r2_score
-from sklearn import preprocessing
+import seaborn as sns
 import matplotlib.pyplot as plt
+
+plt.rc('font', family='SimHei', size='15')
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None)
 
 
 def is_number(s):
@@ -50,21 +41,23 @@ data_y = df.iloc[:, -1]
 
 data = df.iloc[:, 4:]
 
-sample_num = len(df)
-feature_num = len([i for i in data_x])
+sns.boxplot(data=data)
 
-
-def get_model(model):
-    if model == 'svr':
-        return SVR()
-    if model == 'ridge':
-        return Ridge()
-    if model == 'ols':
-        return LinearRegression()
-
-
-pca = PCA(n_components=2)
-print(pca.fit_transform(data))
+# sample_num = len(df)
+# feature_num = len([i for i in data_x])
+#
+#
+# def get_model(model):
+#     if model == 'svr':
+#         return SVR()
+#     if model == 'ridge':
+#         return Ridge()
+#     if model == 'ols':
+#         return LinearRegression()
+#
+#
+# pca = PCA(n_components=2)
+# print(pca.fit_transform(data))
 # corr = data_x.corr()
 #
 # al = []

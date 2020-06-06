@@ -107,6 +107,11 @@
     <a class="navbar-brand justify-content-end" href="{% url 'upload' %}">
         {% trans "机器学习" %}
     </a>
+    <div class="collapse navbar-collapse justify-content-end">
+        <a class="navbar-brand justify-content-end" href="#" disabled="disabled">
+            {% trans "关于" %}
+        </a>
+    </div>
 </nav>
 
 {% block content %}{% endblock %}

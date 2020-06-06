@@ -8,6 +8,17 @@ from sklearn import preprocessing
 
 
 def is_number(s):
+    """
+    judge if the input s is a number
+
+    for example:
+    input '3', return True
+    input '1.2' return True
+    input '1.a3' return False
+    input '四' return True
+    :param s:
+    :return:
+    """
     try:
         float(s)
         return True
@@ -25,40 +36,49 @@ def is_number(s):
 
 
 class excelProcessor(object):
+    """
+    This class is used to process excel file or dataframe object
+    """
 
     def __init__(self, filename):
-        self.name = filename
-        self.df = None
-        if isinstance(filename, list):
+        self.name = filename  # 处理的文件名
+        self.df = None  #
+        if isinstance(filename, list):  # 根据初始化文件类型使用不同的方法构造dataframe
             self.df = pandas.DataFrame(filename)
         else:
             self.df = pandas.read_excel(filename)
-        self.df_matrix = self.df.values
-        self.df_rows, self.df_cols = self.df_matrix.shape
+        self.df_matrix = self.df.values  # 将dataframe转为numpy.ndarray形式
+        self.df_rows, self.df_cols = self.df_matrix.shape  # 记录numpy.ndarray的行列数目
 
-        self.col_start = 0
-
+        self.col_start = 0  # 记录从数值形式的值从哪一列开始
+        # 最初考虑excel文件中不只包含特征数据值，还包括一些描述信息
+        # 预设表格的第一列是编号，第二列开始为字符串形式的描述信息，某一列开始为特征数据信息
         for i in range(self.df_cols):
             # print(type(df_matrix[0][i]))
             if isinstance(self.df_matrix[0][i], float):
                 self.col_start = i
                 break
 
-        self.dfvalue = self.df.iloc[:, self.col_start:]
-        self.valuearray = self.dfvalue.values
-        self.col_name = [column_name for column_name in self.df][self.col_start:]
+        self.dfvalue = self.df.iloc[:, self.col_start:]  # 记录特征数据信息的dataframe
+        self.valuearray = self.dfvalue.values  # 将特征数据信息转为numpy.ndarray形式
+        self.col_name = [column_name for column_name in self.df][self.col_start:]  # 记录特征名
 
-        self.dfattr = self.df.iloc[:, self.col_start:-1]
-        self.attr_num = len([i for i in self.dfattr])
-        self.dftarget = self.df.iloc[:, -1]
+        self.dfattr = self.df.iloc[:, self.col_start:-1]  # 记录独立属性dataframe
+        # 注：独立属性指的是可以根据这些属性预测某个属性的值，类似于自变量。相似地，决策属性类似于应变量
+        self.attr_num = len([i for i in self.dfattr])  # 记录独立属性数目
+        self.dftarget = self.df.iloc[:, -1]  # 记录决策属性dataframe
 
-        self.count = numpy.shape(self.dfattr)[0]
-        self.dim = numpy.shape(self.dfattr)[1]
+        self.count = numpy.shape(self.dfattr)[0]  # 重复定义。记录样本数目
+        self.dim = numpy.shape(self.dfattr)[1]  # 重复定义。记录特征数目
         # self.X = preprocessing.MinMaxScaler().fit_transform(self.dfattr.values)
-        self.X = self.dfattr.values
-        self.Y = self.dftarget.values
+        self.X = self.dfattr.values  # 重复定义。记录独立属性numpy.ndarray
+        self.Y = self.dftarget.values  # 重复定义。记录决策属性numpy.ndarray
 
     def get_column_names(self):
+        """
+
+        :return: excel表格或dataframe列名
+        """
         return [column_name for column_name in self.df]
 
     def get_data(self):
@@ -79,15 +99,27 @@ class excelProcessor(object):
         return materials
 
     def has_blank_cell(self):
+        """
+
+        :return: 若表格或dataframe中有空值，则返回true，否则返回false
+        """
         if 0 == numpy.where(self.df.isnull())[0].size:
             return False
         return True
 
     def blank_cells(self):
+        """
+
+        :return: 返回表格或dataframe中空值的坐标
+        """
         blank_matrix = numpy.where(self.df.isnull())
         return list(zip(blank_matrix[0], blank_matrix[1]))
 
     def statistics_data_check(self):
+        """
+        计算数据的统计信息
+        :return:
+        """
         geo_mean = []
         # 求每列的几何平均
         for i in range(len(self.col_name)):
@@ -97,14 +129,15 @@ class excelProcessor(object):
                 prod *= j
             geo_mean.append(pow(prod, 1.0 / self.df_rows))
 
-        desc = self.dfvalue.describe()
-        skew = self.dfvalue.skew()
-        rangem = desc.loc['max'] - desc.loc['min']
+        desc = self.dfvalue.describe()  # 特征数据的统计描述
+        skew = self.dfvalue.skew()  # 特征数据的偏度
+        rangem = desc.loc['max'] - desc.loc['min']  # 特征数据的极差
 
-        IQR = desc.loc['75%'] - desc.loc['25%']
-        upper = desc.loc['75%'] + 1.5 * IQR
-        lower = desc.loc['25%'] - 1.5 * IQR
+        IQR = desc.loc['75%'] - desc.loc['25%']  # 特征数据的四分位距
+        upper = desc.loc['75%'] + 1.5 * IQR  # 特征数据的盒图上限
+        lower = desc.loc['25%'] - 1.5 * IQR  # 特征数据的盒图下限
 
+        # 将上述信息融入统计描述中
         desc.loc['range'] = rangem
         desc.loc['IQR'] = IQR
         desc.loc['lower'] = lower
@@ -115,6 +148,10 @@ class excelProcessor(object):
         return desc
 
     def eudist_data_check(self):
+        """
+        相似样本对比分析
+        :return:
+        """
         df_arg = self.df.iloc[:, self.col_start:-1]
         df_func = self.df.iloc[:, -1]
 
@@ -161,6 +198,10 @@ class excelProcessor(object):
         return dict(suspected_samples_count)
 
     def algorithm_data_check(self):
+        """
+        局部异常因子检测和孤立森林检测离群点
+        :return:
+        """
         lof = LocalOutlierFactor(n_neighbors=self.df_rows // 2, contamination=.1)
         llof = lof.fit_predict(self.valuearray)
         llof_idx = [i for i in range(len(llof)) if llof[i] == -1]
@@ -175,6 +216,11 @@ class excelProcessor(object):
         return desc
 
     def get_corr_coef(self, method):
+        """
+        计算维度间的相关系数，返回相关系数较高的特征对
+        :param method: 何种相关系数（Pearson，Spearman，Kendall）
+        :return:
+        """
         pearson_corr_mat = self.dfattr.corr(method=method)
 
         attr_relate = []  # 记录相关系数过高的特征编号和相关系数，例如：(1,2,0.9)表示特征1与特征2的相关系数为0.9
@@ -186,5 +232,10 @@ class excelProcessor(object):
         return attr_relate
 
     def get_primary_components(self, ncomponents):
+        """
+        主成分分析法特征提取
+        :param ncomponents: 目标维数
+        :return: 将特征数据降维到目标维度后的dataframe
+        """
         pca = PCA(n_components=ncomponents)
         return pca.fit_transform(self.valuearray).tolist()

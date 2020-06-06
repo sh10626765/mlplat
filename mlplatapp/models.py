@@ -6,6 +6,16 @@ import json
 
 
 def SavaData(dataName, dictList, overwrite, host, port, database):
+    """
+    将字典列表存入mongodb
+    :param dataName: 存入的数据名
+    :param dictList: 存入的数据
+    :param overwrite: 是否覆盖数据库中的数据
+    :param host:
+    :param port:
+    :param database:
+    :return:
+    """
     client = pymongo.MongoClient(host=host, port=port)
     db = client.get_database(name=database)
 
@@ -26,6 +36,16 @@ def SavaData(dataName, dictList, overwrite, host, port, database):
 
 
 def UpdateData(number, newData, dataName, host, port, database):
+    """
+    更新dataName中的数据
+    :param number: dataName中待更改的值的‘NO’值，根据这个值找到dataName中需要更改的一项
+    :param newData:
+    :param dataName:
+    :param host:
+    :param port:
+    :param database:
+    :return:
+    """
     client = pymongo.MongoClient(host=host, port=port)
     db = client.get_database(name=database)
 
@@ -34,6 +54,14 @@ def UpdateData(number, newData, dataName, host, port, database):
 
 
 def ReadData(dataName, host, port, database):
+    """
+    读取数据库中dataName中的所有文档
+    :param dataName:
+    :param host:
+    :param port:
+    :param database:
+    :return:
+    """
     client = pymongo.MongoClient(host=host, port=port)
     db = client.get_database(name=database)
 
@@ -44,18 +72,42 @@ def ReadData(dataName, host, port, database):
 
 
 def ReadColl(host, port, database):
+    """
+    读取数据库中的所有数据集合
+    :param host:
+    :param port:
+    :param database:
+    :return:
+    """
     client = pymongo.MongoClient(host=host, port=port)
     db = client.get_database(name=database)
     return db.list_collection_names()
 
 
 def DropColl(collection, host, port, database):
+    """
+    删除数据库中的数据集合
+    :param collection:
+    :param host:
+    :param port:
+    :param database:
+    :return:
+    """
     client = pymongo.MongoClient(host=host, port=port)
     db = client.get_database(name=database)
     return db.drop_collection(collection)
 
 
 def RmDoc(doc_filter, collection, host, port, database):
+    """
+    删除数据集合中的某个文档
+    :param doc_filter: 用于找到需要删除的文档
+    :param collection:
+    :param host:
+    :param port:
+    :param database:
+    :return:
+    """
     client = pymongo.MongoClient(host=host, port=port)
     db = client.get_database(name=database)
     coll = db.get_collection(collection)
@@ -63,6 +115,10 @@ def RmDoc(doc_filter, collection, host, port, database):
 
 
 class Data(models.Model):
+    """
+    上传的数据集模型，记录数据集的描述信息，对应的特征数据存储在MongoDB中
+    为未来使用关系型数据库准备
+    """
     data_name = models.CharField(max_length=200, primary_key=True)
     data_abstract = models.CharField(max_length=200, blank=True, null=True)
     data_keywords = models.CharField(max_length=200, blank=True, null=True)

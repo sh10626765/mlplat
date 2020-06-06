@@ -14,6 +14,7 @@ HOST = 'localhost'
 PORT = 27017
 DATABASE = 'materialsData'
 DESC_INFO_DATABASE = 'colDescription'
+SAMPLE_DESC_INFO_DATABASE = 'sampleDescription'
 si = 0  # 暂时，用于记录第一个数值型数据的列下标
 model = None
 
@@ -130,6 +131,7 @@ def show(request):
                 continue
             else:
                 models.DropColl(data_item, host=HOST, port=PORT, database=DATABASE)
+                models.DropColl(data_item, host=HOST, port=PORT, database=SAMPLE_DESC_INFO_DATABASE)
                 models.DropColl('stat_data_quality_' + data_item, host=HOST, port=PORT,
                                 database=DATABASE)  # 质量检测过程的中间结果，使用过就没用了，删除
                 models.DropColl('algo_data_quality_' + data_item, host=HOST, port=PORT, database=DATABASE)
@@ -152,6 +154,12 @@ def data(request, name):
 
 
 def info(request, name):
+    """
+    由show页面进入，展示数据集的相关描述信息
+    :param request:
+    :param name:
+    :return:
+    """
     if request.method == 'GET':
         desc_info = models.ReadData(dataName=name, host=HOST, port=PORT, database=DESC_INFO_DATABASE)
         return render(request, 'data_info.html',
@@ -161,9 +169,12 @@ def info(request, name):
 def upload(request):
     global si
     if request.method == 'POST':
-        fileinput = request.FILES.get('input-excel')  # read file from <input name="input-excel">
+        fileinput = request.FILES.get('input-excel')  # read file from <input name="input-excel"> 数据文件
         fileinputname = fileinput.name  # get file name
         excelproc = utils.excelProcessor(fileinput)  # preprocess the file uploaded
+
+        descfileinput = request.FILES.get('input-excel-desc')  # 描述文件
+
         si = excelproc.col_start
 
         if excelproc.has_blank_cell():  # if any blank cell exists, interrupt the uploading
@@ -174,6 +185,10 @@ def upload(request):
         data_name_in_db, res = models.SavaData(fileinputname, excelproc.get_data(), False,
                                                host=HOST, port=PORT, database=DATABASE)
 
+        if descfileinput:
+            descexcelproc = utils.excelProcessor(descfileinput)
+            _, _ = models.SavaData(data_name_in_db, descexcelproc.get_data(), False, host=HOST, port=PORT,
+                                   database=SAMPLE_DESC_INFO_DATABASE)
         # 数据质量检测结果存入数据库
         # 数据质量检测结果仅作为中间数据存储，数据库不保留这些信息
 
@@ -184,14 +199,21 @@ def upload(request):
         sample_num = request.POST.get('data_size_m')
         dim_num = request.POST.get('data_size_n')
 
+        dim_range = request.POST.getlist('dimRange')
         dim_desc = request.POST.getlist('dimDesc')
         col_name = excelproc.col_name
         dim_desc_dict = []
+
+        firstElem = True
         for e in col_name:
+            if firstElem:
+                firstElem = False
+                continue
             dim_desc_dict.append({
                 '名称': e,
                 '符号': e,
-                '描述信息': dim_desc[col_name.index(e)],
+                '值域': dim_range[col_name.index(e) - 1],
+                '描述信息': dim_desc[col_name.index(e) - 1],
             })
         _, _ = models.SavaData(data_name_in_db, dim_desc_dict, False, host=HOST, port=PORT,
                                database=DESC_INFO_DATABASE)
@@ -310,6 +332,7 @@ def qualitycontrol(request, data_name):  # , stat_quality_name, algo_quality_nam
             'kendallr': kendall_corr,
             'spearmanr': spearman_corr,
             'col_start': si,
+            'col_name': excelproc.col_name,
             'pca_result': pca_result,
             'pca_result3': pca_result_3,
         })

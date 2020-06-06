@@ -72,7 +72,6 @@
                             </button>
                         </h3>
                     </div>
-
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
                          data-parent="#accordionExample">
                         <div class="card-body">
@@ -139,7 +138,16 @@
                                 </div>
                                 <div class="row">
                                     <label class="col-sm-2  control-label"
-                                           style="text-align: right; display: inline-block; height:35px; line-height: 35px">文件上传</label>
+                                           style="text-align: right; display: inline-block; height:35px; line-height: 35px">描述文件上传</label>
+                                    <div class="formControls col-md-8">
+                                        <input type="file" class="file validate[required]" id="input-excel-desc"
+                                               name="input-excel-desc"
+                                               placeholder="选择上传文件">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-sm-2  control-label"
+                                           style="text-align: right; display: inline-block; height:35px; line-height: 35px">数据文件上传</label>
                                     <div class="formControls col-md-8">
                                         <input type="file" class="file validate[required]" id="input-excel"
                                                name="input-excel"
@@ -161,10 +169,19 @@
                                                 let data = e.target.result;
                                                 wb = XLSX.read(data, {type: 'binary'});
                                                 let objData = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
-                                                console.log(objData);
+                                                let colnum = 0;
+                                                document.getElementById('data_size_m').value = objData.length;
+                                                let discDiv = $('#descDiv');
+                                                discDiv.empty();
+                                                let firstElement = true;
                                                 for (let colname in objData[0]) {
                                                     if (objData[0].hasOwnProperty(colname)) {
-                                                        $('#descDiv').append(
+                                                        if (firstElement) {
+                                                            firstElement = false;
+                                                            continue;
+                                                        }
+                                                        colnum++;
+                                                        discDiv.append(
                                                             "<div class='row'>" +
                                                             "<div class='col-md-1'></div>" +
                                                             "<div class='form-group col-md-2'>" +
@@ -177,14 +194,20 @@
                                                             "class='form-control validate[required] validate[maxSize[255]]' " +
                                                             "value='" + colname + "'>" +
                                                             "</div>" +
-                                                            "<div class='form-group col-md-6'>" +
+                                                            "<div class='form-group col-md-2'>" +
+                                                            "<input type='text' id='dimRange' name='dimRange' " +
+                                                            "class='form-control validate[required] validate[maxSize[255]]' " +
+                                                            "placeholder='例：2,3' >" +
+                                                            "</div>" +
+                                                            "<div class='form-group col-md-4'>" +
                                                             "<input type='text' id='dimDesc' name='dimDesc' " +
                                                             "class='form-control validate[required] validate[maxSize[255]]' " +
-                                                            "placeholder='描述信息'" +
+                                                            "placeholder='描述信息' >" +
                                                             "</div>" +
                                                             "</div>")
                                                     }
                                                 }
+                                                document.getElementById('data_size_n').value = colnum - 1;
                                             }
                                         }
                                     </script>
@@ -204,7 +227,14 @@
                                 <div class="row">
                                     <div class="col-sm-2"></div>
                                     <label class="control-label" style="text-align: center; padding-left: 10px">
-                                        <a href="#">Excel文件示例</a>
+                                        描述文件为数据文件样本的描述信息
+                                    </label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-2"></div>
+                                    <label class="control-label" style="text-align: center; padding-left: 10px">
+                                        <a href="#">描述文件示例</a>
+                                        <a href="#">数据文件示例</a>
                                     </label>
                                 </div>
                             </div>
@@ -244,10 +274,13 @@
                                        style="display: inline-block; height:35px; line-height: 35px">名称</label>
                                 <label class="col-sm-2 control-label"
                                        style="display: inline-block; height:35px; line-height: 35px">符号</label>
-                                <label class="col-sm-6 control-label"
+                                <label class="col-sm-2 control-label"
+                                       style="display: inline-block; height:35px; line-height: 35px">值域</label>
+                                <label class="col-sm-4 control-label"
                                        style="display: inline-block; height:35px; line-height: 35px">描述信息</label>
+                                {# TODO: 值域 #}
                             </div>
-                            <div id="descDiv"></div>
+                            <div id="descDiv" style="height: 600px;overflow-y: scroll;overflow-x: hidden"></div>
                             <div class="row ">
                                 <div class="formControls col-sm-offset-2 col-sm-2"></div>
                                 <div class="formControls col-sm-offset-2 col-sm-2" style="padding-left: 15px">
@@ -484,6 +517,17 @@
 
     <script>
         $('#input-excel').fileinput({
+            showPreview: false,
+            showRemove: false,
+            browseOnZoneClick: true,
+            allowedFileExtensions: ['xls', 'xlsx'],
+            language: 'zh',
+            type: 'post',
+            theme: 'explorer',
+            browseClass: 'btn btn-info',
+            showUpload: false,
+        })
+        $('#input-excel-desc').fileinput({
             showPreview: false,
             showRemove: false,
             browseOnZoneClick: true,

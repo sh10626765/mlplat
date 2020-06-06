@@ -34,7 +34,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container" style="margin-top: 2%">
+    <div class="container" style="margin-top: 2%; margin-bottom: 2%">
         <div class="row" style="margin-bottom: 2%">
             <button id="uploadButton" type="button" class="btn btn-lg btn btn-success btn-arrow-right"
                     onclick='window.location.href="{% url 'upload' %}"'>数据上传
@@ -49,106 +49,232 @@
                     onclick='window.location.href="{% url 'machinelearning' dataname 'qualitycontrol' %}"'>性能预测
             </button>
         </div>
-        {% if uploadonly == 'False' %}
-            <h3>输入相应数据开始预测</h3>
-            {% for i in selected_features %}
+
+        <ul class="nav nav-tabs" id="predictTabs" role="tablist" style="padding-top: 2%; margin-bottom: 2%">
+            <li class="nav-item">
+                <a class="nav-link {% if uploadtopredict == 'False' %}
+             active
+            {% endif %}" href="#inputToPredict" data-toggle="tab"
+                   {% if uploadonly == 'True' %}disabled="disabled"{% endif %}>预测单个样本</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if uploadtopredict == 'True' %}
+            active
+            {% endif %}" href="#uploadToPredict" data-toggle="tab">上传文件预测</a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="predictTabContent">
+            <div class="tab-pane fade {% if uploadtopredict == 'False' %}
+             show active
+            {% endif %}" id="inputToPredict">
+                <h3>输入相应数据开始预测</h3>
+                {% for i in selected_features %}
+                    <div class="row" style="margin: auto">
+                        <div class="col-2">
+                            <label for="{{ i }}">{{ i }}</label>
+                        </div>
+                        <div class="col-10"><input type="text" id="{{ i }}"></div>
+                    </div>
+                {% endfor %}
                 <div class="row" style="margin: auto">
                     <div class="col-2">
-                        <label for="{{ i }}">{{ i }}</label>
+                        <label for="">Ea(eV)</label>
                     </div>
-                    <div class="col-10"><input type="text" id="{{ i }}"></div>
-                </div>
-            {% endfor %}
-        <div class="row" style="margin: auto">
-            <div class="col-2">
-                <label for="">Ea(eV)</label>
-            </div>
-            <div class="col-6">
-                <label id="target" for=""></label>
-            </div>
-            <div class="col-2">
-                <button class="btn btn-info" id="" onclick="calc();">预测</button>
-            </div>
-        </div>
-    {% endif %}
-        <h3>上传文件开始预测</h3>
-        <div style="margin-left: 0; margin-right: 25%; padding: 0">
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input type="file" class="file" id="input-excel" name="input-excel">
-            </form>
-            <script>
-                $('#input-excel').fileinput({
-                    showPreview: false,
-                    showRemove: false,
-                    browseOnZoneClick: true,
-                    allowedFileExtensions: ['xls', 'xlsx'],
-                    language: 'zh',
-                    type: 'post',
-                    msgPlaceholder: "上传数据表格进行预测",
-                    browseClass: 'btn btn-info',
-                    uploadClass: 'btn btn-info',
-                })
-            </script>
-        </div>
-        {% if uploadtopredict == 'True' %}
-            <div class="row">
-                <div class="col-sm-12" style="overflow:auto;">
-                    <table id="predictresult_table"
-                           class="table table-sm table-hover table-responsive"></table>
+                    <div class="col-3">
+                        <label id="target" for=""></label>
+                    </div>
+                    <div class="col-4">
+                        <button class="btn btn-info" id="" onclick="calc();">&nbsp;&nbsp;预&nbsp;&nbsp;测&nbsp;&nbsp;
+                        </button>
+                    </div>
                 </div>
             </div>
-            <script type="text/javascript">
+            <div class="tab-pane fade {% if uploadtopredict == 'True' %}
+             show active
+            {% endif %}" id="uploadToPredict">
+                <h3>上传文件开始预测</h3>
+                <div style="margin-left: 0; margin-right: 25%; padding: 0">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="file" class="file" id="input-excel" name="input-excel">
+                    </form>
+                    <script>
+                        $('#input-excel').fileinput({
+                            showPreview: false,
+                            showRemove: false,
+                            browseOnZoneClick: true,
+                            allowedFileExtensions: ['xls', 'xlsx'],
+                            language: 'zh',
+                            type: 'post',
+                            msgPlaceholder: "上传数据表格进行预测",
+                            browseClass: 'btn btn-info',
+                            uploadClass: 'btn btn-info',
+                        })
+                    </script>
+                </div>
+                {% if uploadtopredict == 'True' %}
+                    <div class="row">
+                        <div class="col-sm-12" style="overflow:auto;">
+                            <table id="predictresult_table"
+                                   class="table table-sm table-hover table-responsive"></table>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
 
-                function isInteger(arg) {
-                    return new RegExp("^[0-9]*$").test(arg)
-                }
+                        function isInteger(arg) {
+                            return new RegExp("^[0-9]*$").test(arg)
+                        }
 
-                function isFloat(arg) {
-                    return new RegExp("^(-?\\d+)(\\.\\d+)?$").test(arg)
-                }
+                        function isFloat(arg) {
+                            return new RegExp("^(-?\\d+)(\\.\\d+)?$").test(arg)
+                        }
 
-                let result = {{ predictresult|safe }};
-                let resColumns = [];
-                let resData = [];
-                for (let col in result[0]) {
-                    if (result[0].hasOwnProperty(col)) {
-                        resColumns.push({
-                            title: col,
-                            field: col,
-                            formatter: function (value) {
-                                if (!isFloat(value)) {
-                                    return value;  // if value is not float or integer, return value
-                                }
-                                if (isInteger(value)) {
-                                    return value;  // if value is integer, return value
-                                }
-                                return value.toFixed(5);  // if value is float, return fixed float
+                        let result = {{ predictresult|safe }};
+                        let resColumns = [];
+                        let resData = [];
+                        for (let col in result[0]) {
+                            if (result[0].hasOwnProperty(col)) {
+                                resColumns.push({
+                                    title: col,
+                                    field: col,
+                                    formatter: function (value) {
+                                        if (!isFloat(value)) {
+                                            return value;  // if value is not float or integer, return value
+                                        }
+                                        if (isInteger(value)) {
+                                            return value;  // if value is integer, return value
+                                        }
+                                        return value.toFixed(5);  // if value is float, return fixed float
+                                    }
+                                });
                             }
-                        });
-                    }
-                }
-                for (let item in result) {
-                    if (result.hasOwnProperty(item)) {
-                        resData.push(result[item])
-                    }
-                }
+                        }
+                        for (let item in result) {
+                            if (result.hasOwnProperty(item)) {
+                                resData.push(result[item])
+                            }
+                        }
 
-                $('#predictresult_table').bootstrapTable({
-                    data: resData,
-                    theadClasses: "thead-light",
-                    pagination: true,
-                    pageSize: '15',
-                    columns: resColumns,
-                    showColumns: true,
-                    showToggle: true,
-                    search: true,
-                    showExport: true,
-                    exportDataType: "all",
-                    exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
-                });
-            </script>
-        {% endif %}
+                        $('#predictresult_table').bootstrapTable({
+                            data: resData,
+                            theadClasses: "thead-light",
+                            pagination: true,
+                            pageSize: '15',
+                            columns: resColumns,
+                            showColumns: true,
+                            showToggle: true,
+                            search: true,
+                            showExport: true,
+                            exportDataType: "all",
+                            exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],
+                        });
+                    </script>
+                {% endif %}
+            </div>
+        </div>
+
+
+        {#        {% if uploadonly == 'False' %}#}
+        {#            <h3>输入相应数据开始预测</h3>#}
+        {#            {% for i in selected_features %}#}
+        {#                <div class="row" style="margin: auto">#}
+        {#                    <div class="col-2">#}
+        {#                        <label for="{{ i }}">{{ i }}</label>#}
+        {#                    </div>#}
+        {#                    <div class="col-10"><input type="text" id="{{ i }}"></div>#}
+        {#                </div>#}
+        {#            {% endfor %}#}
+        {#            <div class="row" style="margin: auto">#}
+        {#                <div class="col-2">#}
+        {#                    <label for="">Ea(eV)</label>#}
+        {#                </div>#}
+        {#                <div class="col-6">#}
+        {#                    <label id="target" for=""></label>#}
+        {#                </div>#}
+        {#                <div class="col-2">#}
+        {#                    <button class="btn btn-info" id="" onclick="calc();">预测</button>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        {% endif %}#}
+        {#        <h3>上传文件开始预测</h3>#}
+        {#        <div style="margin-left: 0; margin-right: 25%; padding: 0">#}
+        {#            <form method="post" enctype="multipart/form-data">#}
+        {#                {% csrf_token %}#}
+        {#                <input type="file" class="file" id="input-excel" name="input-excel">#}
+        {#            </form>#}
+        {#            <script>#}
+        {#                $('#input-excel').fileinput({#}
+        {#                    showPreview: false,#}
+        {#                    showRemove: false,#}
+        {#                    browseOnZoneClick: true,#}
+        {#                    allowedFileExtensions: ['xls', 'xlsx'],#}
+        {#                    language: 'zh',#}
+        {#                    type: 'post',#}
+        {#                    msgPlaceholder: "上传数据表格进行预测",#}
+        {#                    browseClass: 'btn btn-info',#}
+        {#                    uploadClass: 'btn btn-info',#}
+        {#                })#}
+        {#            </script>#}
+        {#        </div>#}
+        {#        {% if uploadtopredict == 'True' %}#}
+        {#            <div class="row">#}
+        {#                <div class="col-sm-12" style="overflow:auto;">#}
+        {#                    <table id="predictresult_table"#}
+        {#                           class="table table-sm table-hover table-responsive"></table>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#            <script type="text/javascript">#}
+        {##}
+        {#                function isInteger(arg) {#}
+        {#                    return new RegExp("^[0-9]*$").test(arg)#}
+        {#                }#}
+        {##}
+        {#                function isFloat(arg) {#}
+        {#                    return new RegExp("^(-?\\d+)(\\.\\d+)?$").test(arg)#}
+        {#                }#}
+        {##}
+        {#                let result = {{ predictresult|safe }};#}
+        {#                let resColumns = [];#}
+        {#                let resData = [];#}
+        {#                for (let col in result[0]) {#}
+        {#                    if (result[0].hasOwnProperty(col)) {#}
+        {#                        resColumns.push({#}
+        {#                            title: col,#}
+        {#                            field: col,#}
+        {#                            formatter: function (value) {#}
+        {#                                if (!isFloat(value)) {#}
+        {#                                    return value;  // if value is not float or integer, return value#}
+        {#                                }#}
+        {#                                if (isInteger(value)) {#}
+        {#                                    return value;  // if value is integer, return value#}
+        {#                                }#}
+        {#                                return value.toFixed(5);  // if value is float, return fixed float#}
+        {#                            }#}
+        {#                        });#}
+        {#                    }#}
+        {#                }#}
+        {#                for (let item in result) {#}
+        {#                    if (result.hasOwnProperty(item)) {#}
+        {#                        resData.push(result[item])#}
+        {#                    }#}
+        {#                }#}
+        {##}
+        {#                $('#predictresult_table').bootstrapTable({#}
+        {#                    data: resData,#}
+        {#                    theadClasses: "thead-light",#}
+        {#                    pagination: true,#}
+        {#                    pageSize: '15',#}
+        {#                    columns: resColumns,#}
+        {#                    showColumns: true,#}
+        {#                    showToggle: true,#}
+        {#                    search: true,#}
+        {#                    showExport: true,#}
+        {#                    exportDataType: "all",#}
+        {#                    exportTypes: ['excel', 'xlsx', 'csv', 'json', 'txt', 'xml'],#}
+        {#                });#}
+        {#            </script>#}
+        {#        {% endif %}#}
     </div>
 
     <script type="application/javascript">
